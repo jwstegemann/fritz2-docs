@@ -1,0 +1,1 @@
+# fritz2-docs
