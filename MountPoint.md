@@ -1,7 +1,9 @@
 ---
 layout: default
 title: MountPoint
-parent: UI Components
+parent: Store
+parent: Flows
+grand_parent: Store 
 nav_order: 3
 ---
 #MountPoint
