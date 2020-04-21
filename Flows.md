@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Flows
-nav_order: 5
+parent: Store
+nav_order: 3
 ---
 #Flows
 

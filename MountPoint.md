@@ -1,7 +1,8 @@
 ---
 layout: default
 title: MountPoint
-nav_order: 6
+parent: UI Components
+nav_order: 3
 ---
 #MountPoint
 
