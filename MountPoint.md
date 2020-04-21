@@ -1,7 +1,6 @@
 ---
 layout: default
 title: MountPoint
-parent: Store
 parent: Flows
 grand_parent: Store 
 nav_order: 3
