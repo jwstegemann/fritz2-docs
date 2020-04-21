@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Remote Calls
-nav_order: 9
+nav_order: 8
 ---
-# Remote Calls
+#Remote Calls
 
 Accepting user-input it is of course a good idea to valid the data, before processing it any further.
 
@@ -76,4 +76,4 @@ html {
 
 It is recommended to implement your validation-code in a multiplatform-project, so you can use it in browser and backend.
 
-By the way: fritz2 supports you connecting to your (http)-backend from the browser with [Remote Calls](RemoteCalls.html).
+By the way: fritz2 supports you connecting to your (http)-backend from the browser with [[Remote Calls]].

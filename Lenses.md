@@ -2,9 +2,9 @@
 layout: default
 title: Lenses
 parent: Nested Structures
-nav_order: 7
+nav_order: 6
 ---
-# Lenses
+#Lenses
 
 A `Lens` is basically a way to describe the relation between an outer entity and and inner entity in a structure.
 It focusses the inner entity from the viewpoint of the outer entity - that is where the name is derived from.
