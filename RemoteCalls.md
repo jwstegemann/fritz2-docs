@@ -5,48 +5,75 @@ nav_order: 8
 ---
 #Remote Calls
 
-Using the default fetch-api from the browser can get quite tiresome. For this reason fritz2 offers a small wrapper around it:
+Accepting user-input it is of course a good idea to valid the data, before processing it any further.
 
-At first you create a RequestTemplate for your backend:
+To do validation in fritz2 you first have to implement the interface `Validator`. This interface takes three type-parameters:
+* the type of data to validate
+* a type describing the validation-results (like a message, etc.)
+* a type for metadata you want to forward from your `Handler`s to your validation (or `Nothing` if you do not need this)
 
-val sampleApi = remote("https://reqresss.in/api/users")
-            .acceptJson()
-The template offers you some convenience-methods to configure your API-calls, like the acceptJson() above, that simply adds the correct header to each request that will be sent using the template.
+Now you have to implement the `validation`-method itself:
 
-Sending a request is quite straightforward:
+```kotlin
+enum class Severity {
+    Info,
+    Warning,
+    Error
+}
 
-            sampleApi.get(s)
-                .onErrorLog()
-                .body()
-body() return you the body of the response as a String (more is yet to come). onErrorLog just logs exceptions to the console. Of course you can/should implement your own exception-handling.
+data class ValMsg(override val id: String, val severity: Severity, val text: String): Failable {
+    override fun isFail(): Boolean = severity > Severity.Warning
+}
 
-The same works for posts (and other methods), just give it another parameter for the body to send.
+object EMailValidator: Validator<String, ValMsg, String>() {
 
-Since remote-calls are asynchronous by nature and you do not want to block in your Handlers (where you should implement your logic), you have to somehow inject the call, before the Handler is called:
+    override fun validate(data: String, metadata: String): List<ValMsg> {
+        val msgs = mutableListOf<ValMsg>()
 
-val samplePost = apply {s : String ->
-            sampleApi.post(body = """
-                {
-                    "name": "$s",
-                    "job": "programmer"
-                }
-            """.trimIndent())
-                .onErrorLog()
-                .body()
-        } andThen update
-By using apply you create just another handler that chains the asnyc remote call and the update-Handler in a way that does not block and schedules your update right when you processed the answer from your backend. You can use this Handler like any other to handle Flows of actions:
+        if(data.isEmpty()) {
+            msgs.add(ValMsg("empty", Severity.Info, "Please provide some input"))
+        }
 
-... html {
-    button {
-        text("add programmer")
-        samplePost <= clicks.map {
-            "just a name" // wherever you get this from...
+        if(!data.matches("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)")) {
+            msgs.add(ValMsg("not_matched", Severity.Error, "Please correct the email address!"))
+        }
+
+        return msgs
+    }
+}
+```
+Of course you can structure and implement your concrete validation-rules however you can use everything Kotlin offers.
+
+To use this `Validator`in your `Store` just implement the `Validation`-interface by defining a validator for the data-type of your `Store`:
+
+```kotlin
+val store = object : RootStore<String>(""), Validation<String, ValMsg, String> {
+        override val validator = EMailValidator
+
+        val updateWithValidation = handle<String> { data, newData ->
+            if (validate(newData, "update")) newData
+            else data
         }
     }
-...
+```
+
+When you have `Store` that implements `Validation` you can access your validation-results by calling `msgs()`. This gives you a `Flow` of the type you defined as your result-type. You can handle this like any other `Flow` of a `List`, for example by rendering your messages:
+
+```kotlin
+html {
+    ul {
+        store.msgs().each().map {
+            html {
+                li(it.severity.name.toLowerCase()) {
+                    text(it.text)
+                }
+            }
+        }.bind()
+    }
 }
-Of course you can use apply for any other async process, too, or even just to structure your code.
+```
 
-In the real world you won't want to create the JSON manually, so use kotlinx.serialization.
 
-Want more? Keep on reading about Routing.
+It is recommended to implement your validation-code in a multiplatform-project, so you can use it in browser and backend.
+
+By the way: fritz2 supports you connecting to your (http)-backend from the browser with [[Remote Calls]].
