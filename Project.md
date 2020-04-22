@@ -61,4 +61,4 @@ fun main() {
 }
 ```
 
-Voilà, you are done. Maybe you now want to create your first [Components](www.docs.fritz2.dev/Components.html)?  
+Voilà, you are done. Maybe you now want to create your first [Components](Components.html)?  
