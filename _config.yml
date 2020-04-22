@@ -4,12 +4,12 @@ title: fritz2-documentation
 # Aux links for the upper right navigation
 aux_links:
   "Home":
-    - "//fritz2.dev"
+    - "//www.fritz2.dev"
   "Documentation":
-    - "//docs.fritz2.dev/"
+    - "//www.docs.fritz2.dev/"
   "Examples":
-    - "//examples.fritz2.dev"
+    - "//www.examples.fritz2.dev"
   "Api":
-    - "//api.fritz2.dev/dokka/fritz2"
+    - "//www.api.fritz2.dev/dokka/fritz2"
   "Github":
-  - "//github.com/jwstegemann/fritz2"
+  - "//www.github.com/jwstegemann/fritz2"
