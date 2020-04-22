@@ -10,7 +10,7 @@ Most of the time your model for a view will not be of a simple data-type or a `L
 
 In this case you will most probably need a `Store` for the single properties of your main entity, and - later on - for the properties of the sub-entity like the street in an address in our example from above.
 
-fritz2 uses a mechanism called `Lens` to describe the relationship between an entity and it`s sub-entities and properties. So before you continue, please make yourself familiar with [[Lenses]] in fritz2.
+fritz2 uses a mechanism called `Lens` to describe the relationship between an entity and it`s sub-entities and properties. So before you continue, please make yourself familiar with [Lenses](Lenses.html) in fritz2.
 
 Having a `Lens` available, that points to some specific property, it is very easy to get a `SubStore` for exactly that property from a `Store` of the parent entity:
 
