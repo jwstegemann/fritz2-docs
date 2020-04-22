@@ -43,4 +43,4 @@ class MyThirdComponent(val p.Person) {
 }
 ```
 
-Since stateless components alone are not to exciting, go on and read about fritz2 mechanism to handle state, the [Store](www.docs.fritz2.dev/Components.html).
+Since stateless components alone are not to exciting, go on and read about fritz2 mechanism to handle state, the [Store](Store.html).

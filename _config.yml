@@ -6,7 +6,7 @@ aux_links:
   "Home":
     - "//www.fritz2.dev"
   "Documentation":
-    - "//www.docs.fritz2.dev/"
+    - "//www.docs.fritz2.dev/README.html/"
   "Examples":
     - "//www.examples.fritz2.dev"
   "Api":

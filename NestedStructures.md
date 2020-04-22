@@ -43,4 +43,4 @@ html {
 
 To keep your code well structured it is recommended to implement complex logic at your `RootStore`(or inherit it by using interfaces). But for small (convenience-) actions like the above it is a proper solution.
 
-Now that you can handle all kinds of data and structures in your `Store`s you might want to check, if they are valid. In fritz2 this is done by [Validation](www.docs.fritz2.dev/Validation.html).
+Now that you can handle all kinds of data and structures in your `Store`s you might want to check, if they are valid. In fritz2 this is done by [Validation](Validation.html).
