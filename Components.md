@@ -4,7 +4,7 @@ title: Components
 nav_order: 2
 has_children: true
 ---
-#Components
+# Components
 
 It is very easy to create a lightweight reusable component with fritz2:
 
@@ -43,4 +43,4 @@ class MyThirdComponent(val p.Person) {
 }
 ```
 
-Since stateless components alone are not to exciting, go on and read about fritz2 mechanism to handle state, the [[Store]].
+Since stateless components alone are not to exciting, go on and read about fritz2 mechanism to handle state, the [Store](www.docs.fritz2.dev/Components.html).

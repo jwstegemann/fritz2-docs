@@ -1,4 +1,9 @@
-# fritz2-docs
+---
+layout: default
+title: Welcome
+nav_order: 0
+---
+# Welcome
 
 Since we want you to use fritz2 to build the best and most efficient, and successful (and whatever you want) web-apps, we try to provide you with all the documentation you need to do so.
 

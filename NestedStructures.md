@@ -4,7 +4,7 @@ title: Nested Structures
 has_children: true
 nav_order: 6
 ---
-#Nested Structures
+# Nested Structures
 
 Most of the time your model for a view will not be of a simple data-type or a `List`, but a complex entity, like a person, having a name, multiple addresses, email, birth-date,...
 
@@ -43,4 +43,4 @@ html {
 
 To keep your code well structured it is recommended to implement complex logic at your `RootStore`(or inherit it by using interfaces). But for small (convenience-) actions like the above it is a proper solution.
 
-Now that you can handle all kinds of data and structures in your `Store`s you might want to check, if they are valid. In fritz2 this is done by [[Validation]].
+Now that you can handle all kinds of data and structures in your `Store`s you might want to check, if they are valid. In fritz2 this is done by [Validation](www.docs.fritz2.dev/Validation.html).

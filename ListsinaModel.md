@@ -3,7 +3,7 @@ layout: default
 title: Lists in a Model
 nav_order: 5
 ---
-#Lists in a Model
+# Lists in a Model
 
 Like for any other type you can create a `Store` that holds a list:
 
@@ -54,4 +54,4 @@ Binding a `Seq` in your `html` context works exactly as for a `Flow` by just cal
 
 So `each()` allows you to use _one-way-databinding_ when working with the elements in your `List`. If you need _two-way-databinding_ (for example to edit the single elements in a form, etc.), just call `eachStore()` instead. This gives you a `Seq` of `SubStore`s, one for each element of you `List`. You can use them just like any other `Store` to build a form and bind you data.
 
-Like for the single elements in your `List` you will also need to get `Store`s for elements "hidden" deeper in your [[Nested Structures]]. Let's have a look at what we can do for you.
+Like for the single elements in your `List` you will also need to get `Store`s for elements "hidden" deeper in your [Nested Structures](www.docs.fritz2.dev/NestedStructures.html). Let's have a look at what we can do for you.

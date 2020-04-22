@@ -6,7 +6,7 @@ nav_order: 1
 # Project Setup
 
 To use fritz2 you have to set up a Kotlin/JS-project. To do so, you can either
-* clone our template-project from [github] (https://github.com/jwstegemann/fritz2-template)
+* clone our template-project from [github](https://github.com/jwstegemann/fritz2-template)
 * clone the whole fritz2-repo and use the gettingstarted sub-project under examples
 * have a look a the [official documentation](https://kotlinlang.org/docs/tutorials/javascript/getting-started-gradle/getting-started-with-gradle.html) and include the following dependency
 
@@ -61,4 +61,4 @@ fun main() {
 }
 ```
 
-Voilà, you are done. Maybe you now want to create your first [[Components]]?  
+Voilà, you are done. Maybe you now want to create your first [Components](www.docs.fritz2.dev/Components.html)?  

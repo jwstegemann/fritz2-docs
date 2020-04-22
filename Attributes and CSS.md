@@ -4,7 +4,7 @@ title: Attributes and CSS
 parent: Components
 nav_order: 2
 ---
-#Attributes and CSS
+# Attributes and CSS
 
 To create rich HTML-interfaces you have to use many different attributes. In fritz2 there are some different ways to fit every use-case.
 

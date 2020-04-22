@@ -3,7 +3,7 @@ layout: default
 title: Remote Calls
 nav_order: 8
 ---
-#Remote Calls
+# Remote Calls
 
 Accepting user-input it is of course a good idea to valid the data, before processing it any further.
 

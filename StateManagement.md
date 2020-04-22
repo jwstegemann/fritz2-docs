@@ -3,7 +3,7 @@ layout: default
 title: State Management
 nav_order: 4
 ---
-#State Management
+# State Management
 
 Building your `Store`, you can add `Handler`s to respond to actions and adjust your model accordingly:
 
@@ -46,4 +46,4 @@ Of course you can map the elements of the `Flow` to a specific action-type befor
 
 You can also use any other source for a `Flow` like recurring timer events or even external events like web-sockets, local storage, etc.
 
-Next we will have a look at how to use [[Lists in a model]].
+Next we will have a look at how to use [Lists in a model](www.docs.fritz2.dev/ListsinaModel.html).

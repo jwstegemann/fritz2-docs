@@ -4,7 +4,7 @@ title: MountPoint
 parent: Store
 nav_order: 3
 ---
-#MountPoint
+# MountPoint
 
 A `MountPoint`in fritz2 is nothing more than and anchor of a `Flow` somewhere in a given structure. 
 The `MountPoint` itself is used like a placeholder when creating the structure. Afterwards each value that appears on the `Flow` will be put into the structure at exactly that position. 
