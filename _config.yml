@@ -4,7 +4,7 @@ title: fritz2-documentation
 # Aux links for the upper right navigation
 aux_links:
   "Home":
-    - "//fritz2.dev/index_backup.html"
+    - "//fritz2.dev"
   "Documentation":
     - "//docs.fritz2.dev/"
   "Examples":
