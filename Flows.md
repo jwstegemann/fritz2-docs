@@ -2,9 +2,9 @@
 layout: default
 title: Flows
 parent: Store
-nav_order: 3
+nav_order: 4
 ---
-#Flows
+# Flows
 
 fritz2 heavily depends on flows, introduced by [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines).
 
@@ -20,4 +20,4 @@ In Kotlin there is another communication model called `Channel`. They are the _h
 
 To get more information about `Flow` (and if you are interested `Channel`) and it's API, please have a look at the [official documentation](https://kotlinlang.org/docs/reference/coroutines/flow.html).
 
-This is what fritz2 uses to handle the state and events of your app. Now have a closer look at the [[Store]]...
+This is what fritz2 uses to handle the state and events of your app. Now have a closer look at the [Store](Store.html)...

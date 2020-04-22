@@ -1,10 +1,10 @@
 ---
 layout: default
 title: Store
-nav_order: 3
+nav_order: 4
 has_children: true
 ---
-#Store
+# Store
 
 In fritz2 you will use one or more `Store`s to handle you app's state. It heavily depends on Kotlin's `Flow`. If you are not familiar with this concept, please read a little about [[Flows]] first.
 
@@ -66,4 +66,4 @@ div {
 ```
 In this case just the attribute value will change when the model in your store changes. fritz2 offers [pre-defined properties](https://jwstegemann.github.io/fritz2/dokka/fritz2/io.fritz2.dom.html/) for every HTML5-attribute.
 
-But how can you change the model-data in a store? Let's have a look at [[State Management]].
+But how can you change the model-data in a store? Let's have a look at [State Management](StateManagement.html).
