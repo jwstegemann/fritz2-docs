@@ -6,10 +6,10 @@ aux_links:
   "Home":
     - "//www.fritz2.dev"
   "Documentation":
-    - "//www.docs.fritz2.dev/Welcome.html"
+    - "//www.docs.fritz2.dev"
   "Examples":
-    - "//www.examples.fritz2.dev"
+    - "//examples.fritz2.dev"
   "Api":
-    - "//www.api.fritz2.dev/dokka/fritz2"
+    - "//api.fritz2.dev/fritz2"
   "Github":
   - "//www.github.com/jwstegemann/fritz2"
