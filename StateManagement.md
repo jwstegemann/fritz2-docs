@@ -40,7 +40,7 @@ val myComponent = html {
 }
 ```
 
-`changes` in this example is a flow of `String` created by listening to the `Change`-Event of the underlying input-element. Whenever this event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the `Store` to update the model. Event-flows are available for [all HTML5-events](https://jwstegemann.github.io/fritz2/dokka/fritz2/io.fritz2.dom.html/-events/).
+`changes` in this example is a flow of `String` created by listening to the `Change`-Event of the underlying input-element. Whenever this event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the `Store` to update the model. Event-flows are available for [all HTML5-events](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements).
 
 Of course you can map the elements of the `Flow` to a specific action-type before you connect it to the `Handler`. This way you can also add information from the rendering-contect to the action.
 
