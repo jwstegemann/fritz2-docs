@@ -3,7 +3,7 @@ layout: default
 title: Lists in a Model
 nav_order: 5
 ---
-#Lists in a Model
+# Lists in a Model
 
 Like for any other type you can create a `Store` that holds a list:
 
