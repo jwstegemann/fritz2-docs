@@ -1,2 +1,15 @@
 remote_theme: pmarsceill/just-the-docs
 title: fritz2-documentation
+
+# Aux links for the upper right navigation
+aux_links:
+  "Home":
+    - "//fritz2.dev/index_backup.html"
+  "Documentation":
+    - "//docs.fritz2.dev"
+  "Examples":
+    - "//examples.fritz2.dev"
+  "Api":
+    - "//api.fritz2.dev/dokka/fritz2"
+  "Github"
+  - "//github.com/jwstegemann/fritz2"
