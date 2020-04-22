@@ -11,5 +11,5 @@ aux_links:
     - "//examples.fritz2.dev"
   "Api":
     - "//api.fritz2.dev/dokka/fritz2"
-  "Github"
+  "Github":
   - "//github.com/jwstegemann/fritz2"
