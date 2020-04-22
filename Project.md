@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Project Setup
-nav_order: 0
+nav_order: 1
 ---
 #Project Setup
 
