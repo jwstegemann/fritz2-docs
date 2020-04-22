@@ -2,7 +2,7 @@
 layout: default
 title: Lenses
 parent: Nested Structures
-nav_order: 6
+nav_order: 7
 ---
 # Lenses
 

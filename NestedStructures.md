@@ -2,7 +2,7 @@
 layout: default
 title: Nested Structures
 has_children: true
-nav_order: 6
+nav_order: 7
 ---
 # Nested Structures
 
