@@ -60,4 +60,4 @@ apply(plugin = "io.fritz2.optics")
 
 When you compile your code containing `@Lenses`, a file named `GeneratedOptics.kt` will be created in your package, that contains the definition of the `Lenses`-object.
 
-Since your other code will depend on these generated files we recommend implementing your model-classes in a separated sub-project. Have a look at our [`nestedmodel`-example](https://github.com/jwstegemann/fritz2/tree/master/examples/nestedmodel), how to do so. This might be a good idea anyway, since you will have to define a multiplatform-project, to be able to share your model and validation code between browser and backend.  
+Since your other code will depend on these generated files we recommend implementing your model-classes in a separated sub-project. Have a look at our [`nestedmodel`-example](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements), how to do so. This might be a good idea anyway, since you will have to define a multiplatform-project, to be able to share your model and validation code between browser and backend.  

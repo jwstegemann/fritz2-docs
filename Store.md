@@ -64,6 +64,6 @@ div {
     class = store.data.map(...)
 }
 ```
-In this case just the attribute value will change when the model in your store changes. fritz2 offers [pre-defined properties](https://jwstegemann.github.io/fritz2/dokka/fritz2/io.fritz2.dom.html/) for every HTML5-attribute.
+In this case just the attribute value will change when the model in your store changes. fritz2 offers [pre-defined properties](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) for every HTML5-attribute.
 
 But how can you change the model-data in a store? Let's have a look at [State Management](StateManagement.html).
