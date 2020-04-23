@@ -13,3 +13,6 @@ aux_links:
     - "//api.fritz2.dev/fritz2"
   "Github":
   - "//www.github.com/jwstegemann/fritz2"
+
+# Footer content appears at the bottom of every page's main content
+footer_content: "Distributed by an MIT license."
