@@ -61,4 +61,4 @@ fun main() {
 }
 ```
 
-Voilà, you are done. Maybe you now want to create your first [Components](Components.html)?  
+Voilà, you are done. Maybe you now want to create some more versatile [HTML](Attributes%20and%20CSS.html)?  

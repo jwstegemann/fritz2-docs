@@ -63,3 +63,4 @@ html {
     }
 }
 ```
+Now that you can build what you want in your templates, lets make some [Components](Components.html) from it.
