@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Attributes and CSS
-parent: Components
 nav_order: 3
 ---
 # Attributes and CSS

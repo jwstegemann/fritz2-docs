@@ -1,12 +1,12 @@
 ---
 layout: default
 title: Store
-nav_order: 4
+nav_order: 5
 has_children: true
 ---
 # Store
 
-In fritz2 you will use one or more `Store`s to handle you app's state. It heavily depends on Kotlin's `Flow`. If you are not familiar with this concept, please read a little about [[Flows]] first.
+In fritz2 you will use one or more `Store`s to handle you app's state. It heavily depends on Kotlin's `Flow`. If you are not familiar with this concept, please read a little about [Flows](Flow.html) first.
 
 Let's assume, the state of your app is a simple `String`. Creating a `Store` to manage that state is quite easy:
 
@@ -25,7 +25,7 @@ html {
 }
 ```
 
-By calling `s.bind()` you create a [[MountPoint]] as the end of your data-flow. That means that a DOM-element is created by the mount point (in our case a simple `TextNode`) and bound to your `data` so that it will change whenever that state in your `Store` is updated. This is what is called _precise data binding_.
+By calling `s.bind()` you create a [MountPoint](MountPoint.html) as the end of your data-flow. That means that a DOM-element is created by the mount point (in our case a simple `TextNode`) and bound to your `data` so that it will change whenever that state in your `Store` is updated. This is what is called _precise data binding_.
 
 Of course you can call every intermediate action on the `data`-flow as on every other `Flow`, like `map`,`filter`, etc.:
 
@@ -38,7 +38,7 @@ html {
 }
 ```
 
-Knowing this, you can easily assume, how you can derive a reactive component from your state:
+Knowing this, you can easily guess, how you can derive a reactive component from your state:
 
 ```kotlin
 val uppercase = data.map {

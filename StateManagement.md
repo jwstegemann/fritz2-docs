@@ -1,7 +1,7 @@
 ---
 layout: default
 title: State Management
-nav_order: 5
+nav_order: 6
 ---
 # State Management
 
@@ -18,7 +18,7 @@ val store = RootStore<String>("") {
     }
 }
 ```
-Whenever a `String` is sent to the append-`Handler` it updates the model by append the text to it's actual model. `clear` is a `Handle` that does not need any information to do his work, so you can just leave out the second parameter.
+Whenever a `String` is sent to the append-`Handler` it updates the model by appending the text to it's actual model. `clear` is a `Handle` that does not need any information to do his work, so you can just leave out the second parameter.
 
 Since everything in fritz2 is reactive, you won't call the handler directly most of the time but connect a `Flow` of actions to it:
 
@@ -35,15 +35,17 @@ val store = RootStore<String>("")
 val myComponent = html {
     input {
         value = store.data
-        store.update = changes
+        store.update = changes.values()
     }
 }
 ```
 
-`changes` in this example is a flow of `String` created by listening to the `Change`-Event of the underlying input-element. Whenever this event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the `Store` to update the model. Event-flows are available for [all HTML5-events](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements).
+`changes` in this example is a flow of events created by listening to the `Change`-Event of the underlying input-element. Calling `values()` on it, extracts the current value from the input.
+Whenever such an event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the `Store` to update the model. Event-flows are available for [all HTML5-events](https://api.fritz2.dev/fritz2/io.fritz2.dom/-with-events/).
+There are some more [convenience functions](https://api.fritz2.dev/fritz2/io.fritz2.dom/) to help you to extract the data you need from an event or controll event-processing.
 
 Of course you can map the elements of the `Flow` to a specific action-type before you connect it to the `Handler`. This way you can also add information from the rendering-contect to the action.
 
 You can also use any other source for a `Flow` like recurring timer events or even external events like web-sockets, local storage, etc.
 
-Next we will have a look at how to use [Lists in a model](ListsinaModel.html).
+Next we will have a look at how to use [Lists as a model](ListsinaModel.html).
