@@ -1,6 +1,6 @@
 remote_theme: pmarsceill/just-the-docs
 title: fritz2
-
+logo: "images/fritz_logo_black.svg"
 # Aux links for the upper right navigation
 aux_links:
   "Home":
