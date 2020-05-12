@@ -61,4 +61,6 @@ fun main() {
 }
 ```
 
+Run the project by calling `./gradlew run` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser, when you change your code.
+
 Voilà, you are done. Maybe you now want to create some more versatile [HTML](Attributes%20and%20CSS.html)?  

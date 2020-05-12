@@ -11,6 +11,7 @@ At first you create a `RequestTemplate` for your backend:
 ```kotlin
 val sampleApi = remote("https://reqresss.in/api/users")
             .acceptJson()
+            .header("Content-Type","application/json")
 ```
 The template offers you some [convenience-methods](https://jwstegemann.github.io/fritz2/dokka/fritz2/io.fritz2.remote/-request-template/) to configure your API-calls, like the `acceptJson()` above, that simply adds the correct header to each request that will be sent using the template.
 
@@ -55,5 +56,25 @@ By using `apply` you create just another handler that chains the asnyc remote ca
 Of course you can use `apply` for any other async process, too, or even just to structure your code. 
 
 In the real world you won't want to create the JSON manually, so use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
+
+You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts:
+
+```kotlin
+kotlin {
+    target {
+        browser {
+            runTask {
+                devServer = KotlinWebpackConfig.DevServer(
+                    port = 9000,
+                    contentBase = listOf("$projectDir/src/main/web"),
+                    proxy = mapOf(
+                        "/myService" to "http://localhost:8080"
+                    )
+                )
+            }
+        }
+    }
+}
+```
 
 Want more? Keep on reading about [Routing](Routing.html).
