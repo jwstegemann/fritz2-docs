@@ -5,7 +5,7 @@ nav_order: 9
 ---
 # Validation
 
-Accepting user-input it is of course a good idea to valid the data, before processing it any further.
+Accepting user-input it is of course a good idea to validate the data, before processing it any further.
 
 To do validation in fritz2 you first have to implement the interface `Validator`. This interface takes three type-parameters:
 * the type of data to validate
@@ -57,7 +57,7 @@ val store = object : RootStore<String>(""), Validation<String, ValMsg, String> {
     }
 ```
 
-When you have `Store` that implements `Validation` you can access your validation-results by calling `msgs()`. This gives you a `Flow` of the type you defined as your result-type. You can handle this like any other `Flow` of a `List`, for example by rendering your messages:
+When you have a `Store` that implements `Validation` you can access your validation-results by calling `msgs()`. This gives you a `Flow` of the type you defined as your result-type. You can handle this like any other `Flow` of a `List`, for example by rendering your messages:
 
 ```kotlin
 html {

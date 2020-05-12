@@ -8,7 +8,7 @@ nav_order: 8
 
 Most of the time your model for a view will not be of a simple data-type or a `List`, but a complex entity, like a person, having a name, multiple addresses, email, birth-date,...
 
-In this case you will most probably need a `Store` for the single properties of your main entity, and - later on - for the properties of the sub-entity like the street in an address in our example from above.
+In this case you will most probably need `Store`s for the single properties of your main entity, and - later on - for the properties of the sub-entity like the street in an address in our example from above.
 
 fritz2 uses a mechanism called `Lens` to describe the relationship between an entity and it`s sub-entities and properties. So before you continue, please make yourself familiar with [Lenses](Lenses.html) in fritz2.
 
