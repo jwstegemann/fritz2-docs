@@ -16,7 +16,7 @@ html {
 }
 ```
 
-All the other attributes you can set inside the `Tag`'s content by just just assign it a `Flow` of the according type. The attribute's value will be updated in the DOM whenever a new value appears on the `Flow`. If the value is constant, just wrap it with the `const()`-function:
+You can set all the other attributes inside the `Tag`'s content by just assigning a `Flow` of the according type to it. The attribute's value will be updated in the DOM whenever a new value appears on the `Flow`. If the value is constant, just wrap it with the `const()`-function:
 ```kotlin
 val flowOfInts = ... //i.e. get it from some Store
 
@@ -50,7 +50,7 @@ html {
 
 A very special attribute is the `class` of a `Tag`. As seen above, you can set a static base-class just by the parameter of the factory-function of the `Tag`.
 
-You can add dynamic classes by assign a `Flow` of Strings to the `classMap`-attribute as with any other attribute. The same works for `List<String>`s with the `classList`-attribute.
+You can add dynamic classes by assign a `Flow` of Strings to the `className`-attribute as with any other attribute. The same works for `List<String>`s with the `classList`-attribute.
 
 In addition to this, you can build a map from you model data, that enables and disables single classes dynamically:
 ```kotlin
