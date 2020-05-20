@@ -76,4 +76,6 @@ html {
 
 It is recommended to implement your validation-code in a multiplatform-project, so you can use it in browser and backend.
 
+You can have a look at a more complete example [here](https://examples.fritz2.dev/validation/build/distributions/index.html).
+
 By the way: fritz2 supports you connecting to your (http)-backend from the browser with [Remote Calls](RemoteCalls.html).
