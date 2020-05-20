@@ -20,12 +20,12 @@ Every `Store` offers a `Flow` named `data`, that can be bound as part of your ht
 html {
     p {
         text("actual state = ")
-        s.bind()   
+        s.data.bind()
     }
 }
 ```
 
-By calling `s.bind()` you create a [MountPoint](MountPoint.html) at the end of your data-flow. That means that a DOM-element is created by the mount point (in our case a simple `TextNode`) and bound to your `data` so that it will change whenever that state in your `Store` is updated. This is what is called _precise data binding_.
+By calling `s.data.bind()` you create a [MountPoint](MountPoint.html) at the end of your data-flow. That means that a DOM-element is created by the mount point (in our case a simple `TextNode`) and bound to your `data` so that it will change whenever that state in your `Store` is updated. This is what is called _precise data binding_.
 
 Of course you can use every intermediate action (like `map`,`filter`, etc.) on the `data`-flow as on every other `Flow`:
 
@@ -33,25 +33,25 @@ Of course you can use every intermediate action (like `map`,`filter`, etc.) on t
 html {
     p {
         text("you have entered ")
-        s.map { it.length }.bind()
+        s.data.map { it.length }.bind()
         text(" characters so far.")
+    }
 }
 ```
 
 Knowing this, you can easily guess, how you can derive a reactive component from your state:
 
 ```kotlin
-val uppercase = data.map {
-    html {
+val HtmlElements.uppercase
+    get() =
         p {
-            it.toUpperCase().bind()
+            s.data.map { it.toUpperCase() }.bind()
         }
-    } 
-}
+
 
 html {
     div {
-        uppercase.bind()
+        uppercase
     }
 }.mount("target")
 ```

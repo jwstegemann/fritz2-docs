@@ -43,7 +43,7 @@ val someFlowOfStrings = ...
 
 html {
     div {
-        someFlowOfStrings.bindAttr("data-something)
+        someFlowOfStrings.bindAttr("data-something")
     }
 }
 ```
