@@ -56,6 +56,15 @@ html {
 }.mount("target")
 ```
 
+When you want to declare your component inside another function or you want to pass parameters to it, just use an extension function instead:
+
+```kotlin
+fun HtmlElements.uppercaseWithPrefix(prefix: String) =
+        p {
+            s.data.map { prefix + it.toUpperCase() }.bind()
+        }
+```
+
 Doing so is called _one-way-databinding_.
 You can also bind a `Flow to an attribute:
 
