@@ -7,11 +7,13 @@ nav_order: 8
 # Lenses
 
 A `Lens` is basically a way to describe the relation between an outer entity and and inner entity in a structure.
-It focusses the inner entity from the viewpoint of the outer entity - that is where the name is derived from.
+It focuses the inner entity from the viewpoint of the outer entity - that is where the name is derived from.
 Lenses are especially useful when using immutable data-types like fritz2 does.
 For this reason a `Lens` needs to know
+
   * how to get the value of the inner entity from a given instance of the outer entity
   * how to create a new instance of the outer entity (remember: immutable!) as a copy of a given one with just the inner entity changed to a new given value.
+
 In fritz2 a `Lens` is defined by the following interface:
 ```kotlin
 interface Lens<P,T> {
@@ -24,7 +26,7 @@ interface Lens<P,T> {
 
 This interface and some convenience-methods are implemented by a separate project called `fritz2-optics` that you inherit a a transitive dependency by using `fritz2-core`.
 
-Of cource you can easily implement this interface by yourself, by just implementing `get()` and `set()`. fritz2 also offers a method called `buildLens()`, that makes it a little less expressive to do so:
+Of cource you can easily implement this interface by yourself, by just implementing `get()` and `set()`. fritz2 also offers a method called `buildLens()`, that makes it a little less verbose to do so:
 
 ```kotlin
 val innerLens = buildLens("inner", { it.inner },{ parent, value -> parent.copy(inner = value)})
