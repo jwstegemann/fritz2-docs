@@ -13,7 +13,7 @@ val myComponent = html {
         text("This is the smallest valid stateless component")
     }
 }
-``` 
+```
 
 fritz2 does not force you to build your components a certain way. You can use every single Kotlin-language-feature you like to do so.
 
@@ -47,7 +47,7 @@ val myComponent = html {
 More complex components can be realized by using a class. This allows you to encapsulate state, use internal functions to structure your code, etc.
 
 ```kotlin
-class MyThirdComponent(val p.Person) {
+class MyThirdComponent(val p: Person) {
     private fun HtmlElements.renderAddress(a: Address) {
         ... // render street, city, etc.
     }
