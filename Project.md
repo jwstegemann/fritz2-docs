@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.fritz2:fritz2-core-js:0.3")
+    implementation("io.fritz2:fritz2-core-js:0.4")
 }
 ```
 
