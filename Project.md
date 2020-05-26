@@ -42,7 +42,7 @@ The `index.html`is just a normal web-page. Be sure to include the resulting scri
 </html>
 ```
 
-`app.kt` is the starting point of your fritz2 app. So make sure it has a `main`-function. Inside `main` you might want to create some content by creating a `html`-context, adding [some `Tag`s](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) and mount it to the DOM of your `index.html`:
+`app.kt` is the starting point of your fritz2 app. So make sure it has a `main`-function. Inside `main` you might want to create some content by creating a `render`-context, adding [some `Tag`s](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) and mount it to the DOM of your `index.html`:
 
 ```kotlin
 package <your package>
@@ -51,7 +51,7 @@ import io.fritz2.dom.html.html
 import io.fritz2.dom.mount
 
 fun main() {
-    html {
+    render {
         div("some-fix-css-class") {
             p(id = "someId") {
                 text("Hello World!")

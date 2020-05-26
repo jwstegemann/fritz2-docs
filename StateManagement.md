@@ -24,7 +24,7 @@ Since everything in fritz2 is reactive, you won't call the handler directly most
 
 ```kotlin
 val stringsToAppend: Flow<String> = ... //we will see, where you get this stream from later on.
-store.append <= stringsToAppend
+stringsToAppend handledBy store.append
 ```
 
 Each `Store` inherits a `Handler` called `update` accepting the same type as the `Store` as it's action. It just updates the `Store`'s value to the new value it receives. You can use this handler to conveniently implement _two-way-databinding_ by using the `changes` event-flow of an `input`-`Tag` for example:
@@ -32,10 +32,10 @@ Each `Store` inherits a `Handler` called `update` accepting the same type as the
 ```kotlin
 val store = RootStore<String>("")
 
-val myComponent = html {
+val myComponent = render {
     input {
         value = store.data
-        store.update <= changes.values()
+        changes.values() handledBy store.update
     }
 }
 ```

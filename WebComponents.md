@@ -8,7 +8,7 @@ nav_order: 12
 With fritz2 you can easily use [WebComponents](https://webcomponents.org) in any html-context:
 
 ```kotlin
-html {
+render {
     div("weather-card") {
         h2 { city.bind() }
         custom("m3-stars") {
@@ -79,7 +79,7 @@ class MyComponent : WebComponent<HTMLParagraphElement>() {
         // setStylesheet(shadowRoot, """p { border: 1px solid red; }""")
    
         // create your Stores, etc.
-        return html {
+        return render {
             p() {
                 text("I am a WebComponent")
             }
@@ -107,7 +107,7 @@ You can then use the values of these observed attributes in your init-method as 
 ```kotlin
 val first = attributeChanges("first-attr")
 
-html {
+render {
     //...
     first.bind()
 }

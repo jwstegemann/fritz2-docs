@@ -17,7 +17,7 @@ val s = RootStore<String>("initial value")
 Every `Store` offers a `Flow` named `data`, that can be bound as part of your html:
 
 ```kotlin
-html {
+render {
     p {
         text("actual state = ")
         s.data.bind()
@@ -30,7 +30,7 @@ By calling `s.data.bind()` you create a [MountPoint](MountPoint.html) at the end
 Of course you can use every intermediate action (like `map`,`filter`, etc.) on the `data`-flow as on every other `Flow`:
 
 ```kotlin
-html {
+render {
     p {
         text("you have entered ")
         s.data.map { it.length }.bind()
@@ -49,7 +49,7 @@ val HtmlElements.uppercase
         }
 
 
-html {
+render {
     div {
         uppercase
     }

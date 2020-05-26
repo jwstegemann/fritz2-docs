@@ -11,11 +11,11 @@ Like for any other type you can create a `Store` that holds a list:
 val listStore = RootStore<List<String>>(listOf("a","b","c"))
 ```
 
-Of course you can handle this the same way we have seen before: map the `data` to a `Flow` of `Tag`s by iterating over the `List` and bind it to some place in your `html`. This is perfectly valid, but for `List`s that change more often it would not be performing well (your whole list will be rerendered whenever the model changes).
+Of course you can handle this the same way we have seen before: map the `data` to a `Flow` of `Tag`s by iterating over the `List` and bind it to some place in your `render`. This is perfectly valid, but for `List`s that change more often it would not be performing well (your whole list will be rerendered whenever the model changes).
 
 For those cases fritz2 offers the method `each()` on a `Flow<List<?>>` that creates a `Seq` from your `Flow`. `Seq` offer intermediate operations, that work on the elements of your List.
 
-Binding a `Seq` in your `html` context works exactly as for a `Flow` by just calling `bind()` on it. But instead of a `DomMountPoint` a `DomMultiMountPoint` will be created. This kind of `MountPoint` gets a `Flow` of patches as it's upstream from the `Seq` and is therefore able to change only the DOM-elements that need to be changed (when you add a new element to your List for example or remove one):
+Binding a `Seq` in your `render` context works exactly as for a `Flow` by just calling `bind()` on it. But instead of a `DomMountPoint` a `DomMultiMountPoint` will be created. This kind of `MountPoint` gets a `Flow` of patches as it's upstream from the `Seq` and is therefore able to change only the DOM-elements that need to be changed (when you add a new element to your List for example or remove one):
 
 ```kotlin
     val seq = object : RootStore<List<String>>(listOf("one", "two", "three")) {
@@ -30,15 +30,15 @@ Binding a `Seq` in your `html` context works exactly as for a `Flow` by just cal
         }
     }
 
-    val myComponent = html {
+    val myComponent = render {
         section {
             ul {
                 seq.data.each().map { s ->
-                    html {
+                    render {
                         li {
                             button("btn", id = "delete-btn") {
                                 text(s)
-                                seq.deleteItem <= clicks.map { console.log("deleting $s"); s }
+                                clicks.map { console.log("deleting $s"); s } handledBy seq.deleteItem
                             }
                         }
                     }
@@ -46,7 +46,7 @@ Binding a `Seq` in your `html` context works exactly as for a `Flow` by just cal
             }
             button("button") {
                 text("add an item")
-                seq.addItem <= clicks
+                clicks handledBy seq.addItem
             }
         }
     }

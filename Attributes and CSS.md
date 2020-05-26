@@ -9,7 +9,7 @@ To create rich HTML-interfaces you have to use many different attributes. In fri
 
 On each `Tag` you can set static values for `class` and `id` by just using the optional parameters of it's factory function:
 ```kotlin
-html {
+render {
     div("some-static-css-class") {
         button(id = "someId")
     }
@@ -20,7 +20,7 @@ You can set all the other attributes inside the `Tag`'s content by just assignin
 ```kotlin
 val flowOfInts = ... //i.e. get it from some Store
 
-html {
+render {
     input {
         placeholder = const("some text")
         maxLength = flowOfInts
@@ -30,7 +30,7 @@ html {
 
 If you want to set a static value for a custom (data-) attribute, use the `attr()`-function:
 ```kotlin
-html {
+render {
     div {
         attr("data-something", "someValue")
     }
@@ -41,7 +41,7 @@ Of course you can also bind dynamic values (from a `Flow`) to a custom attribute
 ```kotlin
 val someFlowOfStrings = ... 
 
-html {
+render {
     div {
         someFlowOfStrings.bindAttr("data-something")
     }
@@ -54,7 +54,7 @@ You can add dynamic classes by assign a `Flow` of Strings to the `className`-att
 
 In addition to this, you can build a map from you model data, that enables and disables single classes dynamically:
 ```kotlin
-html {
+render {
     div {
         classMap = toDoStore.data.map { mapOf(
             "completed" to it.completed, // a boolean-attribute in the data-model

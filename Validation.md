@@ -60,10 +60,10 @@ val store = object : RootStore<String>(""), Validation<String, ValMsg, String> {
 When you have a `Store` that implements `Validation` you can access your validation-results by calling `msgs()`. This gives you a `Flow` of the type you defined as your result-type. You can handle this like any other `Flow` of a `List`, for example by rendering your messages:
 
 ```kotlin
-html {
+render {
     ul {
         store.msgs().each().map {
-            html {
+            render {
                 li(it.severity.name.toLowerCase()) {
                     text(it.text)
                 }

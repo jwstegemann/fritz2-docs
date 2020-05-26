@@ -30,11 +30,11 @@ val switch = booleanSubStore.handle { model: Boolean ->
    !model
 }
 
-html {
+render {
     ...
         button {
             text("switch state")
-            switch <= clicks
+            clicks handledBy switch
         }
     ...
 }

@@ -31,7 +31,7 @@ Using simple `String`s by `StringRoute`:
 ```kotlin
 val router = router("welcome")
 
-html {
+render {
   section {
     router.routes.map { site ->
       when(site) {
@@ -49,7 +49,7 @@ Use a `Map` of parameters by `MapRoute`:
 ```kotlin
 val router = router(mapOf("page", "welcome"))
 
-html {
+render {
   section {
     router.select("page") {
       val (name, rest) = it
@@ -63,7 +63,7 @@ html {
   }
 }       
 ```
-A router wich uses a `MapRoute` offers an extra `select` method which extract the values for the given key (here `"page"`) and needs a function to map the value. Therefore it returns a `Pair` of the actual value and the complete `Map` to enable you to decide what to render.
+A router which uses a `MapRoute` offers an extra `select` method which extract the values for the given key (here `"page"`) and needs a function to map the value. Therefore it returns a `Pair` of the actual value and the complete `Map` to enable you to decide what to render.
 
 If you want to use your own special `Route` instead, you can do so by
 ```kotlin
@@ -79,7 +79,7 @@ class SetRoute(override val default: Set<String>) : Route<Set<String>> {
 
 val router = router(SetRoute(setOf("welcome")))
 
-html {
+render {
   section {
     router.routes.map { set ->
       TODO("Not yet implemented")
@@ -93,7 +93,7 @@ If you want to change your current route (i.e. when an event is fired) you can d
 ```
 button {
     text("Navigate to Page A")
-    router.navTo <= clicks.map { mapOf("page" to "pageA") }
+    clicks.map { mapOf("page" to "pageA") } handledBy router.navTo
 }
 ```
 Also you can set the url-hash on an initial page request, so this route is used.

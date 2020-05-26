@@ -43,12 +43,12 @@ val samplePost = apply {s : String ->
 By using `apply` you create just another handler that chains the asnyc remote call and the update-`Handler` in a way that does not block and schedules your update right when you processed the answer from your backend. You can use this `Handler` like any other to handle `Flow`s of actions:
 
 ```kotlin
-... html {
+... render {
     button {
         text("add programmer")
-        samplePost <= clicks.map {
+        clicks.map {
             "just a name" // wherever you get this from...
-        }
+        } handledBy samplePost
     }
 ...
 }

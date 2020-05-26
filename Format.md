@@ -49,7 +49,7 @@ input("form-control", id = birthday.id) {
     value = birthday.data
     type = const("date")
 
-    birthday.update <= changes.values()
+    changes.values() handledBy birthday.update
 }
 ```
 The resulting `FormatStore` is basically the same as the `SubStore` except that you 

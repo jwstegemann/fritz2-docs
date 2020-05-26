@@ -8,7 +8,7 @@ nav_order: 4
 It is very easy to create a lightweight reusable component with fritz2:
 
 ```kotlin
-val myComponent = html {
+val myComponent = render {
     p {
         text("This is the smallest valid stateless component")
     }
@@ -20,7 +20,7 @@ fritz2 does not force you to build your components a certain way. You can use ev
 A parametrized stateless component might look like this:
 
 ```kotlin
-fun myOtherComponent(p: Person) = html {
+fun myOtherComponent(p: Person) = render {
     p {
         text("Hello, my name is ${p.name}!")
     }
@@ -37,7 +37,7 @@ fun HtmlElements.myOtherComponent(p: Person) {
     }
 }
 
-val myComponent = html {
+val myComponent = render {
     div {
         myOtherComponent(p)
     }
