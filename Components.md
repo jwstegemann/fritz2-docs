@@ -44,19 +44,4 @@ val myComponent = render {
 }
 ```
 
-More complex components can be realized by using a class. This allows you to encapsulate state, use internal functions to structure your code, etc.
-
-```kotlin
-class MyThirdComponent(val p: Person) {
-    private fun HtmlElements.renderAddress(a: Address) {
-        ... // render street, city, etc.
-    }
-
-    fun HtmlElement.render {
-        ... // render name
-        p.addresses.forEach {renderAddress(it).bind()}
-    }
-}
-```
-
 Since stateless components alone are not too exciting, go on and read about fritz2 mechanism to handle state, the [Store](Store.html).
