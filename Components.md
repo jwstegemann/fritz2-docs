@@ -11,13 +11,14 @@ It is very easy to create a lightweight reusable component with fritz2:
 val myComponent = render {
     p {
         text("This is the smallest valid stateless component")
+        myStore.data.bind()
     }
 }
 ```
 
 fritz2 does not force you to build your components a certain way. You can use every single Kotlin-language-feature you like to do so.
 
-A parametrized stateless component might look like this:
+A parametrized component might look like this:
 
 ```kotlin
 fun myOtherComponent(p: Person) = render {
@@ -27,8 +28,17 @@ fun myOtherComponent(p: Person) = render {
 }
 ```
 
-This function can be called anywhere and gives you a static `Tag` you can use anywhere and mount to any target element using `mount` on it. To create a component that can be used inside
-other html-templates just give it the appropriate receiver:
+This function gives you a `Tag`. Use it for example to map the values of a `Flow` and bind it in another component's render-context:
+
+```kotlin
+render {
+    div {
+        myPersonStore.data.map(::myOtherComponent).bind()
+    }   
+}
+``` 
+
+To create a component that can be called inside render-contexts directly, just give it the appropriate receiver:
 
 ```kotlin
 fun HtmlElements.myOtherComponent(p: Person) {
