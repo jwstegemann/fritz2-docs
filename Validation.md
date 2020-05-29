@@ -5,9 +5,9 @@ nav_order: 9
 ---
 # Validation
 
-Accepting user-input it is of course a good idea to validate the data, before processing it any further.
+When accepting user-input, it is a nice idea to validate the data before processing it any further.
 
-To do validation in fritz2 you first have to implement the interface `Validator`. This interface takes three type-parameters:
+To do validation in fritz2, you first have to implement the interface `Validator`. This interface takes three type-parameters:
 * the type of data to validate
 * a type describing the validation-results (like a message, etc.)
 * a type for metadata you want to forward from your `Handler`s to your validation (or `Nothing` if you do not need this)
@@ -42,9 +42,9 @@ object EMailValidator: Validator<String, ValMsg, String>() {
     }
 }
 ```
-Of course you can structure and implement your concrete validation-rules however you can use everything Kotlin offers.
+You can structure and implement your concrete validation-rules with everything Kotlin offers.
 
-To use this `Validator`in your `Store` just implement the `Validation`-interface by defining a validator for the data-type of your `Store`:
+To use this `Validator`in your `Store`, simply implement the `Validation`-interface by defining a validator for the data-type of your `Store`:
 
 ```kotlin
 val store = object : RootStore<String>(""), Validation<String, ValMsg, String> {
@@ -57,7 +57,7 @@ val store = object : RootStore<String>(""), Validation<String, ValMsg, String> {
     }
 ```
 
-When you have a `Store` that implements `Validation` you can access your validation-results by calling `msgs()`. This gives you a `Flow` of the type you defined as your result-type. You can handle this like any other `Flow` of a `List`, for example by rendering your messages:
+When you have a `Store` that implements `Validation`, you can access your validation-results by calling `msgs()`. This gives you a `Flow` of the type you defined as your result-type. You can handle this like any other `Flow` of a `List`, for example by rendering your messages:
 
 ```kotlin
 render {
@@ -74,8 +74,7 @@ render {
 ```
 
 
-It is recommended to implement your validation-code in a multiplatform-project, so you can use it in browser and backend.
+It is recommended to implement your validation-code in a multiplatform-project so you can use it in both browser and backend.
+Have a look at a more complete example [here](https://examples.fritz2.dev/validation/build/distributions/index.html).
 
-You can have a look at a more complete example [here](https://examples.fritz2.dev/validation/build/distributions/index.html).
-
-By the way: fritz2 supports you connecting to your (http)-backend from the browser with [Remote Calls](RemoteCalls.html).
+By the way: fritz2 supports connecting to your (http)-backend from the browser with [Remote Calls](RemoteCalls.html).
