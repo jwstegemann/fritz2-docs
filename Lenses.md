@@ -6,15 +6,15 @@ nav_order: 8
 ---
 # Lenses
 
-A `Lens` is basically a way to describe the relation between an outer entity and and inner entity in a structure.
-It focuses the inner entity from the viewpoint of the outer entity - that is where the name is derived from.
+A `Lens` is basically a way to describe the relation between an outer and inner entity in a structure.
+It focuses on the inner entity from the viewpoint of the outer entity, which is how it got its name.
 Lenses are especially useful when using immutable data-types like fritz2 does.
-For this reason a `Lens` needs to know
+A `Lens` needs to handle the following: 
 
-  * how to get the value of the inner entity from a given instance of the outer entity
-  * how to create a new instance of the outer entity (remember: immutable!) as a copy of a given one with just the inner entity changed to a new given value.
+  * Getting the value of the inner entity from a given instance of the outer entity
+  * Creating a new instance of the outer entity (immutable!) as a copy of a given one with a different value only for the inner entity
 
-In fritz2 a `Lens` is defined by the following interface:
+In fritz2, a `Lens` is defined by the following interface:
 ```kotlin
 interface Lens<P,T> {
     fun get(parent: P): T
@@ -22,30 +22,30 @@ interface Lens<P,T> {
     fun apply(parent: P, mapper: (T) -> T): P = //is already implemented
 }
 ```
-`apply` allows you to change the actual value of the inner entity within one atomic action.
+`apply` allows you to change the current value of the inner entity within one atomic action.
 
-This interface and some convenience-methods are implemented by a separate project called `fritz2-optics` that you inherit a a transitive dependency by using `fritz2-core`.
+The interface and some convenience-methods are implemented by a separate project called `fritz2-optics` that are inherited as a transitive dependency by using `fritz2-core`.
 
-Of cource you can easily implement this interface by yourself, by just implementing `get()` and `set()`. fritz2 also offers a method called `buildLens()`, that makes it a little less verbose to do so:
+You can easily use this interface by just implementing `get()` and `set()`. fritz2 also offers the method `buildLens()` for a short-and-sweet-experience:
 
 ```kotlin
-val innerLens = buildLens("inner", { it.inner },{ parent, value -> parent.copy(inner = value)})
+val innerLens = buildLens("inner", { it.inner }, { parent, value -> parent.copy(inner = value) })
 ```
 
-No magic in here. The first parameter allows you to give the `Lens` an id. When you use `Lens`es with `SubStore`s, this id will be used to generate a valid html-id representing the path through your model you can use to identify your elements semantically (for automated ui-tests for example).
+No magic there. The first parameter sets an id for the `Lens`. When using `Lens`es with `SubStore`s, the id will be used to generate a valid html-id representing the path through your model. This can be used to identify your elements semantically (for automated ui-tests for example).
 
-If you have deep nested structures or a lot of them it soon gets tiresome to do this manually, though. Therefore fritz2 offers an annotation you can add to your data-class:
+If you have deep nested structures or a lot of them, you may want to automate this behavior. fritz2 offers an annotation you can add to your data-class:
 ```kotlin
 @Lenses
 data class Outer(val inner: Inner, val value: String)
 ```
-Using a gradle-plugin fritz2 builds a `Lenses`-object per package from these annotations that contains all the `Lenses` you need. They are named exactly like the entities and properties, so it is trivial to use:
+Using a Gradle-plugin, fritz2 builds a `Lenses`-object per package from these annotations which contains all the `Lenses` you need. They are named exactly like the entities and properties, so it's easy to use:
 
 ```kotlin
 val innerLens = Lenses.Outer.inner
 ```
 
-To use the gradle-plugin from `fritz-optics`, you have to add the following to your gradle-build:
+To use the Gradle-plugin from `fritz-optics`, you have to add the following lines to your Gradle-build:
 ```gradle
 buildscript {
     repositories {
@@ -60,6 +60,6 @@ buildscript {
 apply(plugin = "io.fritz2.optics")
 ```
 
-When you compile your code containing `@Lenses`, a file named `GeneratedOptics.kt` will be created in your package, that contains the definition of the `Lenses`-object.
+When you compile your code containing `@Lenses`, a file named `GeneratedOptics.kt` will be created in your package which contains the definition of the `Lenses`-object.
 
-Since your other code will depend on these generated files we recommend implementing your model-classes in a separated sub-project. Have a look at our [`nestedmodel`-example](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements), how to do so. This might be a good idea anyway, since you will have to define a multiplatform-project, to be able to share your model and validation code between browser and backend.  
+Since your other code will depend on these generated files, we recommend implementing your model-classes in a separated sub-project. Have a look at our [`nestedmodel`-example](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) to find out how to do so. This will also help you define a multiplatform-project to be able to share your model and validation code between browser and backend.  

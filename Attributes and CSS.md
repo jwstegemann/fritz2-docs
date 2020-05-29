@@ -5,9 +5,9 @@ nav_order: 3
 ---
 # Attributes and CSS
 
-To create rich HTML-interfaces you have to use many different attributes. In fritz2 there are some different ways to fit every use-case.
+To create rich HTML-interfaces you will want to use a variety of attributes. In fritz2 there are several ways to easily achieve this depending on your use case.
 
-On each `Tag` you can set static values for `class` and `id` by just using the optional parameters of it's factory function:
+You can set static values for each `Tag` for `class` and `id` by using the optional parameters of its factory function:
 ```kotlin
 render {
     div("some-static-css-class") {
@@ -16,9 +16,9 @@ render {
 }
 ```
 
-You can set all the other attributes inside the `Tag`'s content by just assigning a `Flow` of the according type to it. The attribute's value will be updated in the DOM whenever a new value appears on the `Flow`. If the value is constant, just wrap it with the `const()`-function:
+You can set all other attributes inside the `Tag`'s content by assigning a `Flow` of the according type to it. The attribute's value will be updated in the DOM whenever a new value appears on the `Flow`. Wrap a constant with the `const()`-function:
 ```kotlin
-val flowOfInts = ... //i.e. get it from some Store
+val flowOfInts = ... //i.e. get it from some store
 
 render {
     input {
@@ -28,7 +28,7 @@ render {
 }
 ```
 
-If you want to set a static value for a custom (data-) attribute, use the `attr()`-function:
+To set a static value for a custom (data-) attribute, use the `attr()`-function:
 ```kotlin
 render {
     div {
@@ -37,7 +37,7 @@ render {
 }
 ```
 
-Of course you can also bind dynamic values (from a `Flow`) to a custom attribute:
+You can also bind dynamic values (from a `Flow`) to a custom attribute:
 ```kotlin
 val someFlowOfStrings = ... 
 
@@ -48,11 +48,11 @@ render {
 }
 ```
 
-A very special attribute is the `class` of a `Tag`. As seen above, you can set a static base-class just by the parameter of the factory-function of the `Tag`.
+The `class` of a `Tag` is a special attribute. As seen above, you can set a static base-class using the parameter of the `Tag`'s factory-function.
 
-You can add dynamic classes by assign a `Flow` of Strings to the `className`-attribute as with any other attribute. The same works for `List<String>`s with the `classList`-attribute.
+You can add dynamic classes by assigning a `Flow` of strings to the `className`-attribute like with any other attribute. The same works for `List<String>`s with the `classList`-attribute.
 
-In addition to this, you can build a map from you model data, that enables and disables single classes dynamically:
+Additionally, you can build a map from your model data that enables and disables single classes dynamically:
 ```kotlin
 render {
     div {
@@ -63,4 +63,4 @@ render {
     }
 }
 ```
-Now that you can build what you want in your templates, lets make some [Components](Components.html) from it.
+Now that you can build what you want in your templates, let's create some [Components](Components.html) with it.
