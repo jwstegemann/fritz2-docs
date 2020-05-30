@@ -5,7 +5,7 @@ nav_order: 12
 ---
 # Use and build WebComponents
 
-With fritz2 you can easily use [WebComponents](https://webcomponents.org) in any html-context:
+With fritz2, you can easily use [WebComponents](https://webcomponents.org) in any html-context:
 
 ```kotlin
 render {
@@ -20,13 +20,13 @@ render {
 }
 ```
 
-Before you can use a custom element, you have to add the component to your site´s scripts.
-You can either add a script link pointing to the component, that is hosted somewhere you can access it:
+Before you can use a custom element, you have to add the component to your site's scripts.
+One way is adding a script link pointing to the component which is hosted somewhere you can access it:
 ```html
 <script type="module" src="https://unpkg.com/@mat3e-ux/stars"></script>
 ```
 
-If the component you want to use is published on [npm](https://www.npmjs.com/) you can add it as a dependency in your Gradle-build:
+If the component you want to use is published on [npm](https://www.npmjs.com/), you can add it as a dependency in your Gradle-build:
 
 ```gradle
 dependencies {
@@ -36,7 +36,7 @@ dependencies {
 }
 ```
 
-... and import in in your Kotlin-Code:
+... and import it in your Kotlin-Code:
 
 ```kotlin
 @JsModule("@mat3e-ux/stars")
@@ -53,7 +53,7 @@ fun main(args: Array<String>) {
 }
 ```
 
-Of course we cannot provide typesafe attributes for custom elements, but you can implement a `Tag` and provide an extension function for `HtmlElements`:
+We cannot provide typesafe attributes for custom elements, but you can implement a `Tag` and provide an extension function for `HtmlElements`:
 
 ```kotlin
 class M3Stars() : Tag<HTMLElement>("m3-stars"),
@@ -68,9 +68,7 @@ fun m3Stars(content: M3Stars.() -> Unit): M3Stars
 
 ## Build a WebComponent
 
-To build a WebComponent with fritz2, you need two steps:
-
-First implement your WebComponent-class: 
+To build a WebComponent with fritz2, two steps are neccessary. First, implement your WebComponent-class: 
 
 ```kotlin
 class MyComponent : WebComponent<HTMLParagraphElement>() {
@@ -88,7 +86,7 @@ class MyComponent : WebComponent<HTMLParagraphElement>() {
 }
 ```
 
-Next you have to register you component:
+Next, register your component:
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -113,7 +111,7 @@ render {
 }
 ```
 
-To react to the lifecyle of your component you can override the according methods from the specification.
+To react to the lifecyle of your component, you can override the according methods from the specification.
 
 Packaging (i.e. as an npm-package) and publishing is out of scope of this documentation.
 

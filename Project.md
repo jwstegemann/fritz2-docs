@@ -5,10 +5,11 @@ nav_order: 2
 ---
 # Project Setup
 
-To use fritz2 you have to set up a Kotlin/JS-project. To do so, you can either
+To use fritz2, you have to set up a Kotlin/JS-project. To do so you can either
+
 * clone our template-project from [github](https://github.com/jwstegemann/fritz2-template)
 * clone the whole fritz2-repo and use the gettingstarted sub-project under examples
-* have a look a the [official documentation](https://kotlinlang.org/docs/tutorials/javascript/getting-started-gradle/getting-started-with-gradle.html) and include the following dependency
+* have a look a the [official documentation](https://kotlinlang.org/docs/tutorials/javascript/getting-started-gradle/getting-started-with-gradle.html) and include the following dependency:
 
 ```gradle
 repositories {
@@ -20,7 +21,7 @@ dependencies {
 }
 ```
 
-We recommend to organize your source code like this
+We recommend organizing your source code like this:
 
 * \<project-root\>
   * src
@@ -31,7 +32,7 @@ We recommend to organize your source code like this
       * resources
         * index.html
 
-The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build and to mark an element of your choice with an id, you can later use to mount your fritz2-components to it:
+The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build. Also mark an element of your choice with an id to later mount your fritz2-components to:
 
 ```html
 <html>
@@ -42,7 +43,7 @@ The `index.html`is just a normal web-page. Be sure to include the resulting scri
 </html>
 ```
 
-`app.kt` is the starting point of your fritz2 app. So make sure it has a `main`-function. Inside `main` you might want to create some content by creating a `render`-context, adding [some `Tag`s](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) and mount it to the DOM of your `index.html`:
+`app.kt` is the starting point of your fritz2 app, so make sure it has a `main`-function. Inside `main`, you might want to create some content by creating a `render`-context, adding [some `Tag`s](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) and mount it to the DOM of your `index.html`:
 
 ```kotlin
 package <your package>
@@ -61,6 +62,6 @@ fun main() {
 }
 ```
 
-Run the project by calling `./gradlew run` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser, when you change your code.
+Run the project by calling `./gradlew run` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser when you change your code.
 
-Voilà, you are done. Maybe you now want to create some more versatile [HTML](Attributes%20and%20CSS.html)?  
+And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  

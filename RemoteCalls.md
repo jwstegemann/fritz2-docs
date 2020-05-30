@@ -5,27 +5,27 @@ nav_order: 10
 ---
 # Remote Calls
 
-Using the default fetch-api from the browser can get quite tiresome. For this reason fritz2 offers a small wrapper around it:
+Using the browser's default fetch-api can get quite tiresome, which is why fritz2 offers a small wrapper for it:
 
-At first you create a `RequestTemplate` for your backend:
+First you create a `RequestTemplate` for your backend:
 ```kotlin
 val sampleApi = remote("https://reqresss.in/api/users")
             .acceptJson()
             .header("Content-Type","application/json")
 ```
-The template offers you some [convenience-methods](https://jwstegemann.github.io/fritz2/dokka/fritz2/io.fritz2.remote/-request-template/) to configure your API-calls, like the `acceptJson()` above, that simply adds the correct header to each request that will be sent using the template.
+The template offers some [convenience-methods](https://jwstegemann.github.io/fritz2/dokka/fritz2/io.fritz2.remote/-request-template/) to configure your API-calls, like the `acceptJson()` above which simply adds the correct header to each request sent using the template.
 
-Sending a request is quite straightforward:
+Sending a request is pretty straightforward:
 ```kotlin
             sampleApi.get(s)
                 .onErrorLog()
                 .body()
 ```
-`body()` return you the body of the response as a `String` (more is yet to come). `onErrorLog` just logs exceptions to the console. Of course you can/should implement your own exception-handling. 
+`body()` returns the body of the response as a `String` (more is yet to come). `onErrorLog` logs exceptions to the console. Of course, you can and should implement your own exception-handling. 
 
-The same works for posts (and other methods), just give it another parameter for the body to send.
+The same works for posts and other methods, just use different parameters for the body to send.
 
-Since remote-calls are asynchronous by nature and you do not want to block in your `Handler`s (where you should implement your logic), you have to somehow inject the call, before the `Handler` is called:
+Since remote-calls are asynchronous by nature, and you do not want to block in your `Handler`s (where you should implement your logic), you have to somehow inject the call before the `Handler` is called:
 
 ```kotlin
 val samplePost = apply {s : String ->
@@ -40,7 +40,7 @@ val samplePost = apply {s : String ->
         } andThen update
 ``` 
 
-By using `apply` you create just another handler that chains the asnyc remote call and the update-`Handler` in a way that does not block and schedules your update right when you processed the answer from your backend. You can use this `Handler` like any other to handle `Flow`s of actions:
+By using `apply`, you create another handler which chains the asnyc remote call and the update-`Handler` in a way that doesn't block. It schedules your update right after you processed the answer from your backend. You can use this `Handler` like any other to handle `Flow`s of actions:
 
 ```kotlin
 ... render {
@@ -53,9 +53,9 @@ By using `apply` you create just another handler that chains the asnyc remote ca
 ...
 }
 ```
-Of course you can use `apply` for any other async process, too, or even just to structure your code. 
+`apply` can be used for any other async process, or even just to structure your code, too. 
 
-In the real world you won't want to create the JSON manually, so use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
+In the real world, instead of creating the JSON manually, better use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
 
 You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts:
 

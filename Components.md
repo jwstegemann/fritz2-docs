@@ -5,7 +5,7 @@ nav_order: 4
 ---
 # Components
 
-It is very easy to create a lightweight reusable component with fritz2:
+It's very easy to create a lightweight reusable component with fritz2:
 
 ```kotlin
 val myComponent = render {
@@ -16,9 +16,8 @@ val myComponent = render {
 }
 ```
 
-fritz2 does not force you to build your components a certain way. You can use every single Kotlin-language-feature you like to do so.
-
-A parametrized component might look like this:
+fritz2 doesn't force you to build your components a certain way - you can use every single Kotlin-language-feature you like.
+A parameterized component could look like this:
 
 ```kotlin
 fun myOtherComponent(p: Person) = render {
@@ -28,7 +27,7 @@ fun myOtherComponent(p: Person) = render {
 }
 ```
 
-This function gives you a `Tag`. Use it for example to map the values of a `Flow` and bind it in another component's render-context:
+This function gives you a `Tag` which has multiple purposes, such as mapping the values of a `Flow` and binding it in another component's render-context:
 
 ```kotlin
 render {
@@ -38,7 +37,7 @@ render {
 }
 ``` 
 
-To create a component that can be called inside render-contexts directly, just give it the appropriate receiver:
+To create a component which can be called inside render-contexts directly, just specify the appropriate receiver:
 
 ```kotlin
 fun HtmlElements.myOtherComponent(p: Person) {
@@ -54,4 +53,4 @@ val myComponent = render {
 }
 ```
 
-Since stateless components alone are not too exciting, go on and read about fritz2 mechanism to handle state, the [Store](Store.html).
+Since stateless components alone are not that exciting, go on and read about the fritz2 mechanism to handle state: the [Store](Store.html).
