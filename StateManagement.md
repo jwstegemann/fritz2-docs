@@ -41,8 +41,8 @@ val myComponent = render {
 ```
 
 `changes` in this example is a flow of events created by listening to the `Change`-Event of the underlying input-element. Calling `values()` on it extracts the current value from the input.
-Whenever such an event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the `Store` to update the model. Event-flows are available for [all HTML5-events](https://api.fritz2.dev/fritz2/io.fritz2.dom/-with-events/).
-There are some more [convenience functions](https://api.fritz2.dev/fritz2/io.fritz2.dom/) to help you to extract data from an event or control event-processing.
+Whenever such an event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the `Store` to update the model. Event-flows are available for [all HTML5-events](https://api.fritz2.dev/core/dev.fritz2.dom/-with-events/).
+There are some more [convenience functions](https://api.fritz2.dev/core/dev.fritz2.dom/) to help you to extract data from an event or control event-processing.
 
 You can map the elements of the `Flow` to a specific action-type before connecting it to the `Handler`. This way you can also add information from the rendering-context to the action. 
 You may also use any other source for a `Flow` like recurring timer events or even external events like web-sockets, local storage, etc.

@@ -5,19 +5,21 @@ nav_order: 2
 ---
 # Project Setup
 
-To use fritz2, you have to set up a Kotlin/JS-project. To do so you can either
+To use fritz2, you have to set up a Kotlin multiplatform-project. To do so you can either
 
 * clone our template-project from [github](https://github.com/jwstegemann/fritz2-template)
-* clone the whole fritz2-repo and use the gettingstarted sub-project under examples
-* have a look a the [official documentation](https://kotlinlang.org/docs/tutorials/javascript/getting-started-gradle/getting-started-with-gradle.html) and include the following dependency:
+* clone the [fritz2-examples](https://github.com/jamowei/fritz2-examples) and copy from one of the sub-projects
+* have a look a the [official documentation](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-a-multiplatform-project) and include the following dependency:
 
 ```gradle
 repositories {
     jcenter()
 }
 
-dependencies {
-    implementation("io.fritz2:fritz2-core-js:0.4")
+val commonMain by getting {
+    dependencies {
+        implementation("dev.fritz2:core:0.5")
+    }
 }
 ```
 
@@ -25,7 +27,10 @@ We recommend organizing your source code like this:
 
 * \<project-root\>
   * src
-    * main
+    * commonMain
+      * kotlin
+        * model.kt (to use the model in client and server)
+    * jsMain
       * kotlin
         * \<your base package\>
           * app.kt (or choose any other name)
@@ -43,13 +48,13 @@ The `index.html`is just a normal web-page. Be sure to include the resulting scri
 </html>
 ```
 
-`app.kt` is the starting point of your fritz2 app, so make sure it has a `main`-function. Inside `main`, you might want to create some content by creating a `render`-context, adding [some `Tag`s](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) and mount it to the DOM of your `index.html`:
+`app.kt` is the starting point of your fritz2 app, so make sure it has a `main`-function. Inside `main`, you might want to create some content by creating a `render`-context, adding [some `Tag`s](https://api.fritz2.dev/core/dev.fritz2.dom.html/-html-elements) and mount it to the DOM of your `index.html`:
 
 ```kotlin
 package <your package>
 
-import io.fritz2.dom.html.html
-import io.fritz2.dom.mount
+import dev.fritz2.dom.html.html
+import dev.fritz2.dom.mount
 
 fun main() {
     render {
@@ -62,6 +67,6 @@ fun main() {
 }
 ```
 
-Run the project by calling `./gradlew run` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser when you change your code.
+Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser when you change your code.
 
 And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  

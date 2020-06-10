@@ -24,8 +24,6 @@ interface Lens<P,T> {
 ```
 `apply` allows you to change the current value of the inner entity within one atomic action.
 
-The interface and some convenience-methods are implemented by a separate project called `fritz2-optics` that are inherited as a transitive dependency by using `fritz2-core`.
-
 You can easily use this interface by just implementing `get()` and `set()`. fritz2 also offers the method `buildLens()` for a short-and-sweet-experience:
 
 ```kotlin
@@ -39,27 +37,14 @@ If you have deep nested structures or a lot of them, you may want to automate th
 @Lenses
 data class Outer(val inner: Inner, val value: String)
 ```
-Using a Gradle-plugin, fritz2 builds a `Lenses`-object per package from these annotations which contains all the `Lenses` you need. They are named exactly like the entities and properties, so it's easy to use:
+Using an annotation-processor, fritz2 builds a `Lenses`-object per package from these annotations which contains all the `Lenses` you need. They are named exactly like the entities and properties, so it's easy to use:
 
 ```kotlin
 val innerLens = Lenses.Outer.inner
 ```
 
-To use the Gradle-plugin from `fritz-optics`, you have to add the following lines to your Gradle-build:
-```gradle
-buildscript {
-    repositories {
-        jcenter()
-    }
+You can see it in action at our [`nestedmodel`-example](https://examples.fritz2.dev/nestedmodel/build/distributions/index.html).
 
-    dependencies {
-        classpath("io.fritz2.optics:plugin:0.1")
-    }
-}
+To make this work your annotated classes have to be in your `commonMain`-SourceSet. If you need to use the generated objects in your `commonMain` (to implement a `Validator` you can use on client and server i.e.), you have to set up a subproject for your model. Have a look at the [`validation`-example](https://examples.fritz2.dev/validation/build/distributions/index.html) to see how to set it up.
 
-apply(plugin = "io.fritz2.optics")
-```
-
-When you compile your code containing `@Lenses`, a file named `GeneratedOptics.kt` will be created in your package which contains the definition of the `Lenses`-object.
-
-Since your other code will depend on these generated files, we recommend implementing your model-classes in a separated sub-project. Have a look at our [`nestedmodel`-example](https://api.fritz2.dev/fritz2/io.fritz2.dom.html/-html-elements) to find out how to do so. This will also help you define a multiplatform-project to be able to share your model and validation code between browser and backend.  
+This will also help you define a multiplatform-project to be able to share your model and validation code between browser and backend.  
