@@ -13,7 +13,7 @@ val sampleApi = remote("https://reqresss.in/api/users")
             .acceptJson()
             .header("Content-Type","application/json")
 ```
-The template offers some [convenience-methods](https://jwstegemann.github.io/fritz2/dokka/fritz2/io.fritz2.remote/-request-template/) to configure your API-calls, like the `acceptJson()` above which simply adds the correct header to each request sent using the template.
+The template offers some [convenience-methods](https://api.fritz2.dev/core/dev.fritz2.remote/-request-template/) to configure your API-calls, like the `acceptJson()` above which simply adds the correct header to each request sent using the template.
 
 Sending a request is pretty straightforward:
 ```kotlin
