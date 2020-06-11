@@ -9,16 +9,37 @@ To use fritz2, you have to set up a Kotlin multiplatform-project. To do so you c
 
 * clone our template-project from [github](https://github.com/jwstegemann/fritz2-template)
 * clone the [fritz2-examples](https://github.com/jamowei/fritz2-examples) and copy from one of the sub-projects
-* have a look a the [official documentation](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-a-multiplatform-project) and include the following dependency:
+* have a look a the [official documentation](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-a-multiplatform-project) and include the following plugin:
 
 ```gradle
+plugins {
+    id("dev.fritz2.fritz2-gradle") version "0.5"
+}
+
 repositories {
     jcenter()
 }
 
-val commonMain by getting {
-    dependencies {
-        implementation("dev.fritz2:core:0.5")
+kotlin {
+    kotlin {
+        jvm()
+        js().browser()
+
+        sourceSets {
+            val commonMain by getting {
+                dependencies {
+                    implementation(kotlin("stdlib"))
+                }
+            }
+            val jvmMain by getting {
+                dependencies {
+                }
+            }
+            val jsMain by getting {
+                dependencies {
+                }
+            }
+        }
     }
 }
 ```
