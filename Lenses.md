@@ -45,6 +45,6 @@ val innerLens = Lenses.Outer.inner
 
 You can see it in action at our [`nestedmodel`-example](https://examples.fritz2.dev/nestedmodel/build/distributions/index.html).
 
-To make this work your annotated classes have to be in your `commonMain`-SourceSet. If you need to use the generated objects in your `commonMain` (to implement a `Validator` you can use on client and server i.e.), you have to set up a subproject for your model. Have a look at the [`validation`-example](https://examples.fritz2.dev/validation/build/distributions/index.html) to see how to set it up.
+To make this work, your annotated classes have to be in your `commonMain`-SourceSet. If you need to use the generated objects in your `commonMain` (i.e. to implement a `Validator` you can use on client and server), you have to set up a subproject for your model. Have a look at the [`validation`-example](https://examples.fritz2.dev/validation/build/distributions/index.html) on how to set it up.
 
-This will also help you define a multiplatform-project to be able to share your model and validation code between browser and backend.  
+This will also help you define a multiplatform-project for sharing your model and validation code between browser and backend.  

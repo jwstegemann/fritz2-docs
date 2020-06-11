@@ -75,7 +75,7 @@ form {
 ```
 In this case, only the attribute value will change when the model in your store changes. fritz2 offers [pre-defined properties (at each Tag)](https://api.fritz2.dev/core/dev.fritz2.dom.html/) for every HTML5-attribute.
 
-If you do not bind your store's content anywhere but need it's handler's code to be executed whenever an action is available, you have explicitly `watch()` it:
+If your store's content is not bound anywhere but need its handler's code to be executed whenever an action is available, you have explicitly `watch()` it:
 
 ```kotlin
     val store = object : RootStore<Whatever> {
