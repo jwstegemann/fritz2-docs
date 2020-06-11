@@ -10,7 +10,7 @@ aux_links:
   "Examples":
     - "//www.fritz2.dev/examples.html"
   "Api":
-    - "//api.fritz2.dev/fritz2"
+    - "//api.fritz2.dev/core"
   "Github":
   - "//www.github.com/jwstegemann/fritz2"
 
