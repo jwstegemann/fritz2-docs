@@ -53,4 +53,34 @@ val myComponent = render {
 }
 ```
 
+To refactor your html code into different functions you can do the following:
+
+```kotlin
+// needs to return a html element for using in render{} method directly
+fun HtmlElements.container(content: HtmlElements.() -> Unit): Div {
+    return div("container") {
+        content()
+    }
+}
+
+// don't need to return a html element because its used 
+// in HtmlElements context only
+fun HtmlElements.row(content: HtmlElements.() -> Unit) {
+    div("row") {
+        content()
+    }
+}
+
+
+val mySite = render {
+    container {
+        row {
+            p {
+                text("Hello World!")
+            }
+        }
+    }
+}
+```
+
 Since stateless components alone are not that exciting, go on and read about the fritz2 mechanism to handle state: the [Store](Store.html).
