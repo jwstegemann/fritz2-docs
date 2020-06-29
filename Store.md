@@ -11,7 +11,9 @@ In fritz2, `Store`s are used to handle your app's state. It heavily depends on K
 Let's assume the state of your app is a simple `String`. Creating a `Store` to manage that state is quite easy:
 
 ```kotlin
-val s = RootStore<String>("initial value")
+val s = object: RootStore<String>("initial value") {
+   // space for handlers
+}
 ```
 
 Every `Store` offers a `Flow` named `data` which can be bound as part of your html:
@@ -19,8 +21,7 @@ Every `Store` offers a `Flow` named `data` which can be bound as part of your ht
 ```kotlin
 render {
     p {
-        text("actual state = ")
-        s.data.bind()
+        s.data.map { "current state = $it" }.bind()
     }
 }
 ```
@@ -32,12 +33,28 @@ You can of course use every intermediate action like `map`,`filter`, etc., on th
 ```kotlin
 render {
     p {
-        text("you have entered ")
-        s.data.map { it.length }.bind()
-        text(" characters so far.")
+        s.data.map { "you have entered ${it.length} characters so far." }.bind()
     }
 }
 ```
+
+To combine data from two or more stores you can use the following `flatMapConcat` -> `map` pattern:
+```kotlin
+val firstName = object: RootStore<String>("Foo") {}
+val lastName = object: RootStore<String>("Bar") {}
+
+render {
+    p {
+        firstName.data.flatMapConcat { firstName ->
+            lastName.data.map { lastName ->
+                "Your full name is: $firstName $lastName"
+            }
+        }.bind()
+    }
+}.mount("target")
+```
+Of curse, you can also use a `RootStore<T>` with a complex model which contains all data that you need in one place.
+Therefore, take a look in [Nested Structures](NestedStructures.html).
 
 Knowing this, you can easily guess how to derive a reactive component from your state:
 
@@ -60,9 +77,9 @@ When you want to declare your component inside another function, or you want to 
 
 ```kotlin
 fun HtmlElements.uppercaseWithPrefix(prefix: String) =
-        p {
-            s.data.map { prefix + it.toUpperCase() }.bind()
-        }
+    p {
+        s.data.map { prefix + it.toUpperCase() }.bind()
+    }
 ```
 
 Doing so is called _one-way-databinding_.
