@@ -4,49 +4,45 @@ title: Flows
 parent: State Management
 nav_order: 6
 ---
-# Stores verbinden
+# Connection stores to each other
 
-In größeren real-world Anwendungen, die viele verschiedene `Stores` enthalten können, ist es unverzichtbar,
-dass diese Stores miteinander kommunizieren können.
+Most real-world applications contain multiple stores which need to be linked to properly react to model changes.
 
-Für diesen Fall bietet fritz2 den `EmittingHandler` an, welcher ein spezieller `Handler` ist,
-mit dem man nach außenhin Informationen offern kann.
+To make your stores interconnect, fritz2 offers the `EmittingHandler`, a type of handler that doesn't just take data
+ as an argument but also emits (offers) data. The offered data can then be picked up and handled by other stores.  
 
-Die Erzeugung dieses `Handler`s erfolgt mit Hilfe der `handleAndOffer` Funktion analog zur `handle` Funktion,
- was das folgende Beispiel zeigt:
+Create an emitting handler by calling the handleAndOffer function just like the regular handle function, but add the 
+offered/emitted data type to the type brackets: 
 
 ```kotlin
-val dataStore = object : RootStore<String>("start") {
-    val offerLength = handleAndOffer<String, Int> { model, action: String ->
-        console.log("new data: $action")
-        offer(action.length) // this what I want to offer
-        model // don`t change the model
+val stringStore = object : RootStore<String>("I want to count the characters in this String.") {
+    val offerLength = handleAndOffer<String, Int> { model, input: String -> // <String, Int>: accept String, offer Int
+        console.log("new data: $input")
+        offer(input.length) // emit length of the input String
+        model // return unchanged model
     }
 }
 ```
-Der hier dargestellte `EmittingHandler` `offerLength` zählt die Länge des übergebenen Strings `action` und 
-offeriert sie nach der Ausgabe auf der Console. Nun kann ein `Handler` aus einem anderen `Store` 
-diesen Wert nehmen und verarbeiten. Dazu müssen diese beiden `Handler` aber noch verbunden werden.
-Das Verbinden geschieht durch den Aufruf der `handledBy` Funktion, wie das folgende Beispiel zeigt:
-
+This `EmittingHandler` named `offerLength` offers the length of the input String after printing the String to the
+ console. Another store can be setup to handle this Int after connection the handlers. To do this, call the handledBy
+  function: 
+ 
 ```kotlin
-val dataStore = ... //see above
+val stringStore = ... //see above
 
 val lengthStore = object : RootStore<Int>(0) {
-    val handleLength: SimpleHandler<Int> = handle<Int> { model, action: Int ->
-       console.log("offered length is: $action")
-       action // setting new offered length
+    val handleLength = handle<Int> { model, length: Int -> // model is not used and could be replaced by _
+       console.log("I picked up this Int: $length")
+       length // update length in this Store
     }
 }
 
 // don't forget to connect the handlers
-dataStore.offerLength handledBy lengthStore.handleLength
+stringStore.offerLength handledBy lengthStore.handleLength
 ```
-Nun sind die beiden `Handler` `dataStore.offerLength` und `lengthStore.handleLength` miteinander verbunden, 
-sodass sich immer wenn `dataStore.offerLength` aufgerufen wird ein neuer Wert in den `lengthStore` geschrieben wird.
-Der Aufruf des `dataStore.offerLength` handlers kann z.B. durch ein `changes.value() handledBy dataStore.offerLength`
-in einem `input {}` erfolgen.
+After connecting these two stores via their handlers, changes to the String in stringStore will also update the Int
+ in lengthStore. To call the `dataStore.offerLength` handler, you could use an input element to create a new String
+  and handle it with `changes.value() handledBy stringStore.offerLength`, which will then also update the lengthStore.
 
-Ein Beispiel das dieses Konzept in der Praxis zeigt, ist das [validation example](https://examples.fritz2.dev/validation/build/distributions/index.html).
-Dort werden nur `Person`s aus dem einem `Store` dem anderen `Store` geschrieben, wenn diese auch valide sind.
-Die Verlinkung der beiden `Handler` erfolgt dabei mit dem Aufruf `personStore.save handledBy listStore.add`.
+Our [validation example](https://examples.fritz2.dev/validation/build/distributions/index.html) uses linked stores to
+ validate a `Person` before adding it to a list of `Person`s.
