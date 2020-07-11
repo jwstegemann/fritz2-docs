@@ -105,4 +105,22 @@ If your store's content is not bound anywhere but need its handler's code to be 
     store.data.watch()
 ```
 
+You can start another flow independently using `Flow.launchIn` method:
+
+```kotlin
+    val addressStore = object : RootStore<String>("Loading...") {
+        val addresses = remote("/addresses")
+
+        val loadAddresses = apply<Unit, String> {
+            addresses.get().onErrorLog().body()
+        } andThen update
+    }
+    GlobalScope.launch {
+        val initial = flowOf<Unit>()
+                          .onCompletion { println("Done")}
+        initial handledBy addressStore.loadAddresses
+        initial.launchIn(this)
+    }
+```
+
 But how can you change the model-data in a store? Let's have a look at [State Management](StateManagement.html).
