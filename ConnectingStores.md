@@ -15,10 +15,10 @@ Create an emitting handler by calling the handleAndOffer function just like the 
 offered/emitted data type to the type brackets: 
 
 ```kotlin
-val stringStore = object : RootStore<String>("I want to count the characters in this String.") {
-    val offerLength = handleAndOffer<String, Int> { model, input: String -> // <String, Int>: accept String, offer Int
-        console.log("new data: $input")
-        offer(input.length) // emit length of the input String
+val dataStore = object : RootStore<String>("I want to count the characters in this String.") {
+    val offerLength = handleAndOffer<String, Int> { model, action: String -> // <String, Int>: accept String, offer Int
+        console.log("new data: $action")
+        offer(action.length) // emit length of the input String
         model // return unchanged model
     }
 }
@@ -28,21 +28,21 @@ This `EmittingHandler` named `offerLength` offers the length of the input String
   function: 
  
 ```kotlin
-val stringStore = ... //see above
+val dataStore = ... //see above
 
 val lengthStore = object : RootStore<Int>(0) {
-    val handleLength = handle<Int> { model, length: Int -> // model is not used and could be replaced by _
+    val handleLength = handle<Int> { _, length: Int ->
        console.log("I picked up this Int: $length")
        length // update length in this Store
     }
 }
 
 // don't forget to connect the handlers
-stringStore.offerLength handledBy lengthStore.handleLength
+dataStore.offerLength handledBy lengthStore.handleLength
 ```
 After connecting these two stores via their handlers, changes to the String in stringStore will also update the Int
  in lengthStore. To call the `dataStore.offerLength` handler, you could use an input element to create a new String
-  and handle it with `changes.value() handledBy stringStore.offerLength`, which will then also update the lengthStore.
+  and handle it with `changes.value() handledBy dataStore.offerLength`, which will then also update the `lengthStore`.
 
 Our [validation example](https://examples.fritz2.dev/validation/build/distributions/index.html) uses linked stores to
  validate a `Person` before adding it to a list of `Person`s.
