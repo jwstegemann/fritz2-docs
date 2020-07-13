@@ -48,4 +48,13 @@ There are some more [convenience functions](https://api.fritz2.dev/core/dev.frit
 You can map the elements of the `Flow` to a specific action-type before connecting it to the `Handler`. This way you can also add information from the rendering-context to the action. 
 You may also use any other source for a `Flow` like recurring timer events or even external events like web-sockets, local storage, etc.
 
+If you need to purposefully fire an action at some point in your code (to init a [Store] for example) use 
+```kotlin
+//action with value inside Store
+action(someValue) handledBy someHandler
+
+//action without value anywhere else
+action() handledBy store.someHandler
+```
+
 Next we will have a look at how to use [Lists as a model](ListsinaModel.html).
