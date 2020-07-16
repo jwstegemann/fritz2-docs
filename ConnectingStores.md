@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Flows
+title: Connection stores
 parent: State Management
 nav_order: 6
 ---
