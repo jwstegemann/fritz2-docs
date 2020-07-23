@@ -13,7 +13,7 @@ To use fritz2, you have to set up a Kotlin multiplatform-project. To do so you c
 
 ```gradle
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.5"
+    id("dev.fritz2.fritz2-gradle") version "0.6"
 }
 
 repositories {
@@ -21,23 +21,21 @@ repositories {
 }
 
 kotlin {
-    kotlin {
-        jvm()
-        js().browser()
+    jvm()
+    js().browser()
 
-        sourceSets {
-            val commonMain by getting {
-                dependencies {
-                    implementation(kotlin("stdlib"))
-                }
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib"))
             }
-            val jvmMain by getting {
-                dependencies {
-                }
+        }
+        val jvmMain by getting {
+            dependencies {
             }
-            val jsMain by getting {
-                dependencies {
-                }
+        }
+        val jsMain by getting {
+            dependencies {
             }
         }
     }
@@ -74,7 +72,7 @@ The `index.html`is just a normal web-page. Be sure to include the resulting scri
 ```kotlin
 package <your package>
 
-import dev.fritz2.dom.html.html
+import dev.fritz2.dom.html.render
 import dev.fritz2.dom.mount
 
 fun main() {
@@ -90,4 +88,41 @@ fun main() {
 
 Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser when you change your code.
 
-And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  
+And voilà, you are done!
+
+If you want get the newest snapshot-builds of fritz2 before we are releasing them you can add the following to your 'build.gradle.kts':
+```gradle
+...
+repositories {
+    jcenter()
+    maven("https://oss.jfrog.org/artifactory/jfrog-dependencies") // new repository here
+}
+
+kotlin {
+    kotlin {
+        jvm()
+        js().browser()
+
+        sourceSets {
+            val commonMain by getting {
+                dependencies {
+                    implementation(kotlin("stdlib"))
+                    implementation("dev.fritz2:core:0.7-SNAPSHOT") // add the newer snapshot version here
+                }
+            }
+            val jvmMain by getting {
+                dependencies {
+                }
+            }
+            val jsMain by getting {
+                dependencies {
+                }
+            }
+        }
+    }
+}
+```
+If you find any bugs or problems when using this snapshots-versions please give us an issue on
+ [github.com](https://github.com/jwstegemann/fritz2/issues).
+
+Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  
