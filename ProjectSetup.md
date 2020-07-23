@@ -88,9 +88,10 @@ fun main() {
 
 Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser when you change your code.
 
-And voilà, you are done!
+And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  
 
-If you want get the newest snapshot-builds of fritz2 before we are releasing them you can add the following to your 'build.gradle.kts':
+## Pre-release builds
+If you want get the newest snapshot-builds of fritz2 before we are releasing them you can put the following into your 'build.gradle.kts':
 ```gradle
 ...
 repositories {
@@ -99,30 +100,19 @@ repositories {
 }
 
 kotlin {
-    kotlin {
-        jvm()
-        js().browser()
+    jvm()
+    js().browser()
 
-        sourceSets {
-            val commonMain by getting {
-                dependencies {
-                    implementation(kotlin("stdlib"))
-                    implementation("dev.fritz2:core:0.7-SNAPSHOT") // add the newer snapshot version here
-                }
-            }
-            val jvmMain by getting {
-                dependencies {
-                }
-            }
-            val jsMain by getting {
-                dependencies {
-                }
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib"))
+                implementation("dev.fritz2:core:0.7-SNAPSHOT") // add the newer snapshot version here
             }
         }
+        ...
     }
 }
 ```
 If you find any bugs or problems when using this snapshots-versions please give us an issue on
  [github.com](https://github.com/jwstegemann/fritz2/issues).
-
-Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  
