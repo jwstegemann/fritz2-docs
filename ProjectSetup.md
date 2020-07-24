@@ -114,5 +114,5 @@ kotlin {
     }
 }
 ```
-If you find any bugs or problems when using this snapshots-versions please give us an issue on
+If you find any problems with these snapshot-versions please open an issue at
  [github.com](https://github.com/jwstegemann/fritz2/issues).
