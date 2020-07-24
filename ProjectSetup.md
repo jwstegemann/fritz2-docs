@@ -86,12 +86,12 @@ fun main() {
 }
 ```
 
-Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser when you change your code.
+Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser after changing your code.
 
 And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  
 
 ## Pre-release builds
-If you want get the newest snapshot-builds of fritz2 before we are releasing them you can put the following into your 'build.gradle.kts':
+If you want get the newest snapshot-builds of fritz2 before we release them add the following lines to your 'build.gradle.kts':
 ```gradle
 ...
 repositories {
