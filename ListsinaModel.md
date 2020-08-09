@@ -33,13 +33,11 @@ Binding a `Seq` in your `render` context works exactly as for a `Flow` by just c
     val myComponent = render {
         section {
             ul {
-                seq.data.each().map { s ->
-                    render {
-                        li {
-                            button("btn", id = "delete-btn") {
-                                text(s)
-                                clicks.map { console.log("deleting $s"); s } handledBy seq.deleteItem
-                            }
+                seq.data.each().render { s ->
+                    li {
+                        button("btn", id = "delete-btn") {
+                            text(s)
+                            clicks.map { console.log("deleting $s"); s } handledBy seq.deleteItem
                         }
                     }
                 }.bind()
@@ -63,5 +61,7 @@ There are four flavours of each to chose from to fit your use-case:
 * with `Store<List<T>>.each(idProvider: (T) -> String)` you can also map a `SubStore<T>` to `Tag`s, but it uses the given idProvider to determine whether or not two elements are the same`, so only the parts that are bound and  actually changed will be re-rendered. Use this whenever you work on entities that can be identified using some sort of constant id and need two-way-databinding.
 
 * use `Store<List<T>>.each()` to map a `SubStore<T>` to `Tag`s. It uses the list position of the element to determine whether or not two elements are the same. This means that when inserting something into the middle of the list, the changed element AND ALL following elements will be re-rendered. Use this when you work on elements that are not identifiable using a constant id (like simple [String]s) and still need two-way-databinding. 
+
+`store.data.each(...).render {...}` is just a short for `store.data.each(...).map { render {...} }`. 
 
 Like for the single elements in your `List`, you will also need to get `Store`s for elements "hidden" deeper in your [Nested Structures](NestedStructures.html). Let's see how fritz2 can help you here.

@@ -62,11 +62,9 @@ When you have a `Store` that implements `Validation`, you can access your valida
 ```kotlin
 render {
     ul {
-        store.msgs().each().map {
-            render {
-                li(it.severity.name.toLowerCase()) {
-                    text(it.text)
-                }
+        store.msgs().each().render {
+            li(it.severity.name.toLowerCase()) {
+                text(it.text)
             }
         }.bind()
     }
