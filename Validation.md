@@ -7,63 +7,80 @@ nav_order: 9
 
 When accepting user-input, it is a nice idea to validate the data before processing it any further.
 
-To do validation in fritz2, you first have to implement the interface `Validator`. This interface takes three type-parameters:
+To do validation in fritz2, you first have to implement the interface `Validator`. 
+This interface takes three type-parameters:
 * the type of data to validate
 * a type describing the validation-results (like a message, etc.)
-* a type for metadata you want to forward from your `Handler`s to your validation (or `Nothing` if you do not need this)
+* a type for metadata you want to forward from your `Handler`s to your validation (or `Unit` if you do not need this)
 
-Now you have to implement the `validation`-method itself:
+Put your code for your validation in the `commonMain` section of your multiplatform-project where also you data models are in.
+Then you can use the same code in `jsMain` (frontend) and `jvmMain` (backend) section accordingly:
 
+In the `commonMain` section write something like this:
 ```kotlin
+@Lenses
+data class Person(
+    val name: String,
+    val age: Int
+)
+
 enum class Severity {
     Info,
     Warning,
     Error
 }
 
-data class ValMsg(override val id: String, val severity: Severity, val text: String): Failable {
-    override fun isFail(): Boolean = severity > Severity.Warning
+data class Message(val id: String, val severity: Severity, val text: String): ValidationMessage {
+    override fun isError(): Boolean = severity > Severity.Warning
 }
 
-object EMailValidator: Validator<String, ValMsg, String>() {
+object PersonValidator: Validator<Person, Message, String>() {
 
-    override fun validate(data: String, metadata: String): List<ValMsg> {
-        val msgs = mutableListOf<ValMsg>()
-
-        if(data.isEmpty()) {
-            msgs.add(ValMsg("empty", Severity.Info, "Please provide some input"))
+    override fun validate(data: String, metadata: String): List<Message> {
+        val msgs = mutableListOf<Message>()
+        val inspector = inspect(data)
+        
+        val name = inspector.sub(L.Person.name)
+        if(name.data.trim().isBlank()) {
+            msgs.add(Message(name.id, Severity.Error, "Please provide a name"))
         }
 
-        if(!data.matches("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)")) {
-            msgs.add(ValMsg("not_matched", Severity.Error, "Please correct the email address!"))
+        val age = inspector.sub(L.Person.age)
+        if(age.data < 1) {
+            msgs.add(Message(age,id, Severity.Error, "Please correct the age"))
+        } else if(age.date > 100) {
+            msgs.add(Message(age,id, Severity.Warning, "Is the person really older then 100 years!?"))
         }
 
         return msgs
     }
 }
 ```
-You can structure and implement your concrete validation-rules with everything Kotlin offers.
+You can structure and implement your concrete validation-rules with everything Kotlin offers. 
+Also, for getting the same ids as with using `sub()` method on the `SubStore`s, we create a new `Inspector` with the
+`ìnspect()` function. The `Inspector` can then navigate through the model by calling the `sub()` method with the corresponding `Lens`.
+The resulting `SubInspector`s then have two attributes `data` and `ìd`. The first one gives you the current data and 
+the second one the corresponding id to it.
 
-To use this `Validator`in your `Store`, simply implement the `Validation`-interface by defining a validator for the data-type of your `Store`:
+Now you can use the `PersonValidator` in your `jsMain` section:
 
 ```kotlin
-val store = object : RootStore<String>(""), Validation<String, ValMsg, String> {
-        override val validator = EMailValidator
-
-        val updateWithValidation = handle<String> { data, newData ->
-            if (validate(newData, "update")) newData
-            else data
-        }
+val store = object : RootStore<String>("") {
+     val updateWithValidation = handle<Person> { oldPerson, newPerson ->
+        if (PersonValidator.isValid(newPerson, "update")) new else oldPerson
     }
+}
 ```
 
-When you have a `Store` that implements `Validation`, you can access your validation-results by calling `msgs()`. This gives you a `Flow` of the type you defined as your result-type. You can handle this like any other `Flow` of a `List`, for example by rendering your messages:
+You can access your validation-results with `Validator.msgs`. 
+This gives you a `Flow<List<M>` where `M` is your `ValidationMessage`-type. 
+You can handle this like any other `Flow` of a `List`, for example by rendering your messages to html:
 
 ```kotlin
 render {
     ul {
-        store.msgs().each().render {
-            li(it.severity.name.toLowerCase()) {
+        PersonValidator.msgs.each(Message::id).render {
+            li(baseClass = it.severity.name.toLowerCase()) {
                 text(it.text)
             }
         }.bind()
@@ -71,8 +88,6 @@ render {
 }
 ```
 
-
-It is recommended to implement your validation-code in a multiplatform-project so you can use it in both browser and backend.
 Have a look at a more complete example [here](https://examples.fritz2.dev/validation/build/distributions/index.html).
 
 By the way: fritz2 supports connecting to your (http)-backend from the browser with [Remote Calls](RemoteCalls.html).
