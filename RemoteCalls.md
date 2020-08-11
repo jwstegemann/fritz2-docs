@@ -9,53 +9,71 @@ Using the browser's default fetch-api can get quite tiresome, which is why fritz
 
 First you create a `RequestTemplate` for your backend:
 ```kotlin
-val sampleApi = remote("https://reqresss.in/api/users")
+val usersApi = remote("https://reqresss.in/api/users")
             .acceptJson()
-            .header("Content-Type","application/json")
+            .contentType("application/json")
 ```
-The template offers some [convenience-methods](https://api.fritz2.dev/core/dev.fritz2.remote/-request-template/) to configure your API-calls, like the `acceptJson()` above which simply adds the correct header to each request sent using the template.
+The remote service offers some [convenience-methods](https://api.fritz2.dev/core/dev.fritz2.remote/-request/) to configure 
+your API-calls, like the `acceptJson()` above which simply adds the correct header to each request sent using the template.
 
 Sending a request is pretty straightforward:
 ```kotlin
-            sampleApi.get(s)
-                .onErrorLog()
-                .body()
+val result: String = usersApi.get(s).getBody()
 ```
-`body()` returns the body of the response as a `String` (more is yet to come). `onErrorLog` logs exceptions to the console. Of course, you can and should implement your own exception-handling. 
+`getBody()` returns the body of the response as a `String`. Instead, you can also use some following methods to get different results:
+* `getBlob(): Blob`
+* `getArrayBuffer(): ArrayBuffer`
+* `getFormData(): FormData`
+* `getJson(): Any?`
+
+If your request was not successful (`Response.ok` is `false`) a `FetchException` will be thrown.
 
 The same works for posts and other methods, just use different parameters for the body to send.
 
-Since remote-calls are asynchronous by nature, and you do not want to block in your `Handler`s (where you should implement your logic), you have to somehow inject the call before the `Handler` is called:
-
+Of curse the remote service is primary designed to use in your `Handler`s within your `Store`s for 
+exchanging data with your backend:
 ```kotlin
-val samplePost = apply {s : String ->
-            sampleApi.post(body = """
-                {
-                    "name": "$s",
-                    "job": "programmer"
-                }
-            """.trimIndent())
-                .onErrorLog()
-                .body()
-        } andThen update
+val userStore = object : RootStore<String>("") {
+    
+    val usersApi = remote("https://reqresss.in/api/users").acceptJson().contentType("application/json")
+
+    val addUser = handle<String> { _, s : String ->
+        usersApi.body("""
+            {
+                "name": "$s",
+                "job": "programmer"
+            }
+        """.trimIndent())
+        .post().getBody()
+    }
+}
 ``` 
 
-By using `apply`, you create another handler which chains the asnyc remote call and the update-`Handler` in a way that doesn't block. It schedules your update right after you processed the answer from your backend. You can use this `Handler` like any other to handle `Flow`s of actions:
+You can use this `Handler` like any other to handle `Flow`s of actions:
 
 ```kotlin
-... render {
-    button {
-        text("add programmer")
-        clicks.map {
-            "just a name" // wherever you get this from...
-        } handledBy samplePost
+... 
+render {
+    div {
+        ...
+        button {
+            text("add programmer")
+            clicks.map {
+                "just a name" // wherever you get this from...
+            } handledBy userStore.addUser
+        }
     }
-...
 }
+
+// or
+action("just a name") handledBy userStore.addUser
 ```
-`apply` can be used for any other async process, or even just to structure your code, too. 
+
+To see a complete example of this visit our [remote example](https://examples.fritz2.dev/remote/build/distributions/index.html)
 
 In the real world, instead of creating the JSON manually, better use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
+Therefore, have a look at our [repositories](Repositories.html) service.
+
 
 You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts:
 
