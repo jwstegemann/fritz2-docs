@@ -85,7 +85,7 @@ kotlin {
             runTask {
                 devServer = KotlinWebpackConfig.DevServer(
                     port = 9000,
-                    contentBase = listOf("$projectDir/src/main/web"),
+                    contentBase = listOf("$projectDir/src/jsMain/resources"),
                     proxy = mapOf(
                         "/myService" to "http://localhost:8080"
                     )
