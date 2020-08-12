@@ -87,23 +87,24 @@ Hint: `store.data.each(...).render {...}` is just a short for `store.data.each(.
 There are four flavours of each to chose from to fit your use-case:
 
 * use `Flow<T>.each()` to map each instance of T to your `Tag`s. It uses Kotlin's equality function to determine 
-whether or not two elements are the same, and therefore re-renders the whole content you mapped when an element 
+whether two elements are the same, and therefore re-renders the whole content you mapped when an element 
 is changed or moved.
 
 * with `Flow<T>.each(idProvider: (T) -> I)` you can also map each instance of T to your `Tag`s, but it uses the given 
-idProvider to determine whether or not two elements are the same. In your mapping, you can get a `SubStore` for an 
+idProvider to determine whether two elements are the same. In your mapping, you can get a `SubStore` for an 
 element using `listStore.sub(id, idProvider)`, so only the parts that actually changed will be re-rendered. 
-Keep in mind: using this flavour without the `SubStore` an element with the same id but different constant will be 
-treated as unchanged and therefore not be rerendered.
+Keep in mind: when using this flavour without the `SubStore`, an element with the same id but different constant will
+ be 
+treated as unchanged and therefore not be re-rendered.
 
 * with `Store<List<T>>.each(idProvider: (T) -> I)` you can also map a `SubStore<T>` to `Tag`s, but it uses the given 
-idProvider to determine whether or not two elements are the same`, so only the parts that are bound and  actually 
+idProvider to determine whether two elements are the same`, so only the parts that are bound and  actually 
 changed will be re-rendered. Use this whenever you work on entities that can be identified using some sort of constant 
 id and need two-way-databinding.
 
 * use `Store<List<T>>.each()` to map a `SubStore<T>` to `Tag`s. It uses the list position of the element to determine 
-whether or not two elements are the same. This means that when inserting something into the middle of the list, the 
-changed element AND ALL following elements will be re-rendered. Use this when you work on elements that are not 
+whether two elements are the same. This means that when inserting something into the middle of the list, the 
+changed element AND ALL following elements will be re-rendered. Use this when working on elements that are not 
 identifiable using a constant id (like simple [String]s) and still need two-way-databinding. 
 
 Like for the single elements in your `List`, you will also need to get `Store`s for elements "hidden" deeper in your [Nested Structures](NestedStructures.html). Let's see how fritz2 can help you here.

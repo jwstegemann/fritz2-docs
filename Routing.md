@@ -25,15 +25,15 @@ To make this mechanism easier to use, we already implemented two ways of handlin
 * `StringRoute` uses the url-hash how it is.
 * `MapRoute` marshals and unmarshals the url-hash to `Map<String,String>` where `&` is the separator between the entries.
 
-You can create a new instance of `Router` easily by using the global `router()` function. 
+You can easily create a new instance of `Router` by using the global `router()` function. 
 There are currently three of them for each type of your `Route`.
 * `router(default: String): Router<String>` which uses the `StringRoute`
 * `router(default: Map<String, String>): Router<Map<String, String>>` which uses the `MapRoute`
 * `<T> router(default: Route<T>): Router<T>` which uses your custom implementation of `Route` interface
 
-With the last one you can implement your own `Route` on your own data type.
+Use the last option to implement your own `Route` on your own data type.
 
-The usage of routing is straightforward:
+Routing is straightforward:
 
 Using simple `String`s by `StringRoute`:
 ```kotlin
@@ -53,7 +53,7 @@ render {
 }.mount("target")
 ```
 
-Use a `Map` of parameters by `MapRoute`:
+Using a `Map` of parameters by `MapRoute`:
 ```kotlin
 val router = router(mapOf("page" to "welcome"))
 
@@ -72,7 +72,8 @@ render {
 }.mount("target")   
 ```
 A router using a `MapRoute` offers an extra `select` method which extract the values for the given key (here `"page"`) 
-and needs a function to map the value. Therefore, it returns a `Pair` of the current value and the complete `Map`, to help you decide what to render.
+and requires a function to map the value. Therefore, it returns a `Pair` of the current value and the complete `Map` to
+ help you decide what to render.
 
 If you want to use your own special `Route` instead, try this:
 ```kotlin
@@ -99,7 +100,7 @@ render {
 ```
 These are the options for routing with fritz2.
 
-If you want to change your current route (i.e. when an event fires) you can do this by calling `navTo`: 
+If you want to change your current route (i.e. when an event fires), you can do so by calling `navTo`: 
 ```
 val router = router("welcome")
 
@@ -111,5 +112,5 @@ button {
 action("pageA") handledBy router.navTo
 ```
 
-You can have a look at our full [routing example](https://examples.fritz2.dev/routing/build/distributions/index.html)
-to see how it works and play around with it.
+Have a look at our full [routing example](https://examples.fritz2.dev/routing/build/distributions/index.html)
+to see how it works and to play around with it.

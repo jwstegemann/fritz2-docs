@@ -13,8 +13,8 @@ This interface takes three type-parameters:
 * a type describing the validation-results (like a message, etc.)
 * a type for metadata you want to forward from your `Handler`s to your validation (or `Unit` if you do not need this)
 
-Put your code for your validation in the `commonMain` section of your multiplatform-project where also you data models are in.
-Then you can use the same code in `jsMain` (frontend) and `jvmMain` (backend) section accordingly:
+Put your validation code in the `commonMain` section of your multiplatform-project where your data models
+ are located as well. Code in `commonMain` can be used in `jsMain` (frontend) and `jvmMain` (backend). 
 
 In the `commonMain` section write something like this:
 ```kotlin

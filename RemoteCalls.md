@@ -30,7 +30,7 @@ If your request was not successful (`Response.ok` is `false`) a `FetchException`
 
 The same works for posts and other methods, just use different parameters for the body to send.
 
-Of curse the remote service is primary designed to use in your `Handler`s within your `Store`s for 
+Of course the remote service is primarily designed to use in your `Handler`s within your `Store`s when 
 exchanging data with your backend:
 ```kotlin
 val userStore = object : RootStore<String>("") {
@@ -69,10 +69,11 @@ render {
 action("just a name") handledBy userStore.addUser
 ```
 
-To see a complete example of this visit our [remote example](https://examples.fritz2.dev/remote/build/distributions/index.html)
+To see a complete example of this, visit our [remote example](https://examples.fritz2.dev/remote/build/distributions
+/index.html)
 
 In the real world, instead of creating the JSON manually, better use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
-Therefore, have a look at our [repositories](Repositories.html) service.
+So have a look at our [repositories](Repositories.html) service.
 
 
 You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts:

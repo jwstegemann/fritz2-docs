@@ -27,7 +27,7 @@ object Format {
 }
 ```
 
-When you have created a special `Lens` for your own data type like `Format.dateLens`, you can now use them for creating a new `SubStore`: 
+When you have created a special `Lens` for your own data type like `Format.dateLens`, you can then use it to create a new `SubStore`: 
 call the method `sub()` on the `SubStore` of your custom type `P` with your formatting `Lens` e.g `sub(Format.dateLens)` 
 or concatenate your Lenses before using the `Lens` in the `sub()` method e.g. `sub(L.Person.birthday + Fromat.dateLens)`.
 
@@ -53,7 +53,7 @@ input("form-control", id = birthday.id) {
 ```
 The resulting `SubStore` is basically a `Store<String>`. As you can see in the example above, your internal type 
 is converted to a `String` when binding it to the input `value` attribute, using the given `parse: (String) -> P` function
-in from the `format()` function. When converting the changed `String` back to a new `Date` object, 
-the given `format: (P) -> String` function gets used.
+in from the `format()` function. The given `format: (P) -> String` function is used to convert the changed `String
+` back to a new `Date` object.
 
 You can of course reuse your custom formatting `Lens` for every `SubStore` of the same type (in this case `com.soywiz.klock.Date`).
