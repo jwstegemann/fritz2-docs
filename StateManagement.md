@@ -57,4 +57,17 @@ action(someValue) handledBy someHandler
 action() handledBy store.someHandler
 ```
 
+If your store's content is not bound anywhere but need its handler's code to be executed whenever an action is available, you have explicitly `watch()` it:
+
+```kotlin
+    val store = object : RootStore<Whatever> {
+        val printMessage = handle { model ->
+            console.log("some message")
+            model
+        }
+    }
+
+    store.data.watch()
+```
+
 Next we will have a look at how to use [Lists as a model](ListsinaModel.html).

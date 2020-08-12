@@ -11,9 +11,7 @@ In fritz2, `Store`s are used to handle your app's state. It heavily depends on K
 Let's assume the state of your app is a simple `String`. Creating a `Store` to manage that state is quite easy:
 
 ```kotlin
-val s = object: RootStore<String>("initial value") {
-   // space for handlers
-}
+val s = storeOf("initial value")
 ```
 
 Every `Store` offers a `Flow` named `data` which can be bound as part of your html:
@@ -91,18 +89,5 @@ form {
 }
 ```
 In this case, only the attribute value will change when the model in your store changes. fritz2 offers [pre-defined properties (at each Tag)](https://api.fritz2.dev/core/dev.fritz2.dom.html/) for every HTML5-attribute.
-
-If your store's content is not bound anywhere but need its handler's code to be executed whenever an action is available, you have explicitly `watch()` it:
-
-```kotlin
-    val store = object : RootStore<Whatever> {
-        val printMessage = handle { model ->
-            console.log("some message")
-            model
-        }
-    }
-
-    store.data.watch()
-```
 
 But how can you change the model-data in a store? Let's have a look at [State Management](StateManagement.html).
