@@ -32,7 +32,7 @@ val innerLens = buildLens("inner", { it.inner }, { parent, value -> parent.copy(
 
 No magic there. The first parameter sets an id for the `Lens`. When using `Lens`es with `SubStore`s, the id will be used to generate a valid html-id representing the path through your model. This can be used to identify your elements semantically (for automated ui-tests for example).
 
-If you have deep nested structures or a lot of them, you may want to automate this behavior. fritz2 offers an annotation you can add to your data-class:
+If you have deep nested structures or a lot of them, you may want to automate this behavior. fritz2 offers an annotation you can add to your data-class in the `commonMain` section:
 ```kotlin
 @Lenses
 data class Outer(val inner: Inner, val value: String)
@@ -40,10 +40,10 @@ data class Outer(val inner: Inner, val value: String)
 Using an annotation-processor, fritz2 builds a `Lenses`-object per package from these annotations which contains all the `Lenses` you need. They are named exactly like the entities and properties, so it's easy to use:
 
 ```kotlin
-val innerLens = Lenses.Outer.inner
+val innerLens = L.Outer.inner
 ```
 
-You can see it in action at our [`nestedmodel`-example](https://examples.fritz2.dev/nestedmodel/build/distributions/index.html).
+You can see it in action at our [nestedmodel-example](https://examples.fritz2.dev/nestedmodel/build/distributions/index.html).
 
 To make this work your annotated classes have to be in your `commonMain`-SourceSet. If you need to use the generated objects in your `commonMain` (to implement a `Validator` you can use on client and server i.e.), you have to set up a subproject for your model. Have a look at the [`validation`-example](https://examples.fritz2.dev/validation/build/distributions/index.html) to see how to set it up.
 

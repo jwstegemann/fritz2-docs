@@ -17,7 +17,7 @@ Having a `Lens` available which points to some specific property makes it very e
 ```kotlin
     val outerStore = RootStore(Outer(Inner("hello"), "world"))
     // remember, the Lenses-object is created by fritz2-optics per package
-    val innerStore = outerStore.sub(Lenses.Outer.inner)
+    val innerStore = outerStore.sub(L.Outer.inner)
 ```
 
 Now that you can use your `innerStore` exactly like any other `Store` to set up _two-way-databinding_, call `sub(...)` again to access the properties of `Inner`. If a `SubStore` contains a `List`-type, you can of course iterate over it by using `each()` or `eachStore()` like you are used to. It's fully recursive from here on down to the deepest nested parts of your entity.

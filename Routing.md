@@ -1,14 +1,17 @@
 ---
 layout: default
 title: Routing
-nav_order: 11
+nav_order: 12
 ---
 # Routing
 
 Writing a Single Page Application (SPA), you might need a way to render a certain view depending on url-parameters. This is called routing. 
-fritz2 uses the hash-part of the url which starts with a `#`: `https://my.doma.in/path#hash`. url-parameters (`?`) are usually handled by the server, while url-hashes (`#`) are handled by the browser.
+fritz2 uses the hash-part of the url which starts with a `#`: `https://my.doma.in/path#hash`. url-parameters (`?`) are usually handled by the server, 
+while url-hashes (`#`) are handled by the browser.
 
-Fritz2 offers a general mechanism for using client-site routing in your SPA. It includes a class called `Router` which registers itself to listen for the specific dom-events of the hash changing. Additionally, a `Router` needs a `Route` which is an interface you have to implement to use it:
+fritz2 offers a general mechanism for using client-site routing in your SPA. 
+It includes a class called `Router` which registers itself to listen for the specific dom-events of the hash changing. 
+Additionally, a `Router` needs a `Route` which is an interface you have to implement to use it:
 ```kotlin
 interface Route<T> {
     val default: T
@@ -18,13 +21,19 @@ interface Route<T> {
 ```
 A `Route` always has a default route to start with. It also needs a way to unmarshal and marshal the url-hash string to a kotlin (data-)class and vice versa.
 
-To make this mechanism easier to use, we implemented two ways of handling routing: 
+To make this mechanism easier to use, we already implemented two ways of handling routing in fritz2: 
 * `StringRoute` uses the url-hash how it is.
 * `MapRoute` marshals and unmarshals the url-hash to `Map<String,String>` where `&` is the separator between the entries.
 
-If none of these fits your needs, you can implement your own `Route` on your own data type instead.
+You can easily create a new instance of `Router` by using the global `router()` function. 
+There are currently three of them for each type of your `Route`.
+* `router(default: String): Router<String>` which uses the `StringRoute`
+* `router(default: Map<String, String>): Router<Map<String, String>>` which uses the `MapRoute`
+* `<T> router(default: Route<T>): Router<T>` which uses your custom implementation of `Route` interface
 
-The usage of routing is straightforward:
+Use the last option to implement your own `Route` on your own data type.
+
+Routing is straightforward:
 
 Using simple `String`s by `StringRoute`:
 ```kotlin
@@ -32,7 +41,7 @@ val router = router("welcome")
 
 render {
   section {
-    router.routes.map { site ->
+    router.render { site ->
       when(site) {
           "welcome" -> div { +"Welcome" }
           "pageA" -> div { +"Page A" }
@@ -41,58 +50,67 @@ render {
       }
     }.bind()
   }
-}       
+}.mount("target")
 ```
 
-Use a `Map` of parameters by `MapRoute`:
+Using a `Map` of parameters by `MapRoute`:
 ```kotlin
-val router = router(mapOf("page", "welcome"))
+val router = router(mapOf("page" to "welcome"))
 
 render {
-  section {
-    router.select("page") {
-      val (name, rest) = it
-      when(name) {
-          "welcome" -> div { +"Welcome" }
-          "pageA" -> div { +"Page A" }
-          "pageB" -> div { +"Page B" }
-          else -> div { +"not found" }
-      }
-    }.bind()
-  }
-}       
+    section {
+        router.select("page") {
+            val (name, rest) = it
+            when(name) {
+                "welcome" -> div { +"Welcome" }
+                "pageA" -> div { +"Page A" }
+                "pageB" -> div { +"Page B" }
+                else -> div { +"not found" }
+            }
+        }.bind()
+    }
+}.mount("target")   
 ```
-A router using a `MapRoute` offers an extra `select` method which extract the values for the given key (here `"page"`) and needs a function to map the value. Therefore, it returns a `Pair` of the current value and the complete `Map`, to help you decide what to render.
+A router using a `MapRoute` offers an extra `select` method which extract the values for the given key (here `"page"`) 
+and requires a function to map the value. Therefore, it returns a `Pair` of the current value and the complete `Map` to
+ help you decide what to render.
 
 If you want to use your own special `Route` instead, try this:
 ```kotlin
 class SetRoute(override val default: Set<String>) : Route<Set<String>> {
-  override fun unmarshal(hash: String): Set<String> {
-      TODO("Not yet implemented")
-  }
-
-  override fun marshal(route: Set<String>): String {
-      TODO("Not yet implemented")
-  }
+    val separator = "&"
+    override fun unmarshal(hash: String): Set<String> = hash.split(separator).toSet()
+    override fun marshal(route: Set<String>): String = route.joinToString(separator)
 }
 
 val router = router(SetRoute(setOf("welcome")))
 
 render {
-  section {
-    router.routes.map { set ->
-      TODO("Not yet implemented")
-    }.bind()
-  }
-}  
+    section {
+        router.render { route ->
+            when {
+                route.contains("welcome") -> div { +"Welcome" }
+                route.contains("pageA") -> div { +"Page A" }
+                route.contains("pageB") -> div { +"Page B" }
+                else -> div { +"not found" }
+            }
+        }.bind()
+    }
+}.mount("target")
 ```
 These are the options for routing with fritz2.
 
-If you want to change your current route (i.e. when an event fires) you can do this by calling `navTo`: 
+If you want to change your current route (i.e. when an event fires), you can do so by calling `navTo`: 
 ```
+val router = router("welcome")
+
 button {
     text("Navigate to Page A")
-    clicks.map { mapOf("page" to "pageA") } handledBy router.navTo
+    clicks.map { "pageA" } handledBy router.navTo
 }
+// or
+action("pageA") handledBy router.navTo
 ```
-Also, you can set the url-hash to an initial page request, for example `https://mysite.com/myapp#page=welcome`.
+
+Have a look at our full [routing example](https://examples.fritz2.dev/routing/build/distributions/index.html)
+to see how it works and to play around with it.
