@@ -34,7 +34,7 @@ data class Message(val id: String, val severity: Severity, val text: String): Va
     override fun isError(): Boolean = severity > Severity.Warning
 }
 
-object PersonValidator: Validator<Person, Message, String>() {
+class PersonValidator : Validator<Person, Message, String>() {
 
     override fun validate(data: String, metadata: String): List<Message> {
         val msgs = mutableListOf<Message>()
@@ -66,8 +66,10 @@ Now you can use the `PersonValidator` in your `jsMain` section:
 
 ```kotlin
 val store = object : RootStore<String>("") {
-     val updateWithValidation = handle<Person> { oldPerson, newPerson ->
-        if (PersonValidator.isValid(newPerson, "update")) new else oldPerson
+    val validator = PersonValidator()
+
+    val updateWithValidation = handle<Person> { oldPerson, newPerson ->
+        if (validator.isValid(newPerson, "update")) new else oldPerson
     }
 }
 ```
@@ -79,7 +81,7 @@ You can handle this like any other `Flow` of a `List`, for example by rendering 
 ```kotlin
 render {
     ul {
-        PersonValidator.msgs.each(Message::id).render {
+        store.validator.msgs.each(Message::id).render {
             li(baseClass = it.severity.name.toLowerCase()) {
                 text(it.text)
             }
