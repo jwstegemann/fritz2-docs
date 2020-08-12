@@ -6,14 +6,13 @@ nav_order: 2
 # Project Setup
 
 To use fritz2, you have to set up a Kotlin multiplatform-project. To do so you can either
-
 * clone our template-project from [github](https://github.com/jwstegemann/fritz2-template)
 * clone the [fritz2-examples](https://github.com/jamowei/fritz2-examples) and copy from one of the sub-projects
 * have a look a the [official documentation](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-a-multiplatform-project) and include the following plugin:
 
 ```gradle
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.6"
+    id("dev.fritz2.fritz2-gradle") version "0.7"
 }
 
 repositories {
@@ -71,7 +70,6 @@ The `index.html`is just a normal web-page. Be sure to include the resulting scri
 
 ```kotlin
 package <your package>
-
 import dev.fritz2.dom.html.render
 import dev.fritz2.dom.mount
 
@@ -91,7 +89,7 @@ Run the project by calling `./gradlew jsRun` in your project's main directory. A
 And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  
 
 ## Pre-release builds
-If you want get the newest snapshot-builds of fritz2 before we release them add the following lines to your 'build.gradle.kts':
+If you want get the newest snapshot-builds of fritz2 before we release them add the following lines to your `build.gradle.kts`:
 ```gradle
 ...
 repositories {
@@ -107,12 +105,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib"))
-                implementation("dev.fritz2:core:0.7-SNAPSHOT") // add the newer snapshot version here
+                implementation("dev.fritz2:core:0.8-SNAPSHOT") // add the newer snapshot version here
             }
         }
         ...
     }
 }
 ```
-If you find any problems with these snapshot-versions please open an issue at
- [github.com](https://github.com/jwstegemann/fritz2/issues).
+If you find any problems with these snapshot-versions please open an issue at 
+[github.com](https://github.com/jwstegemann/fritz2/issues).
