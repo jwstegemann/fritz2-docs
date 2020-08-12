@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Connection stores
+title: Connecting stores
 parent: State Management
 nav_order: 6
 ---
-# Connection stores to each other
+# Connecting stores to each other
 
 Most real-world applications contain multiple stores which need to be linked to properly react to model changes.
 
