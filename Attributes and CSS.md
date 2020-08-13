@@ -39,20 +39,21 @@ render {
 
 You can also bind dynamic values (from a `Flow`) to a custom attribute:
 ```kotlin
-val someFlowOfStrings = ... 
-
 render {
     div {
-        someFlowOfStrings.bindAttr("data-something")
+        someFlowOfString.bindAttr("data-something")
+        someFlowOfBoolean.bindAttr("data-visible")        
     }
 }
 ```
 
 The `class` of a `Tag` is a special attribute. As seen above, you can set a static base-class using the parameter of the `Tag`'s factory-function.
+This can be used to add meaning to your html elements by using semantic CSS classnames. Also, it keeps your code cleaner when using CSS frameworks like Bootstrap etc.
 
-You can add dynamic classes by assigning a `Flow` of strings to the `className`-attribute like with any other attribute. The same works for `List<String>`s with the `classList`-attribute.
+You can add dynamic classes by assigning a `Flow` of strings to the `className`-attribute like with any other attribute. 
+The same works for `List<String>`s with the `classList`-attribute.
 
-Additionally, you can build a map from your model data that enables and disables single classes dynamically:
+Additionally, you can build a `Map<String, Boolean>` from your model data that enables and disables single classes dynamically:
 ```kotlin
 render {
     div {
@@ -63,4 +64,4 @@ render {
     }
 }
 ```
-Now that you can build what you want in your templates, let's create some [Components](Components.html) with it.
+Now you can build what you want in your templates, let's create some [Components](Components.html) with it.

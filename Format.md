@@ -7,7 +7,7 @@ nav_order: 13
 
 Sometimes we want to use special data types, for example `com.soywiz.klock.Date` for Dates, 
 which supports kotlin-js and other platforms as well. 
-However, there is a small problem when using it within an `HTMLInputElement`: it can only handle 
+However, there is a small problem when using it within an `HTMLInputElement` with `type="date"`: it can only handle 
 `String` in its `value` attribute, so you have to format your data type to `String` and vice versa. 
 fritz2 provides a special function `format` for this, which creates a `Lens<P, String>` for you:
 
