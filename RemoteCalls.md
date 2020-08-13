@@ -69,11 +69,12 @@ render {
 action("just a name") handledBy userStore.addUser
 ```
 
-To see a complete example of this, visit our [remote example](https://examples.fritz2.dev/remote/build/distributions
-/index.html)
+To see a complete example of this, visit our 
+[remote example](https://examples.fritz2.dev/remote/build/distributions/index.html)
 
-In the real world, instead of creating the JSON manually, better use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
-So have a look at our [repositories](Repositories.html) service.
+In the real world, instead of creating the JSON manually, better use 
+[kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
+Get inspired by our [repositories example](https://examples.fritz2.dev/repositories/build/distributions/index.html).
 
 
 You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts:

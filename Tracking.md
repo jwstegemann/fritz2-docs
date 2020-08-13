@@ -39,6 +39,6 @@ The service provides you with a `Flow` representing the description of the curre
 
 Filter the `Flow` using the meta-data you chose when calling `track(meta-data)` if you want to react to only certain transactions.
 
-Of course you can also use the meta-data to show to the user what is currently running (in a status-bar for example). 
+Of course, you can also use the meta-data to show to the user what is currently running (in a status-bar for example). 
 
 Our [repositories example](https://examples.fritz2.dev/repositories/build/distributions/index.html) uses tracking, to show you a spinning wheel when you click on the save button.

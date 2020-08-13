@@ -98,10 +98,9 @@ render {
     }
 }.mount("target")
 ```
-These are the options for routing with fritz2.
 
 If you want to change your current route (i.e. when an event fires), you can do so by calling `navTo`: 
-```
+```kotlin
 val router = router("welcome")
 
 button {
@@ -112,5 +111,5 @@ button {
 action("pageA") handledBy router.navTo
 ```
 
-Have a look at our full [routing example](https://examples.fritz2.dev/routing/build/distributions/index.html)
+Have a look at our [routing example](https://examples.fritz2.dev/routing/build/distributions/index.html)
 to see how it works and to play around with it.

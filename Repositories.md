@@ -31,7 +31,8 @@ We differentiate two kinds of repositories:
   * `saveOrUpdate(entity)`
   * `delete(entity)`
   
-* a `QueryRepository` deals with a `List` of instances of a given type. It offers the following methods to query or manipulate the content of the repository:
+* a `QueryRepository` deals with a `List` of instances of a given type. It offers the following methods to query or 
+manipulate the content of the repository:
   * `query(entities, query)`
   * `addOrUpdate(entities, entity)`
   * `updateMany(entities, entitiesToUpdate)`
@@ -66,9 +67,12 @@ val entityStore = object : RootStore<Person>(personResource.emptyEntity) {
 
 ### QueryRepository
 
-When creating a `QueryRepository` you can define a type describing the queries done by this repository and a function how to execute the query defined by a given instance of this query-type. 
+When creating a `QueryRepository` you can define a type describing the queries done by this repository and a function 
+how to execute the query defined by a given instance of this query-type. 
 
 ```kotlin
+data class PersonQuery(val namePrefix: String? = null)
+
 val queryStore = object : RootStore<List<Person>>(emptyList()) {
     val rest = localStorageQuery<Person, String, PersonQuery>(personResource, "your prefix") { entities, query ->
         if (query.namePrefix != null) entities.filter { it.name.startsWith(query.namePrefix) }   
@@ -84,7 +88,8 @@ val queryStore = object : RootStore<List<Person>>(emptyList()) {
 }
 ```
 
-Of course this receiver, and result of this function depend on the concrete implementation you use. For a `RestQuery` you have to build and fire the request according to your query-object:
+Of course the receiver and result of this function depend on the concrete implementation you use. 
+For a `RestQuery` you have to build and fire the request according to your query-object:
 
 ```kotlin
 val queryStore = restQuery<Person, String, PersonQuery>(personResource, "your url") { query ->

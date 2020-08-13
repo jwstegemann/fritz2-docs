@@ -115,5 +115,5 @@ To react to the lifecyle of your component, you can override the according metho
 
 Packaging (i.e. as an npm-package) and publishing is out of scope of this documentation.
 
-To see it in action, please have a look at [this](https://examples.fritz2.dev/webcomponent/build/distributions/index.html) more complex example.
+To see it in action, please have a look at our [webcomponents example](https://examples.fritz2.dev/webcomponent/build/distributions/index.html).
 

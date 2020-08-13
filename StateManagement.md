@@ -10,7 +10,7 @@ Building your `Store`, you can add `Handler`s to respond to actions and adjust y
 
 ```kotlin
 val store = object : RootStore<String>("") {
-    val append = handle<String> { model, action -> //action is a String
+    val append = handle<String> { model, action: String ->
         "$model$action"
     }
 
@@ -24,8 +24,7 @@ Whenever a `String` is sent to the `append`-`Handler`, it updates the model by a
 Since everything in fritz2 is reactive, most of the time you want to connect a `Flow` of actions to the `Handler` instead of calling it directly:
 
 ```kotlin
-val stringsToAppend: Flow<String> = ... // the source of this stream is set later
-stringsToAppend handledBy store.append
+someFlowOfStrings handledBy store.append
 ```
 
 Each `Store` inherits a `Handler` called `update`, accepting the same type as the `Store` as its action. It updates the `Store`'s value to the new value it receives. You can use this handler to conveniently implement _two-way-databinding_ by using the `changes` event-flow of an `input`-`Tag`, for example:
@@ -33,31 +32,37 @@ Each `Store` inherits a `Handler` called `update`, accepting the same type as th
 ```kotlin
 val store = RootStore<String>("")
 
-val myComponent = render {
+render {
     input {
         value = store.data
         changes.values() handledBy store.update
     }
-}
+}.mount("target")
 ```
 
-`changes` in this example is a flow of events created by listening to the `Change`-Event of the underlying input-element. Calling `values()` on it extracts the current value from the input.
-Whenever such an event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the `Store` to update the model. Event-flows are available for [all HTML5-events](https://api.fritz2.dev/core/dev.fritz2.dom/-with-events/).
-There are some more [convenience functions](https://api.fritz2.dev/core/dev.fritz2.dom/) to help you to extract data from an event or control event-processing.
+`changes` in this example is a `Flow` of events created by listening to the `Change`-Event of the underlying input-element. 
+Calling `values()` on it extracts the current value from the input.
+Whenever such an event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the 
+`Store` to update the model. Event-flows are available for 
+[all HTML5-events](https://api.fritz2.dev/core/dev.fritz2.dom/-with-events/).
+There are some more [convenience functions](https://api.fritz2.dev/core/dev.fritz2.dom/) to help you to extract data 
+from an event or control event-processing.
 
-You can map the elements of the `Flow` to a specific action-type before connecting it to the `Handler`. This way you can also add information from the rendering-context to the action. 
-You may also use any other source for a `Flow` like recurring timer events or even external events like web-sockets, local storage, etc.
+You can map the elements of the `Flow` to a specific action-type before connecting it to the `Handler`. 
+This way you can also add information from the rendering-context to the action. 
+You may also use any other source for a `Flow` like recurring timer events or even external events.
 
 If you need to purposefully fire an action at some point in your code (to init a [Store] for example) use 
 ```kotlin
 //action with value inside Store
-action(someValue) handledBy someHandler
+action(someValue) handledBy someStore.someHandler
 
 //action without value anywhere else
-action() handledBy store.someHandler
+action() handledBy someStore.someHandler
 ```
 
-If your store's content is not bound anywhere but need its handler's code to be executed whenever an action is available, you have explicitly `watch()` it:
+If the content of your `Store` is not bound anywhere but need its handler's code to be executed whenever an action is available, 
+you have to explicitly `watch()` it:
 
 ```kotlin
     val store = object : RootStore<Whatever> {

@@ -47,18 +47,24 @@ We recommend organizing your source code like this:
   * src
     * commonMain
       * kotlin
-        * model.kt (to use the model in client and server)
+        * \<your base package\>
+          * model.kt (to use the model in client and server)
     * jsMain
       * kotlin
         * \<your base package\>
           * app.kt (or choose any other name)
       * resources
         * index.html
+        * styling.css
 
-The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build. Also mark an element of your choice with an id to later mount your fritz2-components to:
+The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build 
+and mark an element of your choice with an id to later mount your fritz2-components to:
 
 ```html
 <html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styling.css">
+  </head>
   <body id="target">
     Loading...
     <script src="yourProject.js"></script>
@@ -66,10 +72,13 @@ The `index.html`is just a normal web-page. Be sure to include the resulting scri
 </html>
 ```
 
-`app.kt` is the starting point of your fritz2 app, so make sure it has a `main`-function. Inside `main`, you might want to create some content by creating a `render`-context, adding [some `Tag`s](https://api.fritz2.dev/core/dev.fritz2.dom.html/-html-elements) and mount it to the DOM of your `index.html`:
+`app.kt` is the starting point of your fritz2 app, so make sure it has a `main`-function. 
+Inside `main`, you might want to create some content by creating a `render`-context, 
+adding [some `Tag`s](https://api.fritz2.dev/core/dev.fritz2.dom.html/-html-elements) and 
+mount it to the DOM of your `index.html`:
 
 ```kotlin
-package <your package>
+package <your base package>
 import dev.fritz2.dom.html.render
 import dev.fritz2.dom.mount
 
@@ -84,12 +93,14 @@ fun main() {
 }
 ```
 
-Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic building and reloading in the browser after changing your code.
+Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic 
+building and reloading in the browser after changing your code.
 
 And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?  
 
 ## Pre-release builds
-If you want get the newest snapshot-builds of fritz2 before we release them add the following lines to your `build.gradle.kts`:
+If you want get the newest snapshot-builds of fritz2 before we release them add the 
+following lines to your `build.gradle.kts`:
 ```gradle
 ...
 repositories {
@@ -112,5 +123,5 @@ kotlin {
     }
 }
 ```
-If you find any problems with these snapshot-versions please open an issue at 
-[github.com](https://github.com/jwstegemann/fritz2/issues).
+If you find any problems with these snapshot-versions please 
+[open an issue](https://github.com/jwstegemann/fritz2/issues/new/choose).

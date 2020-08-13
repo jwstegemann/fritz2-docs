@@ -93,9 +93,8 @@ is changed or moved.
 * with `Flow<T>.each(idProvider: (T) -> I)` you can also map each instance of T to your `Tag`s, but it uses the given 
 idProvider to determine whether two elements are the same. In your mapping, you can get a `SubStore` for an 
 element using `listStore.sub(id, idProvider)`, so only the parts that actually changed will be re-rendered. 
-Keep in mind: when using this flavour without the `SubStore`, an element with the same id but different constant will
- be 
-treated as unchanged and therefore not be re-rendered.
+Caution: when using this flavour without the `SubStore`, an element with the same id but different content will 
+be treated as unchanged and therefore not be re-rendered.
 
 * with `Store<List<T>>.each(idProvider: (T) -> I)` you can also map a `SubStore<T>` to `Tag`s, but it uses the given 
 idProvider to determine whether two elements are the same`, so only the parts that are bound and  actually 
@@ -104,7 +103,8 @@ id and need two-way-databinding.
 
 * use `Store<List<T>>.each()` to map a `SubStore<T>` to `Tag`s. It uses the list position of the element to determine 
 whether two elements are the same. This means that when inserting something into the middle of the list, the 
-changed element AND ALL following elements will be re-rendered. Use this when working on elements that are not 
+changed element and all following elements will be re-rendered. Use this when working on elements that are not 
 identifiable using a constant id (like simple [String]s) and still need two-way-databinding. 
 
-Like for the single elements in your `List`, you will also need to get `Store`s for elements "hidden" deeper in your [Nested Structures](NestedStructures.html). Let's see how fritz2 can help you here.
+Like for the single elements in your `List`, you will also need to get `Store`s for elements "hidden" deeper in your 
+[Nested Structures](NestedStructures.html). Let's see how fritz2 can help you here.
