@@ -1,2 +1,5 @@
-/fritz2-docs.iml
-/.idea/
+*.iml
+.idea
+.jekyll-cache
+_site
+Gemfile.lock
