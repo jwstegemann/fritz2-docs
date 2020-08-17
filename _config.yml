@@ -1,6 +1,8 @@
-remote_theme: pmarsceill/just-the-docs
+remote_theme: pmarsceill/just-the-docs#
+theme: "just-the-docs"
 title: fritz2
 logo: "images/fritz_logo_black.svg"
+search_enabled: true
 # Aux links for the upper right navigation
 aux_links:
   "Home":
