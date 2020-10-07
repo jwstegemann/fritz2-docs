@@ -36,7 +36,7 @@ data class Message(val id: String, val severity: Severity, val text: String): Va
 
 class PersonValidator : Validator<Person, Message, String>() {
 
-    override fun validate(data: String, metadata: String): List<Message> {
+    override fun validate(data: Person, metadata: String): List<Message> {
         val msgs = mutableListOf<Message>()
         val inspector = inspect(data)
         
@@ -69,7 +69,7 @@ val store = object : RootStore<String>("") {
     val validator = PersonValidator()
 
     val updateWithValidation = handle<Person> { oldPerson, newPerson ->
-        if (validator.isValid(newPerson, "update")) new else oldPerson
+        if (validator.isValid(newPerson, "update")) newPerson else oldPerson
     }
 }
 ```
