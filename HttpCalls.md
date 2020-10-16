@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Remote Calls
+title: Http Calls
 nav_order: 10
 ---
-# Remote Calls
+# Http Calls
 
 Using the browser's default fetch-api can get quite tiresome, which is why fritz2 offers a small wrapper for it:
 
-First you create a `RequestTemplate` for your backend:
+First you create a `Request` for your backend:
 ```kotlin
-val usersApi = remote("https://reqresss.in/api/users")
+val usersApi = http("https://reqresss.in/api/users")
             .acceptJson()
             .contentType("application/json")
 ```
@@ -26,7 +26,7 @@ val result: String = usersApi.get(s).getBody()
 * `getFormData(): FormData`
 * `getJson(): Any?`
 
-If your request was not successful (`Response.ok` is `false`) a `FetchException` will be thrown.
+If your request was not successful (`Response.ok` is `false`) and `FetchException` will be thrown.
 
 The same works for posts and other methods, just use different parameters for the body to send.
 
@@ -35,7 +35,7 @@ exchanging data with your backend:
 ```kotlin
 val userStore = object : RootStore<String>("") {
     
-    val usersApi = remote("https://reqresss.in/api/users").acceptJson().contentType("application/json")
+    val usersApi = http("https://reqresss.in/api/users").acceptJson().contentType("application/json")
 
     val addUser = handle<String> { _, s : String ->
         usersApi.body("""
