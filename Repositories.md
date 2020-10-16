@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Repositories
-nav_order: 11
+nav_order: 12
 ---
 # Repositories
 
@@ -10,14 +10,30 @@ To add some sort of backend to your `Store`s you can make use of fritz2's reposi
 * REST
 * more like WebSockets, GraphQL etc. soon to be added
 
+## Serializer
+
+When you defined you data class wich you want to share by a `Repository`, you must define
+a `Serializer` for it first. You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
+for it. Therefore, you need to annotate you data class (here `Person`) with `@Serializable` and
+then you can write the following:
+
+```kotlin
+object PersonSerializer : Serializer<Person, String> {
+    override fun read(msg: String): Person = Json.decodeFromString(Person.serializer(), msg)
+    override fun readList(msg: String): List<Person> = Json.decodeFromString(ListSerializer(Person.serializer()), msg)
+    override fun write(item: Person): String = Json.encodeToString(ToDo.serializer(), item)
+    override fun writeList(items: List<Person>): String = Json.encodeToString(ListSerializer(Person.serializer()), items)
+}
+```
+
 ## Resource
 
-Working with repositories requires the definition of a `Resource` first:
+Working with repositories requires the definition of a `Resource`:
 
 ```kotlin
 val personResource = Resource(
     Person::_id, // function to extract the unique id from a given instance
-    KotlinXJsonSerializer(Person.serializer()), // implementation of Serializer interface to write and read the entity
+    PersonSerializer, // implementation of Serializer interface to write and read the entity
     Person() // definition of an empty entity (to reset an edit form, e.g.)
 )
 ```

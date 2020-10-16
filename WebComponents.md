@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Web Components
-nav_order: 14
+nav_order: 15
 ---
 # Use and build WebComponents
 
