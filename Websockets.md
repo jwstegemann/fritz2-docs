@@ -33,7 +33,7 @@ As you can see, `Session` returns a `Flow` of `MessageEvent`s in messages. When 
 * `blob: Flow<Blob>`
 * `arrayBuffer: Flow<ArrayBuffer>`
 
-More information regarding display can be read from the `Session` as `Flow`:
+More information regarding the connection status can be read from the `Session` as `Flow`:
 * `isConnecting: Flow<Boolean>`
 * `isOpen: Flow<Boolean>`
 * `isClosed: Flow<Boolean>`
