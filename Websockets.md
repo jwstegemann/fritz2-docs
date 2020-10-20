@@ -5,18 +5,14 @@ nav_order: 11
 ---
 # Websockets
 
-In fritz2 gibt es die Möglichkeit **Websockets** zu verwenden.
-Dazu muss zunächst einmal ein `Socket` erzeugt werden:
+fritz2 offers websockets you can use with different protocols. First, create a socket:
+ 
 ```kotlin
 val websocket: Socket = websocket("ws://myserver:3333")
 ```
-Bei der Erzeugung können optional noch ein oder mehrere Protokolle 
-angegeben werden. Siehe [hier](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket)
-für mehr Informationen dazu.
+You can specify one or more protocols on creation. See these [docs](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket) for more information.
 
-Nachdem nun ein Socket erstellt wurde, wird nun mit Hilfe der Methode `connect()`
-eine `Session` zum Server aufgebaut. Über diese `Session` können dann Nachrichten 
-an den Server gesendet und von diesem empfangen werden. Das Ganze sieht dann so aus:
+Your socket is now ready to establish a `Session` with the server, using the method `connect()`. Messages can now be exchanged between socket and server, which looks like this:
 
 ```kotlin
 val session: Session = socket.connect()
@@ -24,39 +20,34 @@ val session: Session = socket.connect()
 // receiving messages from server
 session.messages.body.onEach {
   window.alert("Server said: $it")
-}.watch() // watch is needed, cause the message is not bind to html
+}.watch() // watch is needed because the message is not bound to html
 
 // sending messages to server
 session.send("Hello")
 ```
 
-Die `Session` gibt, wie man oben sehen kann, einen `Flow` von `MessageEvent`s unter `messages`
-zurück. Wenn der Server nun Nachrichten an den Client sendet, erscheint ein neues `MessageEvent` auf
-diesem `Flow` und mit verschiedenen Methoden kann der Inhalt der Nachricht ausgelesen werden.
-Die Art der Nachricht kann eine der Folgenden sein:
+As you can see, `Session` returns a `Flow` of `MessageEvent`s in messages. When a new message from the server arrives, a new event pops up on the `Flow`. Get the content of the message with one of the following methods (depending on content type):
+ 
 * `data: Flow<Any?>`
 * `body: Flow<String>`
 * `blob: Flow<Blob>`
 * `arrayBuffer: Flow<ArrayBuffer>`
 
-Zudem können auch noch weitere für die Darstellung wichtige Informationen aus der `Session` als
-`Flow` ausgelesen werden. Dazu zählen:
+More information regarding display can be read from the `Session` as `Flow`:
 * `isConnecting: Flow<Boolean>`
 * `isOpen: Flow<Boolean>`
 * `isClosed: Flow<Boolean>`
 * `opens: Flow<Event>`
 * `closes: Flow<CloseEvent>`
 
-Wenn die `Session` nicht mehr benötigt wird, kann sie client-seitig geschlossen werden:
+When you're done, close the session client-side. Supplying a code and a reason is optional.
 ```kotlin
 session.close(reason = "finished")
 ```
-Dabei kann optional ein Code und Grund für das Schließen der `Session` angegeben werden.
-Nach dem Schließen der `Session` entweder durch den Client oder durch den Server können keine Nachrichten
-mehr versendet werden. Falls dies doch getan wird, wird eine `SendException` geworfen.
+After the `Session` was closed by either client or server, no further messages can be sent, and trying to do so throws a `SendException`.
 
-Möchte man den Inhalt eines `Store`s mit dem Server per Websocket synchronisieren, kann man dies mit der Funktion
-`syncWith(socket: Socket, resource: Resource<T, I>)` machen. Sie dazu das folgende Beispiel:
+
+You can synchronize the content of a `Store` with a server via websockets. Use the function `syncWith(socket: Socket, resource: Resource<T, I>)` like in the following example:
 
 ```kotlin
 data class Person(val name: String, val age: Int, val _id: String = uniqueId())
@@ -68,13 +59,10 @@ val entityStore = object : RootStore<Person>(personResource.emptyEntity) {
     init {
         syncWith(socket, personResource)
     }
-
     // your handlers...
 }
 ```
 
-Wenn nun das Model im `Store` geändert wird, wird automatisch das geänderte Model per Websocket an den Server gesendet.
-Andersrum kann der Server natürlich auch ein neues Model an den Client senden, welches dann direkt in den `Store` geschrieben wird. 
-Dies bietet eine einfache Möglichkeit Daten über einen `Store` automatisch mit dem Server zu synchronisieren.
+When the model in the `Store` changes, it will be sent to the server via websocket, and vice versa of course.
 
-Want more? Keep on reading about [Routing](Routing.html).
+There you have an easy way to synchronize your stores with a server. Want more? Keep on reading about [Routing](Routing.html).
