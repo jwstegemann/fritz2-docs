@@ -6,7 +6,7 @@ nav_order
 ---
 # Styling DSL and Theming
 
-Um noch schneller und einfacher Komponenten bauen zu können, die einem einheitlichen styling-sytem folgen bietet fritz2-styling eine eigene DSL making use of constraint-based style props based on scales defined in your theme
+To make building components with unified styling even faster and simpler, fritz2 offers its own DSL which makes use of constraint-based style props based on scales defined in your theme.
 
 ```kotlin
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
@@ -21,20 +21,22 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 }
 ```
 
-fritz2-styling offers a convenient syntax for adding responsive styles with a mobile-first approach. Dabei werden vier breakpoints für unterschiedliche viewport-größen verwendet
+fritz2-styling offers a convenient syntax for adding responsive styles with a mobile-first approach. It uses four breakpoints for the different viewport-sizes.
  
 ```kotlin
     font-size(sm = { tiny }, lg = { normal })
     width(sm = { full }, lg = { "768px" })
     color { primary }
 ```
+
+In accordance with mobile-first, the next smaller size is used when no value is given for a particular size. In the example above, `smaller` would be used for `md`, `lg`, and `xl`. If only one value is given, it will be used for all sizes.
  
- Gemäß dem mobile-first-Ansatz, greift der Wert für die nächst kleinere Größe, ist für eine Größe kein eigener Wert angegeben. Im Beispiel ob gilt `smaller` also für `md`, `lg` und `xl`. Wird nur ein Wert angegeben gilt diese entsprechend für alle Größen. 
+These centrally defined theme scales for different properties help in achieving a consistent design. Also, simply changing these definitions alters the theme and therefore the look of the application for different requirements. You can define a high contrast theme, or one with large fonts, both of which can be chosen dynamically at runtime.
+ 
+A theme defines value ranges for..
 
-Durch die Verwendung von zentral in einem theme definierten scales für unterschiedliche eigenschaften wird ein konsistentes design erreicht. Darüber hinaus kann durch eine einfache änderung der Definitionen im Theme das Aussehen der Anwendung an unterschiedliche Anforderungen angepasst werden. So lässt sich beispielsweise ein theme für hohen Kontrast oder für große Schriftarten definieren. Das Theme kann zur Laufzeit dynamisch gewählt werden. Ein Theme definiert dabei vorbereitete wertebreiche für
-
-* space
-* position
+* spacing
+* positions
 * fontSizes
 * colors
 * fonts
@@ -47,8 +49,8 @@ Durch die Verwendung von zentral in einem theme definierten scales für untersch
 * zIndices
 * opacities
 * gaps
-    
-Selbstverständlich können gestylten Elementen weiterhin `baseClass`, `id` und `prefix` übergeben werden
+
+You can still pass `baseClass`, `id`, and `prefix` to styled elements, of course. 
 
 ```kotlin
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
@@ -65,15 +67,15 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 
 # ThemeProvider
 
-* verwendung
-* zugriff auf currentTheme
+* Usage
+* Accessing currentTheme
 
 
 # CSS
 
-* umfang der dsl
-* verweis auf styled-system
-* verwendung von css
-* pseudos
-* selektoren
-* children
+* DSL scope
+* Link styled-system
+* Using CSS
+* Pseudos
+* Selectors
+* Children

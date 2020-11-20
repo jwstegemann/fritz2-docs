@@ -5,19 +5,19 @@ nav_order: 14
 ---
 # Integrated Styling
 
-fritz2 ist im core optimiert für styling durch externes css (siehe [Attributes and CSS](Attributes%20and%20CSS.html). Dies erleichtert die Verwendung von CSS-Frameworks wie [Bootstrap](https://getbootstrap.com/) oder [Tailwind](https://tailwindcss.com/).
+The fritz2 core is optimized for styling with external css (siehe [Attributes and CSS](Attributes%20and%20CSS.html). This makes it easy to use css frameworks like [Bootstrap](https://getbootstrap.com/) or [Tailwind](https://tailwindcss.com/).
 
-Wenn es darum geht dynamische Komponenten effizient zu entwickeln und zu verwenden, stößt dieser Ansatz allerdings an seine Grenzen. Daher bietet fritz2 im Modul `dev.fritz2:styling` die Möglichkeit, css direkt im Kotlin-code zu schreiben und zu verwenden. Dies bietet einige Vorteile:
+However, this approach does not yield the best results when trying to efficiently develop dynamic components, which is why fritz2 offers the module `dev.fritz2:styling`. It lets you write and use css directly in your kotlin code, giving you the following advantages: 
 
-* Komponenten-Code und Styling zusammengefasst an einer Stelle (vereinfacht Wartung und Fehlersuche)
-* automatische Injektion benötigter (und nur der benötigten) CSS-Klassen
-* Nutzung von IDE-Features um z.B. herauszufinden, wo eine Klasse genutzt wird, sie umzubenennen, etc.
-* dynamische Generierung von CSS-Klassen in Abhängigkeit von Laufzeit-Variablen
-* keine Notwendigkeit, CSS-Dateien parallel zum Komponenten-Code zu verteilen
+* Components code and styling are found in the same place, which makes trouble shooting and maintenance easier
+* Automatic injection of the neccessary (and only the neccessary) css classes
+* Allows usage of IDE features (renaming classes, finding usages, ...)
+* Dynamically generated css classes depending on runtime variables
+* No need to distribute css files with the component code
 
 # Verwendung
 
-Um fritz2-styling nutzen zu können, muss lediglich die passende Abhängigkeit im gradle-build ergänzt werden:
+To use fritz2-styling, add the following dependency to your gradle build:
 
 ```gradle
     val jsMain by getting {
@@ -29,7 +29,7 @@ Um fritz2-styling nutzen zu können, muss lediglich die passende Abhängigkeit i
 
 # StyleClass
 
-Das zentrale Element in fritz2-styling ist die `StyleClass`. Eine Instanz entspricht dabei genau einer CSS-Klasse im Stylesheet. Über das `name`-Attribut kann die StyleClass überall dort verwendet werden, wo im core CSS-Klassen als `String benötigt werden: 
+The key element of fritz2-styling is the `StyleClass`, one instance of which is exaclty one css class in the resulting stylesheet. The `name`-attribute can be used whenever css classes are needed as a `String` in fritz2-core:
 
 ```kotlin
     val height = "100%"
@@ -49,9 +49,9 @@ Das zentrale Element in fritz2-styling ist die `StyleClass`. Eine Instanz entspr
     }
 ````
 
-Die factory-Methode `staticStyle` compiliert den übergebenen CSS-Code und legt eine Klasse mit dem Namen `myClassName` in einem von fritz2 verwalteten StyleSheet an. fritz2 verwendet [stylis](https://stylis.js.org/) als css-compiler, dessen homepage einen kurzen Überblick über die gegenüber reinem css leicht erweiterte syntax bietet. So ist die Verwendung eingebetter selektoren ebenso möglich wie media-classes und namespaces.
+The factory method `staticStyle` compiles the passed css code and inserts a class named `myClassName` into a stylesheet managed by fritz2. It uses the [stylis] (https://stylis.js.org/) css compiler, which offers a slightly extended syntax over pure css. It allows embedded selectors as well as media classes and namespaces. 
 
-Of course you can use Kotlin variable and even code inside your styles this way. Since this class has a static name your variable cannot change over time. 
+Of course you can use Kotlin variables and even code inside your styles, but since this class has a static name, your variable cannot change over time. 
 
 Use `style` to create dynamic classes:
 
@@ -70,11 +70,10 @@ fun RenderContext.myComponent(height: Int, isFlex: Boolean) {
     }
 }
 ```
+Every time this component is rendered, fritz2 creates a new class name, consisting of the prefix and a calculated hash value (i.e. `myComponent-iHpEb`). This ensures that each created class has unique content, and classes that already exist are reused if the content has not changed. The prefix allows you to use semantic identifiers which makes it easy to see the source component in the resulting stylesheet. 
 
-Jedesmal, wenn diese Komponente gerendert wird, erzeugt fritz2 einen neuen Klassennamen, der sich aus dem prefix und einem errechneten hash-wert zusammensetzt, z.B. `myComponent-iHpEb`. Auf diese Weise werden keine zwei Klassen gleichen inhalts erzeugt, sondern bereits bestehende Klassen wiederverwendet, wenn sich der Inhalt nicht geändert hat. Durch verwendung des prefix ist es möglich, semantische bezeichner zu verwenden. So lässt sich im ergebnis leicht erkennen, aus welcher komponente das div erzeugt wurde. 
 
-
-Durch die Verwendung von [language injections](https://www.jetbrains.com/help/idea/using-language-injections.html) bietet IntelliJ IDEA allen komfort bei der Bearbeitung des css-codes in Kotlin-Dateien.  
+IntelliJ uses [language injections](https://www.jetbrains.com/help/idea/using-language-injections.html), making it easy and comfortable to edit css code in kotlin files.
 
 
 
