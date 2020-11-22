@@ -26,9 +26,9 @@ object store : RootStore<String>("") {
 
 render {
     button("btn") {
-        className = store.running.map {
+        className(store.running.map {
             it?.let {"spinner"}.orEmpty()
-        }
+        })
         +"save"
         clicks handledBy store.saveOrUpdate
     }

@@ -18,17 +18,17 @@ val myComponent = render {
 
 fritz2 doesn't force you to build your components a certain way - you can use every single Kotlin-language-feature you like.
 To create a component which can be called inside render-contexts directly, just specify the appropriate receiver
- `HtmlElements`:
+ `RenderContext`:
 
 ```kotlin
-fun HtmlElements.myOtherComponent(p: Person): P {
+fun RenderContext.myOtherComponent(person: Person): P {
     retrun p {
-        text("Hello, my name is ${p.name}!")
+        +"Hello, my name is ${person.name}!"
     }
 }
 
 val somePerson = Person(...)
-val myComponent = render {
+render {
     div {
         myOtherComponent(somePerson)
     }
@@ -43,7 +43,7 @@ render {
             div {
                 myOtherComponent(person)
             }
-        }.bind()
+        }
     }
 }.mount("target")
 ```
@@ -51,7 +51,7 @@ render {
 To create more nested components do the following:
 ```kotlin
 // needs to return a html element for using in render{} method directly
-fun HtmlElements.container(content: HtmlElements.() -> Unit): Div {
+fun RenderContext.container(content: Div.() -> Unit): Div {
     return div("container") {
         content()
     }
@@ -59,14 +59,14 @@ fun HtmlElements.container(content: HtmlElements.() -> Unit): Div {
 
 // don't need to return a html element because its used 
 // in HtmlElements context only
-fun HtmlElements.okBtn(content: Button.() -> Unit): Button {
+fun RenderContext.okBtn(content: Button.() -> Unit): Button {
     return button("btn success") {
         +"Ok"
         content()
     }
 }
 
-val mySite = render {
+render {
     container {
         p {
             text("Hello World!")
@@ -78,4 +78,5 @@ val mySite = render {
 }.mount("target")
 ```
 
-Since stateless components alone are not that exciting, go on and read about the fritz2 mechanism to handle state: the [Store](Store.html).
+Since stateless components alone are not that exciting, go on and read about the fritz2 
+mechanism to handle state: the [Store](Store.html).

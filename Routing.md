@@ -41,14 +41,14 @@ val router = router("welcome")
 
 render {
   section {
-    router.render { site ->
+    router.renderElement { site ->
       when(site) {
           "welcome" -> div { +"Welcome" }
           "pageA" -> div { +"Page A" }
           "pageB" -> div { +"Page B" }
           else -> div { +"not found" }
       }
-    }.bind()
+    }
   }
 }.mount("target")
 ```
@@ -59,21 +59,20 @@ val router = router(mapOf("page" to "welcome"))
 
 render {
     section {
-        router.select("page") {
-            val (name, rest) = it
+        router.select("page").renderElement { (name, rest) ->
             when(name) {
                 "welcome" -> div { +"Welcome" }
                 "pageA" -> div { +"Page A" }
                 "pageB" -> div { +"Page B" }
                 else -> div { +"not found" }
             }
-        }.bind()
+        }
     }
-}.mount("target")   
+}.mount("target")
 ```
-A router using a `MapRoute` offers an extra `select` method which extract the values for the given key (here `"page"`) 
+A router using a `MapRoute` offers an extra `select` method which extract the values as `Pair` for the given key (here `"page"`) 
 and requires a function to map the value. Therefore, it returns a `Pair` of the current value and the complete `Map` to
- help you decide what to render.
+help you decide what to render.
 
 If you want to use your own special `Route` instead, try this:
 ```kotlin
@@ -87,14 +86,14 @@ val router = router(SetRoute(setOf("welcome")))
 
 render {
     section {
-        router.render { route ->
+        router.renderElement { route ->
             when {
                 route.contains("welcome") -> div { +"Welcome" }
                 route.contains("pageA") -> div { +"Page A" }
                 route.contains("pageB") -> div { +"Page B" }
                 else -> div { +"not found" }
             }
-        }.bind()
+        }
     }
 }.mount("target")
 ```
@@ -103,12 +102,14 @@ If you want to change your current route (i.e. when an event fires), you can do 
 ```kotlin
 val router = router("welcome")
 
-button {
-    text("Navigate to Page A")
-    clicks.map { "pageA" } handledBy router.navTo
+render {
+    button {
+        +"Navigate to Page A"
+        clicks.map { "pageA" } handledBy router.navTo
+    }   
 }
 // or
-action("pageA") handledBy router.navTo
+router.navTo("pageA")
 ```
 
 Have a look at our [routing example](https://examples.fritz2.dev/routing/build/distributions/index.html)

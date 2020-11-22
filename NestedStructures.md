@@ -26,7 +26,7 @@ property from a `Store` of the parent entity:
 
 Now you can use your `innerStore` exactly like any other `Store` to set up _two-way-databinding_, call `sub(...)` 
 again to access the properties of `Inner`. If a `SubStore` contains a `List`, 
-you can of course iterate over it by using `each()` or `eachStore()` like you are used to. 
+you can of course iterate over it by using `renderEach()` like you are used to. 
 It's fully recursive from here on down to the deepest nested parts of your model.
 
 You can also add `Handler`s to your `SubStore`s by simply calling the `handle`-method:
@@ -40,7 +40,7 @@ val switch = booleanSubStore.handle { model: Boolean ->
 render {
     ...
         button {
-            text("switch state")
+            +"switch state"
             clicks handledBy switch
         }
     ...

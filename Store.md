@@ -7,7 +7,8 @@ has_children: true
 # Store
 
 In fritz2, `Store`s are used to handle your app's state. 
-It heavily depends on Kotlin's `Flow` - if you are not familiar with this concept, please take a look at [Flows](Flows.html) first.
+It heavily depends on Kotlin's `Flow` - if you are not familiar with this concept, 
+please take a look at [Flows](Flows.html) first.
 
 Let's assume the state of your app is a simple `String`. Creating a `Store` to manage that state is quite easy:
 
@@ -20,12 +21,12 @@ Every `Store` offers a `Flow` named `data` which can be bound as part of your ht
 ```kotlin
 render {
     p {
-        s.data.bind()
+        s.data.asText()
     }
 }.mount("target")
 ```
 
-By calling `s.data.bind()` a [MountPoint](MountPoint.html) is created and collects your model values. 
+By calling `s.data.asText()` a [MountPoint](MountPoint.html) is created and collects your model values. 
 This means a DOM-element is created (in this example it's a simple `TextNode`) and 
 bound to your `data` so that it will change whenever your `Store`'s state updates. This is called _precise data binding_.
 
@@ -34,7 +35,7 @@ You can of course use every intermediate action like `map`,`filter`, etc., on th
 ```kotlin
 render {
     p {
-        s.data.map { "you have entered ${it.length} characters so far." }.bind()
+        s.data.map { "you have entered ${it.length} characters so far." }.asText()
     }
 }.mount("target")
 ```
@@ -48,7 +49,7 @@ render {
     p {
         firstName.data.combine(lastName.data) { firstName, lastName ->
             "Your full name is: $firstName $lastName"
-        }.bind()
+        }.asText()
     }
 }.mount("target")
 ```
@@ -58,7 +59,7 @@ Therefore, take a look at [Nested Structures](NestedStructures.html).
 You can also bind a `Flow` to an attribute:
 ```kotlin
 input {
-    value = store.data
+    value(store.data)
 }
 ```
 In this case, only the attribute value will change when the model in your store changes. 

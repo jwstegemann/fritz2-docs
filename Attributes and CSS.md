@@ -5,7 +5,7 @@ nav_order: 3
 ---
 # Attributes and CSS
 
-To create rich HTML-interfaces you will want to use a variety of attributes. In fritz2 there are several ways to easily achieve this depending on your use case.
+To create rich html-interfaces you will want to use a variety of attributes. In fritz2 there are several ways to easily achieve this depending on your use case.
 
 You can set static values for each `Tag` for `class` and `id` by using the optional parameters of its factory function:
 ```kotlin
@@ -16,33 +16,28 @@ render {
 }
 ```
 
-You can set all other attributes inside the `Tag`'s content by assigning a `Flow` of the according type to it. The attribute's value will be updated in the DOM whenever a new value appears on the `Flow`. Wrap a constant with the `const()`-function:
+You can set all other attributes inside the `Tag`'s content by calling a function of the according name. 
+Every standard html attribute have two functions. One for a static value and a second one for dynamic data coming from a `Flow`.
+When it's coming from a `Flow` the attribute's value will be updated in the DOM whenever a new value appears on the `Flow`:
 ```kotlin
 val flowOfInts = ... //i.e. get it from some store
 
 render {
     input {
-        placeholder = const("some text")
-        maxLength = flowOfInts
+        placeholder("some text")
+        maxLength(flowOfInts)
+        disabled(true)
     }
 }
 ```
+If you have a `Boolean` value to set you can set an optional parameter `trueValue` which will be set as value if the data is `true`
 
-To set a static value for a custom (data-) attribute, use the `attr()`-function:
+To set a value for a custom (data-) attribute, use the `attr()`-function. It works for static and dynamic values (from a `Flow`):
 ```kotlin
 render {
     div {
         attr("data-something", "someValue")
-    }
-}
-```
-
-You can also bind dynamic values (from a `Flow`) to a custom attribute:
-```kotlin
-render {
-    div {
-        someFlowOfString.bindAttr("data-something")
-        someFlowOfBoolean.bindAttr("data-visible")        
+        attr("data-something", flowOf("someValue"))
     }
 }
 ```

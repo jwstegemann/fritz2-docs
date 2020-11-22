@@ -8,22 +8,24 @@ nav_order: 6
 
 Most real-world applications contain multiple stores which need to be linked to properly react to model changes.
 
-To make your stores interconnect, fritz2 offers the `OfferingHandler`, a type of handler that doesn't just take data
- as an argument but also offers data on a new `Flow`. The offered data can then be picked up and handled as usual.  
+@TODO: add invoking handlers directly...
 
-Create such handler by calling the `handleAndOffer()` function instead of the `handle()` function, but add the 
+To make your stores interconnect, fritz2 offers the `EmittingHandler`, a type of handler that doesn't just take data
+as an argument but also emits data on a new `Flow`. The emitted data can then be picked up and handled as usual.  
+
+Create such handler by calling the `handleAndEmit()` function instead of the `handle()` function, but add the 
 offered data type to the type brackets: 
 
 ```kotlin
 val personStore = object : RootStore<Person>(Person(...)) {
-    val save = handleAndOffer<Person> { person ->
+    val save = handleAndEmit<Person> { person ->
         // saves the current Person
-        offer(person) 
+        emit(person) 
         person // return unchanged person
     }
 }
 ```
-The `OfferingHandler` named `save` offers the saved `Person` on its `Flow`. 
+The `EmittingHandler` named `save` emits the saved `Person` on its `Flow`. 
 Another store can be setup to handle this `Person` by connecting the handlers: 
 ```kotlin
 val personStore = ... //see above
@@ -33,13 +35,15 @@ val personListStore = object : RootStore<List<Person>>(emptyList<Person>()) {
        console.log("add new person: $person")
        list + person
     }
-}
 
-// don't forget to connect the handlers
-personStore.save handledBy personListStore.add
+    init {
+       // don't forget to connect the handlers
+       personStore.save handledBy personListStore.add
+    }
+}
 ```
 After connecting these two stores via their handlers, a saved `Person` will also be added to the list
- in `personListStore`. All depending components will be updated accordingly.
+in `personListStore`. All depending components will be updated accordingly.
 
 To see a complete example visit our 
 [validation example](https://examples.fritz2.dev/validation/build/distributions/index.html) which uses connected
