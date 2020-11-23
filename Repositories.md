@@ -5,9 +5,8 @@ nav_order: 12
 ---
 # Repositories
 
-@TODO review: fritz2 is always lowercase (aas far as I know) and should therefore also be lowercase at the beginning of a sentence (like it is throughout all other files of the docs)
 To add some sort of backend to your `Store`s you can make use of fritz2's repositories. 
-Fritz2 offers implementations of the repository-interfaces for several types of backends:
+fritz2 offers implementations of the repository-interfaces for several types of backends:
 * LocalStorage
 * REST
 
