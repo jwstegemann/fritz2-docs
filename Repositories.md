@@ -5,6 +5,7 @@ nav_order: 12
 ---
 # Repositories
 
+@TODO review: fritz2 is always lowercase (aas far as I know) and should therefore also be lowercase at the beginning of a sentence (like it is throughout all other files of the docs)
 To add some sort of backend to your `Store`s you can make use of fritz2's repositories. 
 Fritz2 offers implementations of the repository-interfaces for several types of backends:
 * LocalStorage
@@ -12,10 +13,10 @@ Fritz2 offers implementations of the repository-interfaces for several types of 
 
 ## Serializer
 
-When you defined you data class which you want to share by a `Repository`, you must define
-a `Serializer` for it first. You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
-for it. Therefore, you need to annotate you data class (here `Person`) with `@Serializable` and
-then you can write the following:
+When defining the data class you want to share via a `Repository`, you must define
+a `Serializer` for it. You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
+for this. Annotate your data class (here `Person`) with `@Serializable` and
+then write the following serializer for your class:
 
 ```kotlin
 object PersonSerializer : Serializer<Person, String> {

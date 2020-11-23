@@ -17,8 +17,8 @@ render {
 ```
 
 You can set all other attributes inside the `Tag`'s content by calling a function of the according name. 
-Every standard html attribute have two functions. One for a static value and a second one for dynamic data coming from a `Flow`.
-When it's coming from a `Flow` the attribute's value will be updated in the DOM whenever a new value appears on the `Flow`:
+Every standard html attribute has two functions. One for a static value and a second one for dynamic data coming from a `Flow`.
+When coming from a `Flow`, the attribute's value will be updated in the DOM whenever a new value appears on the `Flow`:
 ```kotlin
 val flowOfInts = ... //i.e. get it from some store
 
@@ -30,9 +30,10 @@ render {
     }
 }
 ```
-If you have a `Boolean` value to set you can set an optional parameter `trueValue` which will be set as value if the data is `true`
+If you want to set a `Boolean` value, you can set an optional parameter `trueValue` which will be set as value if the data is `true` 
+@TODO give an example of trueValue
 
-To set a value for a custom (data-) attribute, use the `attr()`-function. It works for static and dynamic values (from a `Flow`):
+To set a value for a custom (data-) attribute, use the `attr()`-function. It works for static and dynamic  (from a `Flow`) values:
 ```kotlin
 render {
     div {
