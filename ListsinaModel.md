@@ -18,10 +18,10 @@ For those cases, fritz2 offers the method `renderEach()` which creates a `Render
 Then you can create new `Tag`s based on the single list elements.
 
 @STE rework
-Binding a `Seq` in your `render` context works exactly as for a `Flow` by just calling `bind()` on it.
+Binding a `Seq` in your `render` context works exactly like binding a `Flow` - just call `bind()` on it.
 But instead of a `DomMountPoint`, a `DomMultiMountPoint` will be created.
-This kind of `MountPoint` gets a `Flow` of patches as its upstream and is therefore able to change only those
-DOM-elements that need to be changed (when you add a new element to your List for example or remove one):
+This kind of `MountPoint` accepts a `Flow` of patches as its upstream and will change only those
+DOM-elements that have actually changed (when you add a new element to your List for example or remove one):
 
 ```kotlin
 val seq = object : RootStore<List<String>>(listOf("one", "two", "three")) {

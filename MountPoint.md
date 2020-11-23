@@ -9,7 +9,7 @@ nav_order: 5
 A mount-point in fritz2 is an anchor of a `Flow` somewhere in a given structure. It is used as a placeholder when creating the structure. 
 Afterwards, each value appearing on the mounted `Flow` will be put into the structure at exactly that position. 
 
-Most of the time you will use mount-point in the browsers DOM, allowing you to mount a `Flow` of `Tag`s to some point in the 
+Most of the time you will use mount-points in the browser's DOM, allowing you to mount a `Flow` of `Tag`s to some point in the 
 html-structure you are building (e.g. using the `render { }`-context).
 
 @TODO: @STE review
