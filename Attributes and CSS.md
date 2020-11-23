@@ -31,7 +31,19 @@ render {
 }
 ```
 If you want to set a `Boolean` value, you can set an optional parameter `trueValue` which will be set as value if the data is `true` 
-@TODO give an example of trueValue
+```kotlin
+val isLow = myStore.data.map { i -> i <= 0 }
+
+render {
+    button {
+        +"My button"
+        attr("data-low", isLow, trueValue = "true")
+        // isLow == true  -> <button data-low="true">My button</button>
+        // isLow == false -> <button>My button</button>
+    }
+}
+```
+This is sometimes needed for CSS-selection or animations.
 
 To set a value for a custom (data-) attribute, use the `attr()`-function. It works for static and dynamic  (from a `Flow`) values:
 ```kotlin
