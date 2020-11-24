@@ -29,7 +29,7 @@ To use fritz2-styling, add the following dependency to your gradle build:
 
 # StyleClass
 
-The key element of fritz2-styling is the `StyleClass`, one instance of which is exaclty one css class in the resulting stylesheet. The `name`-attribute can be used whenever css classes are needed as a `String` in fritz2-core:
+The key element of fritz2-styling is the `StyleClass`, one instance of which represents exaclty one css class in the resulting stylesheet. The `name`-attribute can be used whenever css classes are needed as a `String` in fritz2-core:
 
 ```kotlin
     val height = "100%"
@@ -70,7 +70,7 @@ fun RenderContext.myComponent(height: Int, isFlex: Boolean) {
     }
 }
 ```
-Every time this component is rendered, fritz2 creates a new class name, consisting of the prefix and a calculated hash value (i.e. `myComponent-iHpEb`). This ensures that each created class has unique content, and classes that already exist are reused if the content has not changed. The prefix allows you to use semantic identifiers which makes it easy to see the source component in the resulting stylesheet. 
+Every time this component is rendered, fritz2 creates a new class name, consisting of the prefix and a calculated hash value (i.e. `myComponent-iHpEb`). This ensures that each created class has unique content, and classes that already exist are reused if the content has not changed. The prefix allows you to use semantic identifiers which makes it easy to see the source component in the resulting HTML. 
 
 
 IntelliJ uses [language injections](https://www.jetbrains.com/help/idea/using-language-injections.html), making it easy and comfortable to edit css code in kotlin files.
