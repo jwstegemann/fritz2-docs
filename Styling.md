@@ -29,7 +29,7 @@ To use fritz2-styling, add the following dependency to your gradle build:
 
 # StyleClass
 
-The key element of fritz2-styling is the `StyleClass`, one instance of which represents exaclty one css class in the resulting stylesheet. The `name`-attribute can be used whenever css classes are needed as a `String` in fritz2-core:
+The key element of fritz2-styling is the `StyleClass`, one instance of which represents exactly one css class in the resulting stylesheet. The `name`-attribute can be used whenever css classes are needed as a `String` in fritz2-core:
 
 ```kotlin
     val height = "100%"
