@@ -6,7 +6,7 @@ nav_order: 1
 ---
 # Styling DSL and Theming
 
-To make building components with unified styling even faster and simpler, fritz2 offers its own DSL which makes use of constraint-based style props based on scales defined in your theme.
+To make building components with unified styling even faster and simpler, fritz2 offers its own DSL which makes use of constraint-based style props based on scales defined in a `Theme`.
 
 ```kotlin
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
@@ -28,6 +28,7 @@ fritz2-styling offers a convenient syntax for adding responsive styles with a mo
     width(sm = { full }, lg = { "768px" })
     color { primary }
 ```
+The concrete definition of the breakpoints (by media-query) ist part of each `Theme`.
 
 In accordance with mobile-first, when no value is given for a particular size, the next smaller one will be applied. In the example above, `smaller` would be used for `md`, `lg`, and `xl`. If only one value is given, it will be used for all sizes.
  
@@ -65,25 +66,6 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 }
 ```
 
-# Theme Provider
-
-To use themed components in your application, just add a `themeProvider` component in the main render-function wrapping your content:
-
-```kotlin
-fun main() {
-    renderElement {
-        themeProvider {
-            div { +"your themed content" }
-        }
-    }.mount("target")
-}
-
-```
-
-## Accessing and changing the current theme
-
-Access the current theme via `Theme()`, and use `Theme.use(myOtherTheme)` to exchange it with another theme.
-
 ## Reusability
 
 You can predefine reusable combinations of properties which are also customizable when specified as functions:
@@ -100,6 +82,23 @@ render {
     ::p.styled(teaserText) { +"myTeaser" }
 }
 ```
+
+
+# Current Theme & Switching
+
+You can access the current `Theme` at any time by calling `Theme()`. Change it by `Theme.use(myTheme)`.
+
+Use the `render(someTheme)` function at your root to allow dynamic theme-switching and automatically re-render your content:
+
+```kotlin
+fun main() {
+    render(MyTheme()) { theme ->
+        div { +"your themed content" }
+    }.mount("target")
+}
+
+```
+
 
 ## Extensions
 
@@ -143,9 +142,15 @@ fun main() {
 
 fritz2's styling DSL does not aim to support the entirety of the CSS standard. Similar to [Styled System](https://styled-system.com/), it offers fast, type-safe, and themed access to the most important properties for adapting components and elements to the special requirements of any situation, and for re-composing them time and again.
 
-To remain as flexible as possible, values of properties can alternatively always be passed as `String`s, like `width { "73%" }`. Also, using the `css()` function allows you to influence your properties as well.
+To remain as flexible as possible, values of properties can alternatively be passed as `String`s, like `width { "73%" }`. Also, using the `css()` function allows you set properties that are not part of the DSL as well:
 
-@TODO Add a css() example that makes sense?
+```kotlin
+::p.styled {
+    css("animation: mymove 5s infinite;")
+} {
+    div { + "some animated content"}
+}
+```
 
 In addition to the usual pseudo elements and classes, the function `children()` gives access to (sub-)selectors:
 
