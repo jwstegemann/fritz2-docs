@@ -15,9 +15,9 @@ However, this approach does not yield the best results when trying to efficientl
 * Dynamically generated css classes depending on runtime variables
 * No need to distribute css files with the component code
 
-# Verwendung
+# How to use fritz2-styling 
 
-To use fritz2-styling, add the following dependency to your gradle build:
+Add the following dependency to your gradle build:
 
 ```gradle
     val jsMain by getting {
