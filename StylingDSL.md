@@ -28,7 +28,7 @@ fritz2-styling offers a convenient syntax for adding responsive styles with a mo
     width(sm = { full }, lg = { "768px" })
     color { primary }
 ```
-The concrete definition of the breakpoints (by media-query) ist part of each `Theme`.
+The concrete definition of the breakpoints (by media-query) is part of each `Theme`.
 
 In accordance with mobile-first, when no value is given for a particular size, the next smaller one will be applied. In the example above, `smaller` would be used for `md`, `lg`, and `xl`. If only one value is given, it will be used for all sizes.
  
@@ -142,7 +142,7 @@ fun main() {
 
 fritz2's styling DSL does not aim to support the entirety of the CSS standard. Similar to [Styled System](https://styled-system.com/), it offers fast, type-safe, and themed access to the most important properties for adapting components and elements to the special requirements of any situation, and for re-composing them time and again.
 
-To remain as flexible as possible, values of properties can alternatively be passed as `String`s, like `width { "73%" }`. Also, using the `css()` function allows you set properties that are not part of the DSL as well:
+To remain as flexible as possible, values of properties can alternatively be passed as `String`s, like `width { "73%" }`. Additionally, using the `css()` function allows you to set properties that are not part of the DSL:
 
 ```kotlin
 ::p.styled {

@@ -5,7 +5,7 @@ nav_order: 14
 ---
 # Integrated Styling
 
-The fritz2 core is optimized for styling with external css (siehe [Attributes and CSS](Attributes%20and%20CSS.html). This makes it easy to use css frameworks like [Bootstrap](https://getbootstrap.com/) or [Tailwind](https://tailwindcss.com/) to build you fritz2-app.
+The fritz2 core is optimized for styling with external css (siehe [Attributes and CSS](Attributes%20and%20CSS.html). This makes it easy to use css frameworks like [Bootstrap](https://getbootstrap.com/) or [Tailwind](https://tailwindcss.com/) to build your fritz2-app.
 
 However, this approach does not yield the best results when trying to efficiently develop dynamic components, which is why fritz2 offers the module `dev.fritz2:styling`. It lets you write and use css directly in your kotlin code, giving you the following advantages: 
 
