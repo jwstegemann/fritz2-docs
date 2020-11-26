@@ -100,7 +100,6 @@ registerWebComponent("my-component", MyComponent::class, "first-attr", "second-a
 
 You can then use the values of these observed attributes in your init-method as a `Flow`:
 
-@STE what does it mean?
 ```kotlin
 val first = attributeChanges("first-attr")
 

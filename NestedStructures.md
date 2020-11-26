@@ -2,11 +2,11 @@
 layout: default
 title: Nested Structures
 has_children: true
-nav_order: 8
+nav_order: 7
 ---
 # Nested Structures
 
-Most of the time, your model for a view will not be of a simple data-type or a `List`, but a complex entity, like a 
+Most of the time, your model for a view will not be of just a simple data-type but a complex entity, like a 
 person having a name, multiple addresses, an email, a date of birth, etc.
 
 In those cases, you will most likely need `Store`s for the single properties of your main entity, and - later on - for 
@@ -50,5 +50,4 @@ render {
 To keep your code well-structured, it is recommended to implement complex logic at your `RootStore` or inherit it by using interfaces. 
 However, the code above is a decent solution for small (convenience-)handlers.
 
-Now you can handle all kinds of data and structures in your `Store`s. 
-Next you might want to check, if your model is valid. In fritz2 this is done by [Validation](Validation.html).
+Your real worl data model will certainly contain lists of elements. Learn how to handle those effectivly by reading about [Lists as a Model](ListsinaModel.html)
