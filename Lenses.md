@@ -27,7 +27,7 @@ interface Lens<P,T> {
 You can easily use this interface by just implementing `get()` and `set()`. fritz2 also offers the method `buildLens()` for a short-and-sweet-experience:
 
 ```kotlin
-val innerLens = buildLens("inner", { it.inner }, { parent, value -> parent.copy(inner = value) })
+val nameLens = buildLens("name", { it.name }, { person, value -> person.copy(name = value) })
 ```
 
 No magic there. The first parameter sets an id for the `Lens`. When using `Lens`es with `SubStore`s, the id will be used to generate a valid html-id representing the path through your model. This can be used to identify your elements semantically (for automated ui-tests for example).
@@ -37,13 +37,13 @@ fritz2 offers an annotation `@Lenses` you can add to your data-classes in the `c
 your multiplatform project:
 ```kotlin
 @Lenses
-data class Outer(val inner: Inner, val value: String)
+data class Person(val name: String, val value: String)
 ```
 Using an annotation-processor, fritz2 builds a `L`-object per package from these annotations which contains all the `Lens`es you need. 
 They are named exactly like the entities and properties, so it's easy to use:
 
 ```kotlin
-val innerLens = L.Outer.inner
+val nameLens = L.Person.name
 ```
 
 You can see it in action at our [nestedmodel-example](https://examples.fritz2.dev/nestedmodel/build/distributions/index.html).

@@ -19,9 +19,9 @@ Having a `Lens` available which points to some specific property makes it very e
 property from a `Store` of the parent entity:
 
 ```kotlin
-    val outerStore = storeOf(Outer(Inner("hello"), "world"))
+    val personStore = storeOf(Person(Name("first name", "last name"), "more text"))
     // remember, the L-object is created by fritz2-gradle-plugin per package
-    val innerStore = outerStore.sub(L.Outer.inner)
+    val nameStore = personStore.sub(L.Person.name)
 ```
 
 Now you can use your `innerStore` exactly like any other `Store` to set up _two-way-databinding_, call `sub(...)` 
