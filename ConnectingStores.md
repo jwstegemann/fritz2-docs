@@ -49,4 +49,4 @@ To see a complete example visit our
 [validation example](https://examples.fritz2.dev/validation/build/distributions/index.html) which uses connected
  stores and validate a `Person` before adding it to a list of `Person`s.
 
-Most of the time you will work on much more complex structures in your data model so you will need to get `Store`s for elements "hidden" deeper in your [Nested Structures](NestedStructures.html). Let's see how fritz2 can help you here.
+Most of the time you will work on much more complex structures in your data model, so you will need to get `Store`s for elements "hidden" deeper in your [Nested Structures](NestedStructures.html). Let's see how fritz2 can help you here.

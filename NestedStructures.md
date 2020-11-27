@@ -50,4 +50,4 @@ render {
 To keep your code well-structured, it is recommended to implement complex logic at your `RootStore` or inherit it by using interfaces. 
 However, the code above is a decent solution for small (convenience-)handlers.
 
-Your real worl data model will certainly contain lists of elements. Learn how to handle those effectivly by reading about [Lists as a Model](ListsinaModel.html)
+Your real world data model will most certainly contain lists of elements. Learn how to handle them effectively by reading about [Lists as a Model](ListsinaModel.html)
