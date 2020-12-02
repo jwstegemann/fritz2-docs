@@ -21,7 +21,7 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 }
 ```
 
-fritz2-styling offers a convenient syntax for adding responsive styles with a mobile-first approach. It uses four breakpoints for the different viewport-sizes (sm, md, lg and xl):
+fritz2-styling offers a convenient syntax for adding responsive styles with a mobile-first approach. It uses four breakpoints for the different viewport-sizes (sm, md, lg and xl). You can set each property independently for these viewport-sizes:
  
 ```kotlin
     font-size(sm = { tiny }, lg = { normal })
@@ -30,7 +30,7 @@ fritz2-styling offers a convenient syntax for adding responsive styles with a mo
 ```
 The concrete definition of the breakpoints (by media-query) is part of each `Theme`.
 
-In accordance with mobile-first, when no value is given for a particular size, the next smaller one will be applied. In the example above, `smaller` would be used for `md`, `lg`, and `xl`. If only one value is given, it will be used for all sizes.
+In accordance with mobile-first, when no value is given for a particular size, the next smaller one will be applied. In the example above, the font-size will be `tiny` for `sm` and `md` and `normal` for  `lg` and `xl`. If only one value is given, it will be used for all sizes.
  
 The following scales are defined in a theme for different properties to achieve a consistent design. Also, simply changing these definitions in the theme alters the whole look of the application and all affected components. That way you can easily define themes according to certain requirements like a high contrast theme, or one with large fonts, both of which can be chosen dynamically at runtime.
  
