@@ -45,38 +45,37 @@ As icon set, we chose to include the beautiful [mono icons](https://icons.mono.c
 For a first impression, here is a screenshot from our showcase app:
 ![components example basics](images/components_showcase_1.png)
 
-@Todo Is there a link missing in this sentence?
-Please refer to this for a detailed overview about the components and their features.
+Please refer to this [project](https://github.com/jwstegemann/fritz2-kitchensink) for a detailed overview about the components and their features.
 
 fritz2 currently offers the following components:
 
-@todo camel case or what
 - Layout:
   - ``flexbox``
   - ``gridbox``
   - ``stackUp``
   - ``lineUp``
-- Overlay:
-  - ``tooltip``
-  - ``popover``
-  - ``modal``
 - Forms
   - ``pushButton``
   - ``clickButton``
   - ``inputField``
+  - ``textarea``
   - ``switch``
   - ``checkBox``
   - ``checkBoxGroup``
   - ``radioGroup``
   - ``formControl``
-- Others:
-  - ``icon``
+- Feedback
   - ``spinner``
+- Overlay:
+  - ``tooltip``
+  - ``popover``
+  - ``modal``
+- Icons:
+  - ``icon``
   
 The following components will be added for the [0.9 release](https://github.com/jwstegemann/fritz2/milestone/5):
 
 - Forms
-  - ``textArea``
   - ``select``
   - ``dataTable``
 - Feedback:
