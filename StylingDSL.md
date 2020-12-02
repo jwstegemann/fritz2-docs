@@ -10,11 +10,11 @@ To make building components with unified styling even faster and simpler, fritz2
 
 ```kotlin
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
-    ::img.styled {
+    (::img.styled {
         boxShadow { flat }
         radius { large }
         width(sm = { small }, md = { smaller })
-    } {
+    }) {
         src(srcUrl)
         alt(alternativeText)
     }
@@ -79,7 +79,7 @@ val teaserText: Style<BasicParams> = {
 }
 
 render {
-    ::p.styled(teaserText) { +"myTeaser" }
+    (::p.styled(teaserText)) { +"myTeaser" }
 }
 ```
 
