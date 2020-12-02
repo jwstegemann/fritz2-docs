@@ -38,14 +38,17 @@ Instead of reinventing the wheel, we chose to adopt its beautiful structure, loo
 composition for our fritz2 based approach. Have a look at this amazing project and get inspiration for
 components we do not deliver per default!
 
-As icon set, we chose to include the beautiful [mono icons](https://icons.mono.company/). Their sufficient, but not overwhelming variety of icons fit our needs perfectly. Their look and feel is clear and consistent, which makes them a joy to apply to our default theme and use them within our components. 
+As icon set, we chose to include the beautiful [mono icons](https://icons.mono.company/). Their sufficient, but not 
+overwhelming variety of icons fit our needs perfectly. Their look and feel is clear and consistent, 
+which makes them a joy to apply to our default theme and use them within our components. 
   
 ## Showcase
 
 For a first impression, here is a screenshot from our showcase app:
 ![components example basics](images/components_showcase_1.png)
 
-Please refer to this [project](https://github.com/jwstegemann/fritz2-kitchensink) for a detailed overview about the components and their features.
+Please refer to this [project](https://github.com/jwstegemann/fritz2-kitchensink) for a detailed overview about the 
+components and their features.
 
 fritz2 currently offers the following components:
 
@@ -112,15 +115,18 @@ As you can see in this example, the first component called `stackUp` is just a f
 render context. It only takes one parameter here which requires a functional expression in order to build the 
 component. Within such a build context, the appearance, behaviour, and functionality of the component can be configured.
 Each component offers specific functions within its build context which are tailored to the task of the component. 
-To keep this example simple, only the essential ``items`` function in the ``stackUp``s build context was used in order to declare the sub-elements of this vertical layout.
+To keep this example simple, only the essential ``items`` function in the ``stackUp``s build context was used in order 
+to declare the sub-elements of this vertical layout.
 
-Within the ``items`` sub-context of the ``stackUp`` component, arbitrary elements with a ``RenderContext`` receiver can be inserted, meaning every HTML element or component. 
+Within the ``items`` sub-context of the ``stackUp`` component, arbitrary elements with a ``RenderContext`` receiver 
+can be inserted, meaning every HTML element or component. 
 Our example uses three ``p``-functions and one ``icon`` function. The former construct basic HTML paragraphs,
 the latter is a component for SVG based icons. As you can see, we mix basic HTML elements with
 components in the same declarative context without special ceremony or restriction.  
 
-Since every fritz2 component is defined as an extension method to the ``RenderContext`` interface, you can use them in any 
-place that offers such an object. This is how fritz2 implements structural composition of its components, which is one of the mentioned key features.
+Since every fritz2 component is defined as an extension method to the ``RenderContext`` interface, you can use them in 
+any place that offers such an object. This is how fritz2 implements structural composition of its components, 
+which is one of the mentioned key features.
 
 You can change the visual appearance of this layout component in different ways:
  - configure specific properties within the build context
@@ -129,7 +135,7 @@ You can change the visual appearance of this layout component in different ways:
 ```kotlin
 render {
     stackUp({ // provide a styling expression via the first parameter
-        alignItems { start }
+        alignItems { center }
         padding { small }
         background {
             color { light }
@@ -205,17 +211,24 @@ div {
 
 ![components example getting interactive](images/components_gettinginteractive_1.png)
 
-First of all, a simple ``Boolean`` [store](Store.html) is created for toggling between _visible_ and _hidden_, which will be used to show our information only when the store's  state is _true_. 
+First of all, a simple ``Boolean`` [store](Store.html) is created for toggling between _visible_ and _hidden_, 
+which will be used to show our information only when the store's  state is _true_. 
 
-Then, a ``pushButton`` component is created to toggle that state. As was previously shown, a functional expression is used to access the build context specific functions of the button component. Providing a ``Flow<String>`` to the text function declares a dynamic label. Its content is derived by mapping the boolean flow of our toggle-store to fitting command strings for the use case:
+Then, a ``pushButton`` component is created to toggle that state. As was previously shown, a functional expression
+is used to access the build context specific functions of the button component. Providing a ``Flow<String>`` to the 
+text function declares a dynamic label. Its content is derived by mapping the boolean flow of our toggle-store to 
+fitting command strings for the use case:
 
  - ``hide`` if the text is _visible_
  - ``show`` if the text is _hidden_
  
 Next, an ``events`` context is opened in order to plug the button click event into the toggle-store's 
 update handler. The ``pushButton`` component explicitly offers this context for managing the 
-[events](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events) of the underlying HTML ``button { }`` element.
-Many interactive components offer such a mechanism, often by using the same name ``events`` (for exposing the actual DOM events), sometimes also with more specific functions for specific flows. The principle always remains the same: fritz2 offers a place to grab and use the events of each component.
+[events](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events) of the underlying 
+HTML ``button { }`` element.
+Many interactive components offer such a mechanism, often by using the same name ``events`` 
+(for exposing the actual DOM events), sometimes also with more specific functions for specific flows. 
+The principle always remains the same: fritz2 offers a place to grab and use the events of each component.
 
 ## Composition on steroids
 
