@@ -328,8 +328,8 @@ Every component factory function of fritz2's components follows these patterns. 
 Don't be afraid of the amount of parameters, you will get used to them soon. Often you won't need to set up all or even any 
 of them (as shown in the first example). If you would like to increase readability, use [named arguments](https://kotlinlang.org/docs/reference/functions.html#named-arguments).
  
-{% include tip.html content="If you want to write your own components, we encourage you to adopt these 
+If you want to write your own components, we encourage you to adopt these 
 signature rules. They allow freely combining and integrating your components with ours,
-and offer a consistent API for your users." %}
+and offer a consistent API for your users.
   
 This is basically what you need to know about our components API so far.
