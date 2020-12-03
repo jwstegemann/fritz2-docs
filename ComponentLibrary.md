@@ -21,12 +21,12 @@ We believe that it is more important to offer...
   
  ... in order to...
   - use
-  - customize 
+  - customize
   - compose existing components and
   - write new ones from scratch
   
 In contrast to solely providing the means to creating [components](Components.html) without deeper restrictions, this library provides
- ready to use components that follow consistent rules and APIs, and always considers customizing and
+ready to use components that follow consistent rules and APIs, and always considers customizing and
 composition aspects first class citizens.
 
 You are in no way forced to use our components - they are now and will remain totally
