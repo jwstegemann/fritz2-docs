@@ -63,6 +63,6 @@ input {
 }
 ```
 In this case, only the attribute value will change when the model in your store changes. 
-fritz2 offers [pre-defined properties (at each Tag)](https://api.fritz2.dev/core/dev.fritz2.dom.html/) for every HTML5-attribute.
+fritz2 offers [pre-defined properties (at each Tag)](https://api.fritz2.dev/core/core/dev.fritz2.dom.html/index.html) for every HTML5-attribute.
 
 But how can you change the model-data in a store? Let's have a look at [State Management](StateManagement.html).

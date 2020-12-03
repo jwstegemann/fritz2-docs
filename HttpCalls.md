@@ -13,7 +13,7 @@ val usersApi = http("https://reqresss.in/api/users")
             .acceptJson()
             .contentType("application/json")
 ```
-The remote service offers some [convenience-methods](https://api.fritz2.dev/core/dev.fritz2.remote/-request/) to configure 
+The remote service offers some [convenience-methods](https://api.fritz2.dev/core/core/dev.fritz2.remote/-request/index.html) to configure 
 your API-calls, like the `acceptJson()` above which simply adds the correct header to each request sent using the template.
 
 Sending a request is pretty straightforward:

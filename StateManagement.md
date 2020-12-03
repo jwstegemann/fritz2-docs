@@ -51,8 +51,8 @@ render {
 Calling `values()` on it extracts the current value from the input.
 Whenever such an event is raised, a new value appears on the `Flow` and is processed by the `update`-Handler of the 
 `Store` to update the model. Event-flows are available for 
-[all HTML5-events](https://api.fritz2.dev/core/dev.fritz2.dom/-with-events/).
-There are some more [convenience functions](https://api.fritz2.dev/core/dev.fritz2.dom/) to help you to extract data 
+[all HTML5-events](https://api.fritz2.dev/core/core/dev.fritz2.dom/-with-events/index.html).
+There are some more [convenience functions](https://api.fritz2.dev/core/core/dev.fritz2.dom/index.html) to help you to extract data 
 from an event or control event-processing.
 
 You can map the elements of the `Flow` to a specific action-type before connecting it to the `Handler`. 

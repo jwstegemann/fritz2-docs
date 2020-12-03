@@ -75,7 +75,7 @@ and mark an element of your choice with an id to later mount your fritz2-compone
 
 `app.kt` is the starting point of your fritz2 app, so make sure it has a `main`-function. 
 Inside `main`, you might want to create some content by creating a `render`-context, 
-adding [some `Tag`s](https://api.fritz2.dev/core/dev.fritz2.dom.html/-html-elements) and 
+adding [some `Tag`s](https://api.fritz2.dev/core/core/dev.fritz2.dom.html/-render-context/index.html) and 
 mount it to the DOM of your `index.html`:
 
 ```kotlin
