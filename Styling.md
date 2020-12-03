@@ -32,21 +32,21 @@ Add the following dependency to your gradle build:
 The key element of fritz2-styling is the `StyleClass`, one instance of which represents exactly one css class in the resulting stylesheet. The `name`-attribute can be used whenever css classes are needed as a `String` in fritz2-core:
 
 ```kotlin
-    val height = "100%"
-    val useFlex = true
+val height = "100%"
+val useFlex = true
 
 
-    val myStyle: StyleClass = staticStyle("myClassName", """
-            min-height: $height;
-            flex-direction: row;
-            align-items: stretch;
-            color: rgb(52, 58, 64);
-            display: ${if (useFlex) "flex" else "block"};
-    """)
+val myStyle: StyleClass = staticStyle("myClassName", """
+        min-height: $height;
+        flex-direction: row;
+        align-items: stretch;
+        color: rgb(52, 58, 64);
+        display: ${if (useFlex) "flex" else "block"};
+""")
 
-    div(myStyle.name) {
-        +"here I am"
-    }
+div(myStyle.name) {
+    +"here I am"
+}
 ````
 
 The factory method `staticStyle` compiles the passed css code and inserts a class named `myClassName` into a stylesheet managed by fritz2. It uses the [stylis] (https://stylis.js.org/) css compiler, which offers a slightly extended syntax over pure css. It allows embedded selectors as well as media classes and namespaces. 
