@@ -127,13 +127,11 @@ In all render functions, the current theme is accessible via parameter. You can 
 fun main() {
     currentTheme = MyTheme()
 
-    renderElement { theme: ExtendedTheme ->
-        themeProvider {
-            ::p.styled {
-                color { theme.importantColor }
-                theme.teaserText()
-            } { +"some great looking text"}
-        }
+    render(DefaultTheme()) { theme: ExtendedTheme ->
+        (::p.styled {
+            color { theme.importantColor }
+            theme.teaserText()
+        }) { +"some great looking text"}
     }.mount("target")
 }
 ```
