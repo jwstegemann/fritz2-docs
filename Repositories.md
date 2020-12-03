@@ -5,17 +5,17 @@ nav_order: 12
 ---
 # Repositories
 
-To add some sort of backend to your `Store`s you can make use of fritz2's repositories. fritz2 offers implementations of the repository-interfaces for several types of backends:
+To add some sort of backend to your `Store`s you can make use of fritz2's repositories. 
+fritz2 offers implementations of the repository-interfaces for several types of backends:
 * LocalStorage
 * REST
-* more like WebSockets, GraphQL etc. soon to be added
 
 ## Serializer
 
-When you defined you data class wich you want to share by a `Repository`, you must define
-a `Serializer` for it first. You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
-for it. Therefore, you need to annotate you data class (here `Person`) with `@Serializable` and
-then you can write the following:
+When defining the data class you want to share via a `Repository`, you must define
+a `Serializer` for it. You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
+for this. Annotate your data class (here `Person`) with `@Serializable` and
+then write the following serializer for your class:
 
 ```kotlin
 object PersonSerializer : Serializer<Person, String> {
@@ -44,7 +44,7 @@ We differentiate two kinds of repositories:
 
 * an `EntityRepository` deals with one single entity of a given type. It offers the usual CRUD-methods:
   * `load(entity, id)`
-  * `saveOrUpdate(entity)`
+  * `addOrUpdate(entity)`
   * `delete(entity)`
   
 * a `QueryRepository` deals with a `List` of instances of a given type. It offers the following methods to query or 
@@ -99,7 +99,7 @@ val queryStore = object : RootStore<List<Person>>(emptyList()) {
     val delete = handle<String>(execute = rest::delete)
 
     init {
-        action(PersonQuery()) handledBy query
+        query(PersonQuery())
     }
 }
 ```

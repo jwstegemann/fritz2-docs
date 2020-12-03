@@ -12,7 +12,7 @@ To use fritz2, you have to set up a Kotlin multiplatform-project. To do so you c
 
 ```gradle
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.7"
+    id("dev.fritz2.fritz2-gradle") version "0.8"
 }
 
 repositories {
@@ -27,6 +27,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib"))
+                // implementation("dev.fritz2:styling:0.8")
+                // implementation("dev.fritz2:components:0.8")
             }
         }
         val jvmMain by getting {
@@ -55,7 +57,6 @@ We recommend organizing your source code like this:
           * app.kt (or choose any other name)
       * resources
         * index.html
-        * styling.css
 
 The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build 
 and mark an element of your choice with an id to later mount your fritz2-components to:
@@ -63,7 +64,7 @@ and mark an element of your choice with an id to later mount your fritz2-compone
 ```html
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="styling.css">
+    <title>Your title</title>
   </head>
   <body id="target">
     Loading...
@@ -78,15 +79,12 @@ adding [some `Tag`s](https://api.fritz2.dev/core/dev.fritz2.dom.html/-html-eleme
 mount it to the DOM of your `index.html`:
 
 ```kotlin
-package <your base package>
-import dev.fritz2.dom.html.render
-import dev.fritz2.dom.mount
-
 fun main() {
     render {
+        h1 { +"My App" }
         div("some-fix-css-class") {
             p(id = "someId") {
-                text("Hello World!")
+                +"Hello World!"
             }
         }
     }.mount("target")
@@ -116,7 +114,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib"))
-                implementation("dev.fritz2:core:0.8-SNAPSHOT") // add the newer snapshot version here
+                implementation("dev.fritz2:core:0.9-SNAPSHOT") // add the newer snapshot version here
+                // implementation("dev.fritz2:styling:0.9-SNAPSHOT")
+                // implementation("dev.fritz2:components:0.9-SNAPSHOT")
             }
         }
         ...

@@ -10,7 +10,7 @@ With fritz2, you can easily use [WebComponents](https://webcomponents.org) in an
 ```kotlin
 render {
     div("weather-card") {
-        h2 { city.bind() }
+        h2 { city.asText() }
         custom("m3-stars") {
             attr("max", "5")
             attr("current", "3.5")
@@ -41,7 +41,7 @@ dependencies {
 ```kotlin
 @JsModule("@mat3e-ux/stars")
 @JsNonModule
-abstract external class Stars() : HTMLElement
+abstract external class Stars : HTMLElement
 ```
 
 Depending on how the component is built, you might have to register it with the browser:
@@ -53,17 +53,15 @@ fun main(args: Array<String>) {
 }
 ```
 
-We cannot provide typesafe attributes for custom elements, but you can implement a `Tag` and provide an extension function for `HtmlElements`:
+We cannot provide typesafe attributes for custom elements, but you can implement a `Tag` and provide an extension function for `RenderContext`:
 
 ```kotlin
-class M3Stars() : Tag<HTMLElement>("m3-stars"),
-    WithText<HTMLButtonElement> {
-    var max: Flow<Int> by AttributeDelegate
-    var current: Flow<Float> by AttributeDelegate
+class M3Stars(job: Job) : Tag<HTMLElement>("m3-stars", job = job), WithText<HTMLElement> {
+    fun max(value: Flow<Int>) = attr("max", value.asString())
+    fun current(value: Flow<Float>) = attr("current", value.asString())
 }
 
-fun m3Stars(content: M3Stars.() -> Unit): M3Stars
-    register(M3Stars(), content)
+fun RenderContext.m3Stars(content: M3Stars.() -> Unit): M3Stars = register(M3Stars(job), content)
 ```
 
 ## Build a WebComponent
@@ -77,9 +75,9 @@ class MyComponent : WebComponent<HTMLParagraphElement>() {
         // setStylesheet(shadowRoot, """p { border: 1px solid red; }""")
    
         // create your Stores, etc.
-        return render {
-            p() {
-                text("I am a WebComponent")
+        return renderElement {
+            p {
+                +"I am a WebComponent"
             }
         }
     }
@@ -97,7 +95,7 @@ fun main(args: Array<String>) {
 To observe one or more arguments, just add them to the registration:
 
 ```kotlin
-    registerWebComponent("my-component", MyComponent::class, "first-attr", "second-attr")
+registerWebComponent("my-component", MyComponent::class, "first-attr", "second-attr")
 ```
 
 You can then use the values of these observed attributes in your init-method as a `Flow`:

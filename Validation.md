@@ -14,7 +14,7 @@ This interface takes three type-parameters:
 * a type for metadata you want to forward from your `Handler`s to your validation (or `Unit` if you do not need this)
 
 Put your validation code in the `commonMain` section of your multiplatform-project where your data models
- are located as well. Code in `commonMain` can be used in `jsMain` (frontend) and `jvmMain` (backend). 
+are located as well. Code in `commonMain` can be used in `jsMain` (frontend) and `jvmMain` (backend). 
 
 In the `commonMain` section write something like this:
 ```kotlin
@@ -81,11 +81,11 @@ You can handle this like any other `Flow` of a `List`, for example by rendering 
 ```kotlin
 render {
     ul {
-        store.validator.msgs.each(Message::id).render {
+        store.validator.msgs.renderEach(Message::id) {
             li(baseClass = it.severity.name.toLowerCase()) {
-                text(it.text)
+                +it.text
             }
-        }.bind()
+        }
     }
 }
 ```

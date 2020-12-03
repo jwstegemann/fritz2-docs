@@ -19,15 +19,22 @@ val store = object : RootStore<String>("") {
     }
 }
 ```
-Whenever a `String` is sent to the `append`-`Handler`, it updates the model by appending the text to its current model. `clear` is a `Handler` that doesn't need any information to do its work, so the second parameter can be omitted.
+Whenever a `String` is sent to the `append`-`Handler`, it updates the model by appending the text to its current model.
+`clear` is a `Handler` that doesn't need any information to do its work, so the second parameter can be omitted.
 
-Since everything in fritz2 is reactive, most of the time you want to connect a `Flow` of actions to the `Handler` instead of calling it directly:
+Since everything in fritz2 is reactive, most of the time you want to connect a `Flow` of actions to the `Handler` instead
+of calling it directly which is also possible:
 
 ```kotlin
-someFlowOfStrings handledBy store.append
+someFlowOfString handledBy store.append
+//or
+store.append("someValueOfString")
 ```
 
-Each `Store` inherits a `Handler` called `update`, accepting the same type as the `Store` as its action. It updates the `Store`'s value to the new value it receives. You can use this handler to conveniently implement _two-way-databinding_ by using the `changes` event-flow of an `input`-`Tag`, for example:
+Each `Store` inherits a `Handler` called `update`, accepting the same type as the `Store` as its action.
+It updates the `Store`'s value to the new value it receives.
+You can use this handler to conveniently implement _two-way-databinding_ by using the `changes` event-flow
+of an `input`-`Tag`, for example:
 
 ```kotlin
 val store = RootStore<String>("")
@@ -54,25 +61,25 @@ You may also use any other source for a `Flow` like recurring timer events or ev
 
 If you need to purposefully fire an action at some point in your code (to init a [Store] for example) use 
 ```kotlin
-//action with value inside Store
-action(someValue) handledBy someStore.someHandler
+//call handler with data
+someStore.someHandler(someValue)
 
-//action without value anywhere else
-action() handledBy someStore.someHandler
+//call handler without data
+someStore.someHandler()
 ```
 
 If the content of your `Store` is not bound anywhere but need its handler's code to be executed whenever an action is available, 
 you have to explicitly `watch()` it:
 
 ```kotlin
-    val store = object : RootStore<Whatever> {
-        val printMessage = handle { model ->
-            console.log("some message")
-            model
-        }
+val store = object : RootStore<Whatever> {
+    val printMessage = handle { model ->
+        console.log("some message")
+        model
     }
+}
 
-    store.data.watch()
+store.data.watch()
 ```
 
 Next we will have a look at how to use [Lists as a model](ListsinaModel.html).

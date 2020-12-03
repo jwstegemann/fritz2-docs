@@ -15,7 +15,7 @@ the values are retrieved one by one. fritz2 relies on `Flow`s to represent value
 
 A `Flow` is built from a source which creates the values. This source could be your model or the events raised by an element, 
 for example. On the other end of the `Flow`, a simple function called for each element collects the values one by one. 
-Between those two ends, various actions can be taken on the data (formatting strings, creating HTML-Tags out of your model data, filtering the values, etc).
+Between those two ends, various actions can be taken on the data (formatting strings, creating html-tags out of your model data, filtering the values, etc).
 
 The great thing about `Flow`s is that they are _cold_, which means that nothing is calculated before the result is needed. 
 This makes them perfect for fritz2's use case.

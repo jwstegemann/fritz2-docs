@@ -57,7 +57,7 @@ render {
     div {
         ...
         button {
-            text("add programmer")
+            +"add programmer"
             clicks.map {
                 "just a name" // wherever you get this from...
             } handledBy userStore.addUser
