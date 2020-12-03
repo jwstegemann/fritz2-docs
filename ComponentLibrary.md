@@ -5,9 +5,9 @@ nav_order: 16
 ---
 # Components library
 
-{% include important.html content="This is just a preview release of our components in order to gain feedback from real 
+This is just a preview release of our components in order to gain feedback from real 
 world projects. We encourage our users to try it out and give us feedback, but keep in mind that the API is not final 
-yet and therefore might change in future releases." %}
+yet and therefore might change in future releases.
 
 Beginning with the [release 0.8](https://github.com/jwstegemann/fritz2/releases/tag/untagged-950f0551d012cc3256f3) 
 fritz2 offers its own components library that covers basic components for creating modern HTML based user interfaces. 
@@ -21,17 +21,17 @@ We believe that it is more important to offer...
   
  ... in order to...
   - use
-  - customize 
+  - customize
   - compose existing components and
   - write new ones from scratch
   
 In contrast to solely providing the means to creating [components](Components.html) without deeper restrictions, this library provides
- ready to use components that follow consistent rules and APIs, and always considers customizing and
+ready to use components that follow consistent rules and APIs, and always considers customizing and
 composition aspects first class citizens.
 
-{% include note.html content="You are in no way forced to use our components - they are now and will remain totally
+You are in no way forced to use our components - they are now and will remain totally
 optional. You will always be free to ignore our approach and do something completely different. The
-fritz2 core will never depend on components." %}
+fritz2 core will never depend on components.
 
 Our components are heavily inspired by the incredible [Chakra UI](https://chakra-ui.com/) components library.
 Instead of reinventing the wheel, we chose to adopt its beautiful structure, look and feel, and ease of
