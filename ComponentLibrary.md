@@ -5,9 +5,9 @@ nav_order: 16
 ---
 # Components library
 
-{% include important.html content="This is just a preview release of our components in order to gain feedback from real 
+This is just a preview release of our components in order to gain feedback from real 
 world projects. We encourage our users to try it out and give us feedback, but keep in mind that the API is not final 
-yet and therefore might change in future releases." %}
+yet and therefore might change in future releases.
 
 Beginning with the [release 0.8](https://github.com/jwstegemann/fritz2/releases/tag/untagged-950f0551d012cc3256f3) 
 fritz2 offers its own components library that covers basic components for creating modern HTML based user interfaces. 
@@ -29,9 +29,9 @@ In contrast to solely providing the means to creating [components](Components.ht
  ready to use components that follow consistent rules and APIs, and always considers customizing and
 composition aspects first class citizens.
 
-{% include note.html content="You are in no way forced to use our components - they are now and will remain totally
+You are in no way forced to use our components - they are now and will remain totally
 optional. You will always be free to ignore our approach and do something completely different. The
-fritz2 core will never depend on components." %}
+fritz2 core will never depend on components.
 
 Our components are heavily inspired by the incredible [Chakra UI](https://chakra-ui.com/) components library.
 Instead of reinventing the wheel, we chose to adopt its beautiful structure, look and feel, and ease of
@@ -328,8 +328,8 @@ Every component factory function of fritz2's components follows these patterns. 
 Don't be afraid of the amount of parameters, you will get used to them soon. Often you won't need to set up all or even any 
 of them (as shown in the first example). If you would like to increase readability, use [named arguments](https://kotlinlang.org/docs/reference/functions.html#named-arguments).
  
-{% include tip.html content="If you want to write your own components, we encourage you to adopt these 
+If you want to write your own components, we encourage you to adopt these 
 signature rules. They allow freely combining and integrating your components with ours,
-and offer a consistent API for your users." %}
+and offer a consistent API for your users.
   
 This is basically what you need to know about our components API so far.
