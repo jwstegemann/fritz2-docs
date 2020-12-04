@@ -2,6 +2,7 @@
 layout: default
 title: Styling
 nav_order: 14
+has_children: true
 ---
 # Integrated Styling
 
