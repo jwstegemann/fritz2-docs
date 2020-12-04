@@ -2,7 +2,7 @@
 layout: default
 title: Styling DSL
 parent: Styling
-nav_order: 1
+nav_order: 14
 ---
 # Styling DSL and Theming
 

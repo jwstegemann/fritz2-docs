@@ -22,7 +22,7 @@ To create a component which can be called inside render-contexts directly, just 
 
 ```kotlin
 fun RenderContext.myOtherComponent(person: Person): P {
-    retrun p {
+    return p {
         +"Hello, my name is ${person.name}!"
     }
 }
