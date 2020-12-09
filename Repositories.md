@@ -5,14 +5,14 @@ nav_order: 12
 ---
 # Repositories
 
-To add some sort of backend to your `Store`s you can make use of fritz2's repositories. 
-fritz2 offers implementations of the repository-interfaces for several types of backends:
+To add some sort of backend to your `Store`s, you can make use of fritz2's repositories. 
+fritz2 offers implementations of the repository-interfaces for two types of backends:
 * LocalStorage
 * REST
 
 ## Serializer
 
-When defining the data class you want to share via a `Repository`, you must define
+When defining the data class you want to share via `Repository`, you must define
 a `Serializer` for it. You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
 for this. Annotate your data class (here `Person`) with `@Serializable` and
 then write the following serializer for your class:
@@ -83,8 +83,8 @@ val entityStore = object : RootStore<Person>(personResource.emptyEntity) {
 
 ### QueryRepository
 
-When creating a `QueryRepository` you can define a type describing the queries done by this repository and a function 
-how to execute the query defined by a given instance of this query-type. 
+When creating a `QueryRepository`, you can define a type describing the queries which are done by this repository, and a function 
+for executing the query defined by a given instance of this query-type. 
 
 ```kotlin
 data class PersonQuery(val namePrefix: String? = null)
@@ -105,15 +105,14 @@ val queryStore = object : RootStore<List<Person>>(emptyList()) {
 ```
 
 Of course the receiver and result of this function depend on the concrete implementation you use. 
-For a `RestQuery` you have to build and fire the request according to your query-object:
+For a `RestQuery`, you have to build and fire the request according to your query-object. If you do not specify a function, all entities of the defined Resource will be returned.
 
 ```kotlin
 val queryStore = restQuery<Person, String, PersonQuery>(personResource, "your url") { query ->
     get(query.namePrefix?.let {"?name=$it"}.orEmpty())
 }
 ```
-
-If you do not specify a function all entities of the defined Resource will be returned.
+For more information about the `remote` parameter of `restQuery`, please refer to the docs section [HTTP-Calls](HttpCalls.html).
 
 # Examples
 
