@@ -24,7 +24,7 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 fritz2-styling offers a convenient syntax for adding responsive styles with a mobile-first approach. It uses four breakpoints for the different viewport-sizes (sm, md, lg and xl). You can set each property independently for these viewport-sizes:
  
 ```kotlin
-    font-size(sm = { tiny }, lg = { normal })
+    fontSize(sm = { tiny }, lg = { normal })
     width(sm = { full }, lg = { "768px" })
     color { primary }
 ```
@@ -55,11 +55,11 @@ You can still pass `baseClass`, `id`, and `prefix` to styled elements, of course
 
 ```kotlin
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
-    ::img.styled({
+    (::img.styled(id = "4711", prefix = "headerImage") {
         boxShadow { flat }
         radius { large }
         width(sm = { small }, md = { smaller })
-    }, id = "4711", prefix = "headerImage") {
+    }) {
         src(srcUrl)
         alt(alternativeText)
     }
@@ -79,41 +79,51 @@ val teaserText: Style<BasicParams> = {
 }
 
 render {
-    (::p.styled(teaserText)) { +"myTeaser" }
+    (::p.styled { teaserText() }) {
+        +"myTeaser"
+    }
 }
 ```
 
 
 # Current Theme & Switching
 
-You can access the current `Theme` at any time by calling `Theme()`. Change it by `Theme.use(myTheme)`.
+You can access the current `Theme` at any time by calling `Theme()` inside a `RenderContext`.
+Change it by `Theme.use(myTheme)`.
 
 Use the `render(someTheme)` function at your root to allow dynamic theme-switching and automatically re-render your content:
 
 ```kotlin
-fun main() {
-    render(MyTheme()) { theme ->
-        div { +"your themed content" }
-    }.mount("target")
+object MyTheme: DefaultTheme() {
+    override val name = "MyTheme"
+
+    override val colors = object : Colors by super.colors {
+        override val dark = "darkblue" // overrides default color
+    }
 }
 
+render(MyTheme) {
+    p { +"Here is my darkblue text" }
+}
+
+// switch Theme later
+Theme.use(OtherTheme)
 ```
 
 
 ## Extensions
 
-Feel free to extend the theme interface with your own definitions:
-
+Feel free to extend the theme interface with your own definitions (e.g. corporate design):
 ```kotlin
 interface ExtendedTheme {
     val importantColor: ColorProperty
-    val teaserText: PredefinedBasicStyle
+    val teaserText: Style<BasicParams>
 }
 
-open class MyTheme : ExtendedTheme, DefaultTheme() {
+object MyTheme : ExtendedTheme, DefaultTheme() {
     override val importantColor = "red"
 
-    override val teaserText: PredefinedBasicStyle = {
+    override val teaserText: Style<BasicParams> = {
         fontWeight { semiBold }
         textTransform { uppercase }
         letterSpacing { large }
@@ -121,18 +131,17 @@ open class MyTheme : ExtendedTheme, DefaultTheme() {
 }
 ```
 
-In all render functions, the current theme is accessible via parameter. You can specify the specific sub-type here as well: 
+In all render functions, the current theme is accessible via a parameter. 
+You can specify the specific sub-type here as well: 
 
 ```kotlin
 fun main() {
-    currentTheme = MyTheme()
-
-    render(DefaultTheme()) { theme: ExtendedTheme ->
+    render(MyTheme) { theme ->
         (::p.styled {
             color { theme.importantColor }
             theme.teaserText()
         }) { +"some great looking text"}
-    }.mount("target")
+    }
 }
 ```
 
@@ -143,9 +152,9 @@ fritz2's styling DSL does not aim to support the entirety of the CSS standard. S
 To remain as flexible as possible, values of properties can alternatively be passed as `String`s, like `width { "73%" }`. Additionally, using the `css()` function allows you to set properties that are not part of the DSL:
 
 ```kotlin
-::p.styled {
+(::p.styled {
     css("animation: mymove 5s infinite;")
-} {
+}) {
     div { + "some animated content"}
 }
 ```
@@ -153,12 +162,12 @@ To remain as flexible as possible, values of properties can alternatively be pas
 In addition to the usual pseudo elements and classes, the function `children()` gives access to (sub-)selectors:
 
 ```kotlin
-    ::div.styled {
-        children(" > :not(:first-child)") {
-            margins { top { large } }
-        }
-    } {
-        div { +"no margin "}
-        div { +"margin "}
+(::div.styled {
+    children(" > :not(:first-child)") {
+        margins { top { large } }
     }
+}) {
+    div { +"no margin "}
+    div { +"margin "}
+}
 ```
