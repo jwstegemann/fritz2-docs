@@ -16,7 +16,7 @@ render {
             attr("current", "3.5")
         }
         // ...
-    } 
+    }
 }
 ```
 
@@ -47,7 +47,7 @@ abstract external class Stars : HTMLElement
 Depending on how the component is built, you might have to register it with the browser:
 
 ```kotlin
-fun main(args: Array<String>) {
+fun main() {
     window.customElements.define("m3-stars", Stars::class.js.unsafeCast<() -> dynamic>())
     // ...
 }
@@ -69,16 +69,10 @@ fun RenderContext.m3Stars(content: M3Stars.() -> Unit): M3Stars = register(M3Sta
 To build a WebComponent with fritz2, two steps are neccessary. First, implement your WebComponent-class: 
 
 ```kotlin
-class MyComponent : WebComponent<HTMLParagraphElement>() {
-    override fun init(element: HTMLElement, shadowRoot: ShadowRoot): Tag<HTMLParagraphElement> {
-        linkStylesheet(shadowRoot, "./myStyles.css")
-        // setStylesheet(shadowRoot, """p { border: 1px solid red; }""")
-   
-        // create your Stores, etc.
-        return renderElement {
-            p {
-                +"I am a WebComponent"
-            }
+object MyComponent : WebComponent<HTMLParagraphElement>() {
+    override fun TagContext.init(element: HTMLElement, shadowRoot: ShadowRoot): Tag<HTMLParagraphElement> {
+        return p {
+            +"I am a WebComponent"
         }
     }
 }
@@ -87,25 +81,26 @@ class MyComponent : WebComponent<HTMLParagraphElement>() {
 Next, register your component:
 
 ```kotlin
-fun main(args: Array<String>) {
-    registerWebComponent("my-component", MyComponent::class)
+fun main() {
+    registerWebComponent("my-component", MyComponent)
 }
 ```
 
 To observe one or more arguments, just add them to the registration:
 
 ```kotlin
-registerWebComponent("my-component", MyComponent::class, "first-attr", "second-attr")
+registerWebComponent("my-component", MyComponent, "first-attr", "second-attr")
 ```
 
 You can then use the values of these observed attributes in your init-method as a `Flow`:
 
 ```kotlin
-val first = attributeChanges("first-attr")
+val first = MyComponent.attributeChanges("first-attr")
 
 render {
-    //...
-    first.bind()
+    first.render { firstAttr ->
+        p { +firstAttr }
+    }
 }
 ```
 
