@@ -15,7 +15,7 @@ You can specify one or more protocols on creation. See these [docs](https://deve
 Your socket is now ready to establish a `Session` with the server, using the method `connect()`. Messages can now be exchanged between socket and server, which looks like this:
 
 ```kotlin
-val session: Session = socket.connect()
+val session: Session = websocket.connect()
 
 // receiving messages from server
 session.messages.body.onEach {
