@@ -40,17 +40,17 @@ Using simple `String`s by `StringRoute`:
 val router = router("welcome")
 
 render {
-  section {
-    router.renderElement { site ->
-      when(site) {
-          "welcome" -> div { +"Welcome" }
-          "pageA" -> div { +"Page A" }
-          "pageB" -> div { +"Page B" }
-          else -> div { +"not found" }
-      }
+    section {
+        router.data.render { site ->
+            when(site) {
+                "welcome" -> div { +"Welcome" }
+                "pageA" -> div { +"Page A" }
+                "pageB" -> div { +"Page B" }
+                else -> div { +"not found" }
+            }
+        }
     }
-  }
-}.mount("target")
+}
 ```
 
 Using a `Map` of parameters by `MapRoute`:
@@ -59,7 +59,7 @@ val router = router(mapOf("page" to "welcome"))
 
 render {
     section {
-        router.select("page").renderElement { (name, rest) ->
+        router.select("page").render { (name, other) ->
             when(name) {
                 "welcome" -> div { +"Welcome" }
                 "pageA" -> div { +"Page A" }
@@ -68,7 +68,7 @@ render {
             }
         }
     }
-}.mount("target")
+}
 ```
 A router using a `MapRoute` offers an extra `select` method which extract the values as `Pair` for the given key (here `"page"`) 
 and requires a function to map the value. Therefore, it returns a `Pair` of the current value and the complete `Map` to
@@ -86,7 +86,7 @@ val router = router(SetRoute(setOf("welcome")))
 
 render {
     section {
-        router.renderElement { route ->
+        router.data.render { route ->
             when {
                 route.contains("welcome") -> div { +"Welcome" }
                 route.contains("pageA") -> div { +"Page A" }
@@ -95,7 +95,7 @@ render {
             }
         }
     }
-}.mount("target")
+}
 ```
 
 If you want to change your current route (i.e. when an event fires), you can do so by calling `navTo`: 
@@ -106,9 +106,9 @@ render {
     button {
         +"Navigate to Page A"
         clicks.map { "pageA" } handledBy router.navTo
-    }   
+    }
 }
-// or
+// or call handler directly
 router.navTo("pageA")
 ```
 
