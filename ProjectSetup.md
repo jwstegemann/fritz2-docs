@@ -26,9 +26,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                // implementation("dev.fritz2:styling:0.8")
-                // implementation("dev.fritz2:components:0.8")
+                // implementation("dev.fritz2:components:0.9") // contains styling
+                  // implementation("dev.fritz2:styling:0.9")
             }
         }
         val jvmMain by getting {
@@ -87,7 +86,7 @@ fun main() {
                 +"Hello World!"
             }
         }
-    }.mount("target")
+    }
 }
 ```
 
@@ -113,10 +112,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                implementation("dev.fritz2:core:0.9-SNAPSHOT") // add the newer snapshot version here
-                // implementation("dev.fritz2:styling:0.9-SNAPSHOT")
-                // implementation("dev.fritz2:components:0.9-SNAPSHOT")
+                implementation("dev.fritz2:core:0.10-SNAPSHOT") // add the newer snapshot version here
+                // implementation("dev.fritz2:components:0.10-SNAPSHOT")
+                  // implementation("dev.fritz2:styling:0.10-SNAPSHOT")
             }
         }
         ...
