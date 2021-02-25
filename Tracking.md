@@ -11,7 +11,7 @@ When one of your `Handler`s contains long running actions (like server-calls, et
 Using fritz2 you can use the `tracker`-service to implement this:
 
 ```kotlin
-object store : RootStore<String>("") {
+val store = object : RootStore<String>("") {
     val running = tracker()
 
     val save = handle { model ->
@@ -22,17 +22,14 @@ object store : RootStore<String>("") {
     }
 }
 
-// ...
-
 render {
     button("btn") {
         className(store.running.map {
-            it?.let {"spinner"}.orEmpty()
+            it.let { "spinner" }.orEmpty()
         })
         +"save"
-        clicks handledBy store.saveOrUpdate
+        clicks handledBy store.save
     }
-    
 }
 ```
 The service provides you with a `Flow` representing the description of the currently running transaction or `null`.
