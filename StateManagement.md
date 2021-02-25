@@ -44,7 +44,7 @@ render {
         value = store.data
         changes.values() handledBy store.update
     }
-}.mount("target")
+}
 ```
 
 `changes` in this example is a `Flow` of events created by listening to the `Change`-Event of the underlying input-element. 

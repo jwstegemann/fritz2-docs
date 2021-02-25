@@ -8,14 +8,17 @@ nav_order: 4
 It's very easy to create a lightweight reusable component with fritz2:
 
 ```kotlin
-val myComponent = render {
+fun RenderContext.myComponent() {
     p {
-        text("This is the smallest valid stateless component")
-        myStore.data.bind()
+        +"This is the smallest valid stateless component"
     }
 }
-```
 
+render {
+    myComponent()
+}
+```
+@TODO
 fritz2 doesn't force you to build your components a certain way - you can use every single Kotlin-language-feature you like.
 To create a component which can be called inside render-contexts directly, just specify the appropriate receiver
  `RenderContext`:
@@ -32,7 +35,7 @@ render {
     div {
         myOtherComponent(somePerson)
     }
-}.mount("target")
+}
 
 // or with Flows
 
@@ -45,7 +48,7 @@ render {
             }
         }
     }
-}.mount("target")
+}
 ```
 
 To create more nested components do the following:
@@ -75,7 +78,7 @@ render {
             clicks handledBy someStore.someHandler   
         }
     }
-}.mount("target")
+}
 ```
 
 Since stateless components alone are not that exciting, go on and read about the fritz2 

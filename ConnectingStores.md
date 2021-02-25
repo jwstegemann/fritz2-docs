@@ -8,7 +8,7 @@ nav_order: 6
 
 Most real-world applications contain multiple stores which need to be linked to properly react to model changes.
 
-@TODO: add invoking handlers directly...
+@TODO: add invoking handlers directly... (already described in StateManagment.md)
 
 To make your stores interconnect, fritz2 offers the `EmittingHandler`, a type of handler that doesn't just take data
 as an argument but also emits data on a new `Flow`. The emitted data can then be picked up and handled as usual.  

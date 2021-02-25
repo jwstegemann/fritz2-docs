@@ -23,7 +23,7 @@ render {
     p {
         s.data.asText()
     }
-}.mount("target")
+}
 ```
 
 By calling `s.data.asText()` a [MountPoint](MountPoint.html) is created and collects your model values. 
@@ -37,7 +37,7 @@ render {
     p {
         s.data.map { "you have entered ${it.length} characters so far." }.asText()
     }
-}.mount("target")
+}
 ```
 
 To combine data from two or more stores you can use the `combine` method:
@@ -51,7 +51,7 @@ render {
             "Your full name is: $firstName $lastName"
         }.asText()
     }
-}.mount("target")
+}
 ```
 Of course, you can also use a `RootStore<T>` with a complex model which contains all data that you need in one place.
 Therefore, take a look at [Nested Structures](NestedStructures.html).

@@ -46,13 +46,13 @@ render {
         // insert your form here
     
         button("btn") {
-            className = store.history.available.map { if (it) "" else "hidden" }
+            className(store.history.available.map { if (it) "" else "hidden" })
             +"Undo"
             
-            clicks handledBy EntityStore.undo
+            clicks handledBy store.undo
         }
     }
-}.mount("target")
+}
 ```
 
 To see a more mature undo function in action, go to our [repositories example](https://examples.fritz2.dev/repositories/build/distributions/index.html).

@@ -7,8 +7,17 @@ nav_order: 14
 
 In html you can only use `Strings` in your attributes like in the `value` attribute of `input {}`. To use other data 
 types in your model you have to specify how to represent a specific value as `String` (e.g. Number, Currency, Date). 
-When you work with `input {}` you also need parse the entered text back to your data type. 
-fritz2 provides a special function `format` for this, which creates a `Lens<P, String>` for you:
+When you work with `input {}` you also need parse the entered text back to your data type.
+For all Kotlin basic types there is a convenince function `asString()` which generates a `Lens` from this type to `String`
+and vice versa.
+
+```kotlin
+val ageLens: Lens<Person, String> = L.Person.age.asString()
+val ageStore = myStore.sub(ageLens)
+ageStore.data // Flow<String> instead of Flow<Int>
+```
+
+fritz2 also provides a special function `format()` for creating a `Lens<P, String>` for special types that are not basic:
 
 ```kotlin
 fun <P> format(parse: (String) -> P, format: (P) -> String): Lens<P, String>

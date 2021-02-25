@@ -38,6 +38,6 @@ render {
             div { +it }
         }
         div { +"3" }
-    } // render 1, 3, 2
+    } // renders 1, 3, 2
 }
 ```

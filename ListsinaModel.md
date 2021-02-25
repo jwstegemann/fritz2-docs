@@ -47,7 +47,7 @@ render {
             clicks handledBy seq.addItem
         }
     }
-}.mount("target")
+}
 ```
 
 `renderEach{ }` allows you to use _one-way-databinding_ when working with the elements in your `List` out of the box. 
@@ -80,7 +80,7 @@ render {
             ...
         }
     }
-}.mount("target")
+}
 ```
 
 If you have to manipulate your `Store`'s data-flow before rendering the elements you can do so and call `renderEach` on the resulting `Flow` and get your `Store` by simply calling `myListStore.sub(myElement)` in your `renderEach`.

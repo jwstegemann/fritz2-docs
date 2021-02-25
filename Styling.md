@@ -20,10 +20,10 @@ However, this approach does not yield the best results when trying to efficientl
 
 Add the following dependency to your gradle build:
 
-```gradle
-    val jsMain by getting {
+```kotlin
+    val commonMain by getting {
         dependencies {
-            implementation("dev.fritz2:styling:<fritz2-version>"))
+            implementation("dev.fritz2:styling:<fritz2-version>")
         }
     }
 ```
@@ -36,17 +36,18 @@ The key element of fritz2-styling is the `StyleClass`, one instance of which rep
 val height = "100%"
 val useFlex = true
 
+val myStyle: StyleClass = staticStyle("myClassName", css = """
+            min-height: $height;
+            flex-direction: row;
+            align-items: stretch;
+            color: rgb(52, 58, 64);
+            display: ${if (useFlex) "flex" else "block"};
+        """)
 
-val myStyle: StyleClass = staticStyle("myClassName", """
-        min-height: $height;
-        flex-direction: row;
-        align-items: stretch;
-        color: rgb(52, 58, 64);
-        display: ${if (useFlex) "flex" else "block"};
-""")
-
-div(myStyle.name) {
-    +"here I am"
+render {
+    div(myStyle.name) {
+        +"here I am"
+    }
 }
 ````
 
@@ -58,13 +59,13 @@ Use `style` to create dynamic classes:
 
 ```kotlin
 fun RenderContext.myComponent(height: Int, isFlex: Boolean) {
-    val myStyle: StyleClass = style("""
-            min-height: ${height}%;
-            flex-direction: row;
-            align-items: stretch;
-            color: rgb(52, 58, 64);
-            display: ${if (isFlex) "flex" else "block"};
-    """, "myComponent")
+    val myStyle: StyleClass = style(css = """
+                        min-height: ${height}%;
+                        flex-direction: row;
+                        align-items: stretch;
+                        color: rgb(52, 58, 64);
+                        display: ${if (isFlex) "flex" else "block"};
+                """, "myComponent")
 
     div(myStyle.name) {
         +"here I am"
