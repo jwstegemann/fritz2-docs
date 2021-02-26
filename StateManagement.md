@@ -41,7 +41,7 @@ val store = RootStore<String>("")
 
 render {
     input {
-        value = store.data
+        value(store.data)
         changes.values() handledBy store.update
     }
 }
@@ -72,7 +72,7 @@ If the content of your `Store` is not bound anywhere but need its handler's code
 you have to explicitly `watch()` it:
 
 ```kotlin
-val store = object : RootStore<Whatever> {
+val store = object : RootStore<Whatever>(initialWhatever) {
     val printMessage = handle { model ->
         console.log("some message")
         model
