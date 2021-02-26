@@ -42,7 +42,7 @@ kotlin {
 ```
 
 ## Pre-release builds
-If you want get the newest snapshot-builds of fritz2 before we release them add the 
+If you want to use the newest snapshot-builds of fritz2 before we release them add the 
 following lines to your `build.gradle.kts`:
 ```gradle
 ...

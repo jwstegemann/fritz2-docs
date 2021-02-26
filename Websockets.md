@@ -27,7 +27,6 @@ session.send("Hello")
 ```
 
 As you can see, `Session` returns a `Flow` of `MessageEvent`s in messages. When a new message from the server arrives, a new event pops up on the `Flow`. Get the content of the message with one of the following methods (depending on content type):
- 
 * `data: Flow<Any?>`
 * `body: Flow<String>`
 * `blob: Flow<Blob>`
