@@ -74,14 +74,16 @@ val store = object : RootStore<String>("") {
 }
 ```
 
-You can access your validation-results with `Validator.msgs`. 
+You can access your validation-results with `Validator.data`. 
 This gives you a `Flow<List<M>` where `M` is your `ValidationMessage`-type. 
-You can handle this like any other `Flow` of a `List`, for example by rendering your messages to html:
+You can also use the `current` property to get the current `List` of your `ValidationMessage`.
+You can handle the `Flow` of your messages like any other `Flow` of a `List`, 
+for example by rendering your messages to html:
 
 ```kotlin
 render {
     ul {
-        store.validator.msgs.renderEach(Message::id) {
+        store.validator.data.renderEach(Message::id) {
             li(baseClass = it.severity.name.toLowerCase()) {
                 +it.text
             }
