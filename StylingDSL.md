@@ -85,31 +85,29 @@ render {
 }
 ```
 
-
 # Current Theme & Switching
 
 You can access the current `Theme` at any time by calling `Theme()` inside a `RenderContext`.
 Change it by `Theme.use(myTheme)`.
 
-Use the `render(someTheme)` function at your root to allow dynamic theme-switching and automatically re-render your content:
+Use the `render(someTheme) {}` function at your root to allow dynamic theme-switching and automatically re-render your content:
 
 ```kotlin
 object MyTheme: DefaultTheme() {
     override val name = "MyTheme"
 
     override val colors = object : Colors by super.colors {
-        override val dark = "darkblue" // overrides default color
+        override val dark = "darkblue" // overrides default dark color
     }
 }
 
-render(MyTheme) {
+render(MyTheme) { // calls Theme.use(MyTheme) internally
     p { +"Here is my darkblue text" }
 }
 
 // switch Theme later
 Theme.use(OtherTheme)
 ```
-
 
 ## Extensions
 
@@ -136,11 +134,11 @@ You can specify the specific sub-type here as well:
 
 ```kotlin
 fun main() {
-    render(MyTheme) { theme ->
+    render(MyTheme) { theme: MyTheme ->
         (::p.styled {
             color { theme.importantColor }
             theme.teaserText()
-        }) { +"some great looking text"}
+        }) { +"some great looking text" }
     }
 }
 ```
