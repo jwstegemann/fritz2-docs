@@ -6,16 +6,17 @@ nav_order: 74
 ---
 # Track Processing State of Stores
 
-When one of your `Handler`s contains long running actions (like server-calls, etc.) you might want to keep the user informed about what is going on.
+When one of your `Handler`s contains long running actions (like server-calls, etc.) you might want to keep the user 
+informed about that something is going on.
 
 Using fritz2 you can use the `tracker`-service to implement this:
 
 ```kotlin
 val store = object : RootStore<String>("") {
-    val running = tracker()
+    val tracker = tracker()
 
     val save = handle { model ->
-        running.track("myTransaction") {
+        tracker.track("myTransaction") {
             delay(1500) // do something that takes a while
             "$model."
         }
@@ -24,8 +25,8 @@ val store = object : RootStore<String>("") {
 
 render {
     button("btn") {
-        className(store.running.map {
-            it.let { "spinner" }.orEmpty()
+        className(store.tracker.data.map {
+            if(it) "spinner" else ""
         })
         +"save"
         clicks handledBy store.save
