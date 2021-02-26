@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Lists in a Model
-nav_order: 8
+nav_order: 90
 ---
 # Lists as a Model
 

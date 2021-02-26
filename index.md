@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Welcome
-nav_order: 1
+nav_order: 10
 ---
 # Welcome to fritz2 docs
 

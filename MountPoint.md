@@ -2,16 +2,16 @@
 layout: default
 title: MountPoint
 parent: Store
-nav_order: 5
+nav_order: 64
 ---
 # Mount-Point
 
 A mount-point in fritz2 is an anchor of a `Flow` somewhere in a given structure. It is used as a placeholder when creating the structure. 
 Afterwards, each value appearing on the mounted `Flow` will be put into the structure at exactly that position. 
 
-Most of the time you will use mount-points in the browser's DOM, allowing you to mount a `Flow` of `Tag`s to some point in the html-structure you are building using for example the `someFlow.render { }` function.
+Most of the time you will use mount-points in the browser's DOM, allowing you to mount a `Flow` of `Tag`s to some point in the html-structure you are building using for example the `someFlow.render {}` function.
 
-Inside the `RenderContext` opened by `someFlow.render { }`, a new mount-point is created as a placeholder and 
+Inside the `RenderContext` opened by `someFlow.render {}`, a new mount-point is created as a placeholder and 
 added to the current parent-element. Whenever a new value appears on the `Flow`, the new content is rendered and replaces the old elements.
 
 In this `RenderContext`, any number of root elements can be created (also none).

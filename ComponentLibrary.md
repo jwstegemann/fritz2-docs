@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Component library
-nav_order: 16
+nav_order: 180
 ---
 # Components library
 

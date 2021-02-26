@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Store
-nav_order: 5
+nav_order: 60
 has_children: true
 ---
 # Store

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: State Management
-nav_order: 6
+nav_order: 70
 has_children: true
 ---
 # State Management

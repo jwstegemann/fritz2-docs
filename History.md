@@ -2,7 +2,7 @@
 layout: default
 title: History in Stores
 parent: State Management
-nav_order: 8
+nav_order: 76
 ---
 # History in Stores
 

@@ -2,7 +2,7 @@
 layout: default
 title: Lenses
 parent: Nested Structures
-nav_order: 8
+nav_order: 82
 ---
 # Lenses
 
@@ -19,7 +19,7 @@ In fritz2, a `Lens` is defined by the following interface:
 interface Lens<P,T> {
     fun get(parent: P): T
     fun set(parent: P, value: T): P
-    fun apply(parent: P, mapper: (T) -> T): P = //is already implemented
+    fun apply(parent: P, mapper: (T) -> T): P //is already implemented
 }
 ```
 `apply` allows you to change the current value of the inner entity within one atomic action.
