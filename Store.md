@@ -7,7 +7,7 @@ has_children: true
 # Store
 
 In fritz2, `Store`s are used to handle your app's state. 
-It heavily depends on Kotlin's `Flow` - if you are not familiar with this concept, 
+They heavily depend on Kotlin's `Flow` - if you are not familiar with this concept, 
 please take a look at [Flows](Flows.html) first.
 
 Let's assume the state of your app is a simple `String`. Creating a `Store` to manage that state is quite easy:
