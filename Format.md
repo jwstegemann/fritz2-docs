@@ -9,12 +9,12 @@ In html you can only use `Strings` in your attributes like in the `value` attrib
 types in your model you have to specify how to represent a specific value as `String` (e.g. Number, Currency, Date). 
 When you work with `input {}` you also need parse the entered text back to your data type.
 For all Kotlin basic types there is a convenince function `asString()` which generates a `Lens` from this type to `String`
-and vice versa.
+and vice versa. Therefore it calls internally the `T.toString()` and `String.toT()` functions.
 
 ```kotlin
-val ageLens: Lens<Person, String> = L.Person.age.asString()
-val ageStore = myStore.sub(ageLens)
-ageStore.data // Flow<String> instead of Flow<Int>
+// L object comes from @Lenses annotation on Person data class
+val ageLens: Lens<Person, Int> = L.Person.age // cannot used in Tag attributes
+val ageLensAsString: Lens<Person, String> = L.Person.age.asString() // now it is useable
 ```
 
 fritz2 also provides a special function `format()` for creating a `Lens<P, String>` for special types that are not basic:
