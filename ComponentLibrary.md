@@ -5,11 +5,10 @@ nav_order: 180
 ---
 # Components library
 
-This is just a preview release of our components in order to gain feedback from real 
-world projects. We encourage our users to try it out and give us feedback, but keep in mind that the API is not final 
+This is just an *alpha* release of our components in order to gain feedback from real world projects. 
+We encourage our users to try it out and give us feedback, but keep in mind that the API is not final 
 yet and therefore might change in future releases.
 
-Beginning with the [release 0.8](https://github.com/jwstegemann/fritz2/releases/tag/untagged-950f0551d012cc3256f3) 
 fritz2 offers its own components library that covers basic components for creating modern HTML based user interfaces. 
 We do not intend to provide myriads of components with subtle differences and lots of pre-built variants, 
 instead we focus on the most common ones. 
@@ -25,9 +24,9 @@ We believe that it is more important to offer...
   - compose existing components and
   - write new ones from scratch
   
-In contrast to solely providing the means to creating [components](Components.html) without deeper restrictions, this library provides
-ready to use components that follow consistent rules and APIs, and always considers customizing and
-composition aspects first class citizens.
+In contrast to solely providing the means to creating [components](Components.html) without deeper restrictions, 
+this library provides ready to use components that follow consistent rules and APIs, and always considers customizing 
+and composition aspects first class citizens.
 
 You are in no way forced to use our components - they are now and will remain totally
 optional. You will always be free to ignore our approach and do something completely different. The
@@ -47,43 +46,46 @@ which makes them a joy to apply to our default theme and use them within our com
 For a first impression, here is a screenshot from our showcase app:
 ![components example basics](images/components_showcase_1.png)
 
-Please refer to this [project](https://github.com/jwstegemann/fritz2-kitchensink) for a detailed overview about the 
-components and their features.
+Just jump directly to our [showcase app](https://components.fritz2.dev/#Welcome) to get a detailed overview about the
+components and their features or refer to this [project](https://github.com/jwstegemann/fritz2-kitchensink) for
+studying or modifying the sources directly.
 
 fritz2 currently offers the following components:
 
 - Layout:
-  - ``flexbox``
-  - ``gridbox``
-  - ``stackUp``
-  - ``lineUp``
+  - ``Flexbox``
+  - ``Gridbox``
+  - ``Stacks``
 - Forms
-  - ``pushButton``
-  - ``clickButton``
-  - ``inputField``
-  - ``textarea``
-  - ``switch``
-  - ``checkBox``
-  - ``checkBoxGroup``
-  - ``radioGroup``
-  - ``formControl``
-- Feedback
-  - ``spinner``
+  - ``Buttons``
+  - ``InputField``
+  - ``SelectField``
+  - ``File``
+  - ``Checkbox``
+  - ``Radio``
+  - ``TextArea``
+  - ``Switch``
+  - ``FormControl``
 - Overlay:
-  - ``tooltip``
-  - ``popover``
-  - ``modal``
-- Icons:
-  - ``icon``
+  - ``Modal``
+  - ``Popover``
+  - ``Tooltip``
+  - ``Toast``
+- Misc:
+  - ``Alert``
+  - ``Icons``
+  - ``Spinner``
   
-The following components will be added for the [0.9 release](https://github.com/jwstegemann/fritz2/milestone/5):
+The following components are planned for future releases:
 
+- Layout
+  - ``AppFrame``
+- Overlay
+  - ``Menu``
 - Forms
-  - ``select``
-  - ``dataTable``
+  - ``DataTable``
 - Feedback:
-  - ``progress``
-  - ``toast``
+  - ``Progress``
   
 ## Basics
 
@@ -141,7 +143,7 @@ render {
             color { light }
         }
     }) { // configure content and behaviour / appearance within the build context
-        reverse { true } // show items in reverse declaration order
+        reverse(true) // show items in reverse declaration order
         spacing { huge } // apply a margin between the items based on the ``huge`` property of the theme's ``spacing``
         items {
             p { +"components" }
@@ -170,13 +172,14 @@ Since every fritz2 component accepts this ``styling`` parameter as its first arg
 component's default styling quite easily.
 
 fritz2 intentionally provides two ways for modifying the appearance:
- - Within the ``build`` context, each component offers options which modify common and often quite complex aspects specific to it, 
- and which would be cumbersome to style by hand. To increase usability, we aim to abstract away complex CSS for common use 
- cases. By the way, all of our predefined values for CSS options can easily be modified by
- changing the [theme](StylingDSL.html#styling-dsl-and-theming) as they are often defined purely by styling expressions therein.
- - Everything else can be done within the ``styling`` argument. This can be trivial tasks like adding some ``padding`` or
- ``color``, but you are of course not limited to that. Have a look at the [styling](StylingDSL.html) documentation for 
- a detailed explanation. 
+ - Within the ``build`` context, each component offers options which modify common and often quite complex aspects 
+   specific to it, and which would be cumbersome to style by hand. To increase usability, we aim to abstract away
+   complex CSS for common use cases. By the way, all of our predefined values for CSS options can easily be modified by
+   changing the [theme](StylingDSL.html#styling-dsl-and-theming) as they are often defined purely by styling expressions 
+   therein.
+ - Everything else can be done within the ``styling`` argument. This can be trivial tasks like adding some ``padding`` 
+   or ``color``, but you are of course not limited to that. Have a look at the [styling](StylingDSL.html) documentation
+   for a detailed explanation. 
 
 Now you have seen the three most important patterns of fritz2 components:
  
@@ -226,13 +229,13 @@ Next, an ``events`` context is opened in order to plug the button click event in
 update handler. The ``pushButton`` component explicitly offers this context for managing the 
 [events](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events) of the underlying 
 HTML ``button { }`` element.
-Many interactive components offer such a mechanism, often by using the same name ``events`` 
+Many interactive components offer such a mechanism, always by using exactly the same name ``events`` 
 (for exposing the actual DOM events), sometimes also with more specific functions for specific flows. 
 The principle always remains the same: fritz2 offers a place to grab and use the events of each component.
 
 ## Composition on steroids
 
-The example above works fine, but can be improved slightly by using a variant of the default ``pushButton`` called
+The example above works fine, but can be slightly improved by using a variant of the default ``pushButton`` called
 ``clickButton``:
 
 ```kotlin
@@ -251,14 +254,18 @@ div {
 }
 ```
 
-The ``clickButton`` is basically the same as a ``pushButton`` and therefore behaves almost identically, but it additionally offers
-the _click_ event as return value. This small difference has a big impact on composition because it enables coupling this most common event of a button directly with a handler. This is less cumbersome to write and read and supports the declarative approach of our DSL very well.
+The ``clickButton`` is basically the same as a ``pushButton`` and therefore behaves almost identically, but it 
+additionally offers the _click_ event as return value. This small difference has a big impact on composition because
+it enables coupling this most common event of a button directly with a handler. This is less cumbersome to write and 
+read and supports the declarative approach of our DSL very well.
 
-The ``clickButton`` variant simplifies a common ``pushButton`` use case. fritz2 offers helpful variants on many components, so look out for those in order to enhance composition. 
+The ``clickButton`` variant simplifies a common ``pushButton`` use case. fritz2 offers helpful variants on many
+components, so look out for those in order to enhance composition. 
 
 Now let's introduce another component which takes a similar approach from the handler's point of view: the modal.
 A ``modal`` is a component function for showing a modal dialog or message box. Since this kind of
- dialog is not constantly shown on screen (it overlays parts of the page), it needs an event like a button click to be triggered.
+ dialog is not constantly shown on screen (it overlays parts of the page), it needs an event like a button click to
+be triggered.
 
 ```kotlin
 clickButton {
@@ -272,14 +279,15 @@ First, set up a ``clickButton`` as seen above. And here's the magic: the click e
  with the ``modal`` component without any intermediate steps. This is possible because ``modal`` 
 returns a ``SimpleHandler<Unit>`` which accepts the event's ``Flow<Unit>``. 
 
-This design decision was again made to simplify interconnecting components. The whole thing can be written as a one-liner without significant loss of readability:
+This design decision was again made to simplify interconnecting components. The whole thing can be written as a
+one-liner without significant loss of readability:
  
 ```kotlin
 clickButton { text("Open") } handledBy modal { content { p { +"I am a modal dialog!" } } }
 ```
 
-So in short, the composition of components is not limited to their internal structuring, but expands to the interaction between them. It's
-therefore a first class citizen of fritz2's components library.
+So in short, the composition of components is not limited to their internal structuring, but expands to the 
+interaction between them. It's therefore a first class citizen of fritz2's components library.
 
 ## Deep Dive
 
@@ -302,34 +310,43 @@ Let's step through this generic signature:
  - The component function itself must be defined as an extension method on the ``RenderContext`` interface 
  (for structural composition).
  
- - All parameters should be optional.
+ - All parameters should be optional (except for additional parameters, see below).
  
  - The order is fix (except for additional parameters, see below).
  
  - The first parameter is always custom styling via our [styling DSL](StylingDSL.html). This styling should
- be applied to the intuitively expected element of the resulting component. This means when i.e. styling a button with a width, it should of course be applied to the button instead of to its border. Often, the intuitively expected element is the root element, but have a look at the ``popover`` component for another example: when providing a color, the background color of the popover itself should change, and not the background of the triggering root element. So for components which consist of more than one elements, not all elements should receive the custom styling.
+ be applied to the intuitively expected element of the resulting component. This means when i.e. styling a button with 
+   a width, it should of course be applied to the button instead of to its border. 
+   Often, the intuitively expected element is the root element, but have a look at the ``popover`` component for 
+   another example: when providing a color, the background color of the popover itself should change, and not the
+   background of the triggering root element. So for components which consist of more than one element, not all 
+   elements should receive the custom styling.
  
  - The second parameter``StyleClass`` provides a common CSS base class for the component.
  
  - The third parameter defines the id of the root element of the component. Remember that a component can be 
  a complex structure, so sub elements will often receive generated or default ids prefixed with the root's id.
  
- - The next parameter defines a prefix for the dynamic style classes which are generated based upon the first parameter, styling. Since
- the style classes are given a random name, the prefix establishes a reliable static part of the classname to
- help with debugging or analyzing tasks. 
+ - The next parameter defines a prefix for the dynamic style classes which are generated based upon the first 
+   parameter, styling. Since the style classes are given a random name, the prefix establishes a reliable static 
+   part of the classname to help with debugging or analyzing tasks. 
  
- - The last parameter finally offers a context for actually creating content, defining appearance, handling events, and passing dynamic data into the component. Note that this parameter was the only one set in the first basic example. Sometimes a component only wraps one HTML element, like some of our layout 
- components, so there is no need to expose custom configuration options within a special context object. In these cases, the parameter is called ``init``, and its receiver is either the generic ``RenderContext``- interface or a specific ``Tag<E>`` like ``Div``, for example ``init: Div.() -> Unit = {}``.
+ - The last parameter finally offers a context for actually creating content, defining appearance, handling events,
+   and passing dynamic data into the component. Note that this parameter was the only one set in the first basic
+   example.
  
- - The ``return`` type differs. While ``Unit`` is often sufficient, layout components return a ``Div``, and for interaction composition, some type of ``Flow<T>`` or ``SimpleHandler<T>`` is required.
+ - The ``return`` type differs. While ``Unit`` is often sufficient, layout components return a ``Div``, and
+   for interaction composition, some type of ``Flow<T>`` or ``SimpleHandler<T>`` is required.
  
-Every component factory function of fritz2's components follows these patterns. There are only few exceptions to this rule which require additional parameters (like on ``inputField``). Those are always placed after the first parameter, so after ``styling`` and before ``baseClass``.
+Every component factory function of fritz2's components follows these patterns. There are only few exceptions to 
+this rule which require additional parameters (like on ``inputField``). Those are always placed after the first
+parameter, so after ``styling`` and before ``baseClass``.
 
-Don't be afraid of the amount of parameters, you will get used to them soon. Often you won't need to set up all or even any 
-of them (as shown in the first example). If you would like to increase readability, use [named arguments](https://kotlinlang.org/docs/reference/functions.html#named-arguments).
+Don't be afraid of the amount of parameters, you will get used to them soon. Often you won't need to set up all 
+or even any of them (as shown in the first example). If you would like to increase readability, 
+use [named arguments](https://kotlinlang.org/docs/reference/functions.html#named-arguments).
  
-If you want to write your own components, we encourage you to adopt these 
-signature rules. They allow freely combining and integrating your components with ours,
-and offer a consistent API for your users.
+If you want to write your own components, we encourage you to adopt these signature rules. 
+They allow freely combining and integrating your components with ours, and offer a consistent API for your users.
   
 This is basically what you need to know about our components API so far.
