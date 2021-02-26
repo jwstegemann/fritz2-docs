@@ -24,30 +24,29 @@ property from a `Store` of the parent entity:
     val nameStore = personStore.sub(L.Person.name)
 ```
 
-Now you can use your `innerStore` exactly like any other `Store` to set up _two-way-databinding_, call `sub(...)` 
-again to access the properties of `Inner`. If a `SubStore` contains a `List`, 
-you can of course iterate over it by using `renderEach()` like you are used to. 
+Now you can use your `nameStore` exactly like any other `Store` to set up _two-way-databinding_, call `sub(...)` 
+again to access the properties of `Name`. If a `SubStore` contains a `List`, 
+you can of course iterate over it by using `renderEach {}` like described in [Lists as a Model](ListsinaModel.html). 
 It's fully recursive from here on down to the deepest nested parts of your model.
 
 You can also add `Handler`s to your `SubStore`s by simply calling the `handle`-method:
 
 ```kotlin
-val booleanSubStore = mainStore.sub(someLens)
-val switch = booleanSubStore.handle { model: Boolean ->
-   !model
+val booleanSubStore = parentStore.sub(someLens)
+val switch = booleanSubStore.handle { model: Boolean -> 
+    !model
 }
 
 render {
-    ...
-        button {
-            +"switch state"
-            clicks handledBy switch
-        }
-    ...
+    button {
+        +"switch state"
+        clicks handledBy switch
+    }
 }
 ````
 
 To keep your code well-structured, it is recommended to implement complex logic at your `RootStore` or inherit it by using interfaces. 
 However, the code above is a decent solution for small (convenience-)handlers.
 
-Your real world data model will most certainly contain lists of elements. Learn how to handle them effectively by reading about [Lists as a Model](ListsinaModel.html)
+Your real world data model will most certainly contain lists of elements.
+Learn how to handle them effectively by reading about [Lists as a Model](ListsinaModel.html)
