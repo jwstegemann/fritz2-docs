@@ -15,15 +15,16 @@ Additionally, a `Router` needs a `Route` which is an interface you have to imple
 ```kotlin
 interface Route<T> {
     val default: T
-    fun unmarshal(hash: String): T
-    fun marshal(route: T): String
+    fun deserialize(hash: String): T
+    fun serialize(route: T): String
 }
 ```
-A `Route` always has a default route to start with. It also needs a way to unmarshal and marshal the url-hash string to a kotlin (data-)class and vice versa.
+A `Route` always has a default route to start with.
+It also needs a way to serialize and deserialize the url-hash string to a kotlin (data-)class and vice versa.
 
 To make this mechanism easier to use, we already implemented two ways of handling routing in fritz2: 
 * `StringRoute` uses the url-hash how it is.
-* `MapRoute` marshals and unmarshals the url-hash to `Map<String,String>` where `&` is the separator between the entries.
+* `MapRoute` serialize and deserialize the url-hash to `Map<String,String>` where `&` is the separator between the entries.
 
 You can easily create a new instance of `Router` by using the global `router()` function. 
 There are currently three of them for each type of your `Route`.
@@ -32,9 +33,10 @@ There are currently three of them for each type of your `Route`.
 * `<T> router(default: Route<T>): Router<T>` which uses your custom implementation of `Route` interface
 
 Use the last option to implement your own `Route` on your own data type.
+Every `Router` provides a `data: Flow<R>` and a `current: R` attribute for getting the current route in dynamic
+or static way.
 
 Routing is straightforward:
-
 Using simple `String`s by `StringRoute`:
 ```kotlin
 val router = router("welcome")
@@ -51,6 +53,8 @@ render {
         }
     }
 }
+
+val currentRoute = router.current
 ```
 
 Using a `Map` of parameters by `MapRoute`:
@@ -69,9 +73,11 @@ render {
         }
     }
 }
+
+val currentRoute = router.current
 ```
 A router using a `MapRoute` offers an extra `select` method which extract the values as `Pair` for the given key (here `"page"`) 
-and requires a function to map the value. Therefore, it returns a `Pair` of the current value and the complete `Map` to
+and requires a function to map the value. Therefore, it returns a `Pair` of the current value, and the complete `Map` to
 help you decide what to render.
 
 If you want to use your own special `Route` instead, try this:
@@ -98,7 +104,7 @@ render {
 }
 ```
 
-If you want to change your current route (i.e. when an event fires), you can do so by calling `navTo`: 
+If you want to change your current route (e.g. when an event fires), you can do so by calling `navTo`: 
 ```kotlin
 val router = router("welcome")
 
