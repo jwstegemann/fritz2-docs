@@ -19,7 +19,9 @@ render {
 }
 ```
 
-That way it's also straight forward to parametrize your component:
+Of course, you can also use a subtype of `RenderContext` like a certain `Tag` as receiver if you want to limit the usage of your component to this type as its parent. 
+
+By using plain functions it's also straight forward to parametrize your component:
 
 ```kotlin
 fun RenderContext.myOtherComponent(person: Person): P {
@@ -36,7 +38,7 @@ render {
 }
 ```
 
-To allow nested components use a lamba with `RenderContext` as its receiver or the type of the element you are calling this lambda in:
+To allow nested components use a lambda with `RenderContext` as its receiver, or the type of the element you are calling this lambda in:
 ```kotlin
 // return a html element if your if you need it
 fun RenderContext.container(content: Div.() -> Unit): Div {
