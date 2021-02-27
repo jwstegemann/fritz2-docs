@@ -20,8 +20,8 @@ We recommend organizing your source code like this:
       * resources
         * index.html
 
-The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build 
-and mark an element of your choice with an id to later mount your fritz2-components to:
+The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build .
+You can mark an element of your choice with an id to later mount your fritz2-components to it:
 
 ```html
 <html>
@@ -53,7 +53,9 @@ fun main() {
 }
 ```
 
-Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic 
+By calling render the way above your content will be mounted to the `body` of your document. Set the `targetElement` parameter to mount your content to any other element. Using the `override`parameter you can define it the existing children of the element you are mounting to will be removed (which is the default behaviour) or will be preserved (and your content will be appended).
+
+Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic
 building and reloading in the browser after changing your code.
 
 And voilà, you are done! Maybe you would like to create some more versatile [HTML](Attributes%20and%20CSS.html) now?
