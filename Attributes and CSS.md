@@ -75,4 +75,7 @@ render {
     }
 }
 ```
+
+Beyond that fritz2 offers integrated styling-functions to deal with CSS directly in your Kotlin code as well as a DSL for working with a themed responsive style system. Have a look at [Styling](Styling.html) for more information.
+
 Now you can build what you want in your templates, let's create some [Components](Components.html) with it.
