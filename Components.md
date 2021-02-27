@@ -5,7 +5,7 @@ nav_order: 50
 ---
 # Components
 
-It's very easy to create a lightweight reusable component with fritz2:
+It's very easy to create a lightweight reusable component with fritz2. Basically all you have to do is writing a function with `RenderContext` as it's receiver type:
 
 ```kotlin
 fun RenderContext.myComponent() {
@@ -18,10 +18,8 @@ render {
     myComponent()
 }
 ```
-@TODO
-fritz2 doesn't force you to build your components a certain way - you can use every single Kotlin-language-feature you like.
-To create a component which can be called inside render-contexts directly, just specify the appropriate receiver
- `RenderContext`:
+
+That way it's also straight forward to parametrize your component:
 
 ```kotlin
 fun RenderContext.myOtherComponent(person: Person): P {
@@ -36,35 +34,13 @@ render {
         myOtherComponent(somePerson)
     }
 }
-
-// or with Flows
-
-render {
-    div {
-        // caution: this re-renders everything when the person inside the Flow is changed
-        someflowOfPerson.render { person ->
-            div {
-                myOtherComponent(person)
-            }
-        }
-    }
-}
 ```
 
-To create more nested components do the following:
+To allow nested components use a lamba with `RenderContext` as its receiver or the type of the element you are calling this lambda in:
 ```kotlin
-// needs to return a html element for using in render{} method directly
+// return a html element if your if you need it
 fun RenderContext.container(content: Div.() -> Unit): Div {
     return div("container") {
-        content()
-    }
-}
-
-// don't need to return a html element because its used 
-// in HtmlElements context only
-fun RenderContext.okBtn(content: Button.() -> Unit): Button {
-    return button("btn success") {
-        +"Ok"
         content()
     }
 }
@@ -74,12 +50,13 @@ render {
         p {
             text("Hello World!")
         }
-        okBtn {
-            clicks handledBy someStore.someHandler   
-        }
+
+        clicks handledBy someHandler // you will see what this does in the next chapter
     }
 }
 ```
+
+Using `Div` as receiver type in the example above allows you to access the attributes and events of your container-element from your content-lambda. Use `RenderContext` if this is not necessary or intended.
 
 Since stateless components alone are not that exciting, go on and read about the fritz2 
 mechanism to handle state: the [Store](Store.html).
