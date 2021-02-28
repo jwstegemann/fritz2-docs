@@ -6,7 +6,9 @@ nav_order: 172
 ---
 # Styling DSL
 
-To make building components with unified styling even faster and simpler, fritz2 offers its own DSL which makes use of constraint-based style props based on scales defined in a `Theme`. Just call `styled` on the factory function of the element you would like to style and specify your concrete styling in its lambda:
+To make building components with unified styling even faster and simpler, fritz2 offers its own DSL which makes use of 
+constraint-based style props based on scales defined in a `Theme`. 
+Just call `styled` on the factory function of the element you would like to style and specify your concrete styling in its lambda:
 
 ```kotlin
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
@@ -21,11 +23,15 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 }
 ```
 
-Remember that this does not result in inline-styling but rather uses fritz2's `style` function to dynamically create css classes in a dynamic style sheet managed by fritz2. See [Styling](Styling.html) fot further details.
+Remember that this does not result in inline-styling but rather uses fritz2's `style` function to dynamically create 
+css classes in a dynamic style sheet managed by fritz2. See [Styling](Styling.html) fot further details.
 
-fritz2's styling DSL does not aim to support the entirety of the CSS standard. Similar to [Styled System](https://styled-system.com/), it offers fast, type-safe, and themed access to the most important properties for adapting components and elements to the special requirements of any situation, and for re-composing them time and again.
+fritz2's styling DSL does not aim to support the entirety of the css standard. 
+Similar to [Styled System](https://styled-system.com/), it offers fast, type-safe, and themed access to the most important 
+properties for adapting components and elements to the special requirements of any situation, and for re-composing them time and again.
 
-To remain as flexible as possible, values of properties can alternatively be passed as `String`s, like `width { "73%" }`. Additionally, using the `css()` function allows you to set properties that are not part of the DSL:
+To remain as flexible as possible, values of properties can alternatively be passed as `String`s, 
+like `width { "73%" }`. Additionally, using the `css()` function allows you to set properties that are not part of the DSL:
 
 ```kotlin
 (::p.styled {
@@ -65,20 +71,29 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 
 ## Responsiveness
 
-fritz2-styling offers a convenient syntax for adding responsive styles with a mobile-first approach. It uses four breakpoints for the different viewport-sizes (sm, md, lg and xl). You can set each property independently for these viewport-sizes:
+fritz2-styling offers a convenient syntax for adding responsive styles with a mobile-first approach. 
+It uses four breakpoints for the different viewport-sizes (sm, md, lg and xl). 
+You can set each property independently for these viewport-sizes:
  
 ```kotlin
+{
     fontSize(sm = { tiny }, lg = { normal })
     width(sm = { full }, lg = { "768px" })
     color { primary }
+}
 ```
 The concrete definition of the breakpoints (by media-query) is part of each `Theme`.
 
-In accordance with mobile-first, when no value is given for a particular size, the next smaller one will be applied. In the example above, the font-size will be `tiny` for `sm` and `md` and `normal` for  `lg` and `xl`. If only one value is given, it will be used for all sizes.
+In accordance with mobile-first, when no value is given for a particular size, the next smaller one will be applied. 
+In the example above, the font-size will be `tiny` for `sm` and `md` and `normal` for `lg` and `xl`. 
+If only one value is given, it will be used for all sizes.
  
 ## Theme
 
-The following scales are defined in a theme for different properties to achieve a consistent design. Also, simply changing these definitions in the theme alters the whole look of the application and all affected components. That way you can easily define themes according to certain requirements like a high contrast theme, or one with large fonts, both of which can be chosen dynamically at runtime.
+The following scales are defined in a theme for different properties to achieve a consistent design. 
+Also, simply changing these definitions in the theme alters the whole look of the application and all affected components. 
+That way you can easily define themes according to certain requirements like a high contrast theme, or one with large fonts, 
+both of which can be chosen dynamically at runtime.
  
 A theme defines value ranges for
 
@@ -140,7 +155,8 @@ render(MyTheme) {
 ```
 
 You can access the current `Theme` at any time by calling `Theme()` inside a `RenderContext`.
-Change it at runtime by `Theme.use(myTheme)`. See an example for dynamic theme-switching at runtime [here](https://components.fritz2.dev/#Theme).
+Change it at runtime by `Theme.use(myTheme)`. 
+See an example for dynamic theme-switching at runtime [here](https://components.fritz2.dev/#Theme).
 
 
 ## Extended Themes
