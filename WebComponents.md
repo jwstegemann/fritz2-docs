@@ -3,14 +3,16 @@ layout: default
 title: Web Components
 nav_order: 160
 ---
-# Use and build WebComponents
+# WebComponents
 
-With fritz2, you can easily use [WebComponents](https://webcomponents.org) in any html-context:
+With fritz2, you can easily use [WebComponents](https://webcomponents.org) in any html-context. Some of the following code-snippets are not runnable on their own. Please find the complete example [here](https://examples.fritz2.dev/webcomponent/build/distributions/index.html) 
+
+# Use WebComponents
 
 ```kotlin
 render {
     div("weather-card") {
-        h2 { city.asText() }
+        h2 { "Goslar" }
         custom("m3-stars") {
             attr("max", "5")
             attr("current", "3.5")
@@ -44,7 +46,9 @@ dependencies {
 abstract external class Stars : HTMLElement
 ```
 
-Depending on how the component is built, you might have to register it with the browser:
+Please see the [official documentation](https://kotlinlang.org/docs/js-modules.html#apply-jsmodule-to-packages) for more details on this.
+
+Depending on how the component is internally built, you might have to register it with the browser:
 
 ```kotlin
 fun main() {
@@ -53,7 +57,7 @@ fun main() {
 }
 ```
 
-We cannot provide typesafe attributes for custom elements, but you can implement a `Tag` and provide an extension function for `RenderContext`:
+For obvious reasons we cannot provide typesafe attributes for custom elements, but you can implement a `Tag` and provide an extension function for `RenderContext`:
 
 ```kotlin
 class M3Stars(job: Job) : Tag<HTMLElement>("m3-stars", job = job), WithText<HTMLElement> {
@@ -108,5 +112,5 @@ To react to the lifecyle of your component, you can override the according metho
 
 Packaging (i.e. as an npm-package) and publishing is out of scope of this documentation.
 
-To see it in action, please have a look at our [webcomponents example](https://examples.fritz2.dev/webcomponent/build/distributions/index.html).
+Again, to see it in action, please have a look at our [webcomponents example](https://examples.fritz2.dev/webcomponent/build/distributions/index.html).
 

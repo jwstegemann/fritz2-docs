@@ -11,11 +11,11 @@ fritz2 heavily depends on flows, introduced by [kotlinx.coroutines](https://gith
 A `Flow` is a time discrete stream of values. 
 
 Like a collection, you can use `Flow`s to represent multiple values, but unlike other collections like `List`s, for example, 
-the values are retrieved one by one. fritz2 relies on `Flow`s to represent values that change over time (your data-model for example).
+the values are retrieved one by one. fritz2 relies on `Flow`s to represent values that change over time (your data-model for example) and you want to react to.
 
 A `Flow` is built from a source which creates the values. This source could be your model or the events raised by an element, 
 for example. On the other end of the `Flow`, a simple function called for each element collects the values one by one. 
-Between those two ends, various actions can be taken on the data (formatting strings, creating html-tags out of your model data, filtering the values, etc).
+Between those two ends, various actions can be taken on the data (formatting strings, filtering the values, combining value, etc).
 
 The great thing about `Flow`s is that they are _cold_, which means that nothing is calculated before the result is needed. 
 This makes them perfect for fritz2's use case.

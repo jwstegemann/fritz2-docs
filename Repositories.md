@@ -5,10 +5,11 @@ nav_order: 130
 ---
 # Repositories
 
-To add some sort of backend to your `Store`s, you can make use of fritz2's repositories. 
+To connect certain types of backend to your `Store`s, you can make use of fritz2's repositories. 
 fritz2 offers implementations of the repository-interfaces for two types of backends:
 * LocalStorage
 * REST
+* more like GraphQL are yet to come
 
 The following examples use this `Person` data class:
 ```kotlin
@@ -23,8 +24,9 @@ data class Person(
 
 ## Resource
 
-When defining the data class you want to share via `Repository`, you must define
-a `Resource` for it. You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
+When defining the data class you want to share using a `Repository`, you must define
+a `Resource` for it to define, how to derive a unique id from an instance of your data class and how your data class can be (de-)serialized.
+You can of course use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
 for this. Annotate your data class (here `Person`) with `@Serializable` and
 then write the following serializer next to your class (in `commonMain` section):
 
@@ -50,7 +52,7 @@ We differentiate two kinds of repositories both using ids of type `I`:
   * `addOrUpdate(entity: T): T`
   * `delete(entity: T)`
   
-* a `QueryRepository` deals with a `List` of instances of a given type `T` a query object `Q`. 
+* a `QueryRepository` deals with a `List` of instances of a given type `T` and a query object `Q`. 
   It offers the following methods to query or manipulate the content of the repository:
   * `query(query: Q): List<T>`
   * `updateMany(entities: List<T>, entitiesToUpdate: List<T>): List<T>`
@@ -82,16 +84,14 @@ val entityStore = object : RootStore<Person>(Person(...)) {
     }
 }
 ```
-@TODO improve
-The `restEntity` function needs an `initialId` for determining if an add or update must take place by the `addOrUpdate` function.
-If the `id` of a `Person` in `Store` is the same like `initialId` then a `POST` request is fired othwise a `PUT` request is used
-with the given id for updating the `Person` resource instead.
-The `syncBy` automatically calls the given `Handler` (here `addOrUpdate`) on each update of your `Store`s data.
+
+The `restEntity` function needs an `initialId` to distinguish add from update operations when calling `addOrUpdate`: A `POST`request is sent, when the id of the given instance equals `initialID`, otherwise a `PUT` request is used to update the ressource.).
+
+By calling `syncBy` from your init-block the given `Handler` (here `addOrUpdate`) is automatically called on each update of your `Store`s data, to keep your REST-backend in sync with your local ressource.
 
 ### QueryRepository
 
-When creating a `QueryRepository`, you can define a type describing the queries which are done by this repository, and a function 
-for executing the query defined by a given instance of this query-type. 
+When creating a `QueryRepository`, you can define a type describing the queries which are done by this repository. You also have to implement a lambda, that defines, how to deal with a concrete instance of this query type:
 
 ```kotlin
 data class PersonQuery(val namePrefix: String? = null)

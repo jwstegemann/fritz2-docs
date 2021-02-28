@@ -6,10 +6,10 @@ nav_order: 64
 ---
 # Mount-Point
 
-A mount-point in fritz2 is an anchor of a `Flow` somewhere in a given structure. It is used as a placeholder when creating the structure. 
-Afterwards, each value appearing on the mounted `Flow` will be put into the structure at exactly that position. 
+A mount-point in fritz2 is an anchor of a `Flow` somewhere in a structure like the DOM-tree. It is used as a placeholder when creating the structure. 
+Afterwards, each value appearing on the mounted `Flow` will be put into the structure at exactly that position replacing the former value.
 
-Most of the time you will use mount-points in the browser's DOM, allowing you to mount a `Flow` of `Tag`s to some point in the html-structure you are building using for example the `someFlow.render {}` function.
+Most of the time you will use mount-points in the browser's DOM, allowing you to mount `Tag`s to some point in the html-structure you are building using for example the `someFlow.render {}` function.
 
 Inside the `RenderContext` opened by `someFlow.render {}`, a new mount-point is created as a placeholder and 
 added to the current parent-element. Whenever a new value appears on the `Flow`, the new content is rendered and replaces the old elements.
@@ -27,8 +27,8 @@ someStringFlow.render { name ->
     hr {}
 }
 ```
-Whenever you are sure that there will be only one root element, you can use the `renderElement {}` function instead: it is optimized for a single element and performs better.
-Additionally, you can influence how fritz2 handles the order of elements whenever no `Tag`s exist on the same level as the `render` block, or the order of the elements does not matter: use `preserveOrder = false` to deactivate the ordering of elements to again increase performance. This is highly recommended when re-rendering a lot in your application.
+Whenever you are sure that there will be only one root element, you can use the `renderElement {}` function instead: it is optimized for a single root element and performs slightly better.
+Additionally, you can influence how fritz2 handles the order of elements: Whenever no `Tag`s exist on the same level as the MountPoint created by the call to `render`, or the order of the elements just does not matter use `preserveOrder = false` to deactivate the ordering of elements to increase performance. This is highly recommended when re-rendering a lot in your application.
 
 ```kotlin
 render {
