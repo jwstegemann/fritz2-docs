@@ -26,13 +26,13 @@ session.messages.body.onEach {
 session.send("Hello")
 ```
 
-As you can see, `Session` returns a `Flow` of `MessageEvent`s in messages. When a new message from the server arrives, a new event pops up on the `Flow`. Get the content of the message with one of the following methods (depending on content type):
+As you can see, `Session` offers a `Flow` of `MessageEvent`s in messages. When a new message from the server arrives, a new message pops up on the `Flow`. Get the content of the message with one of the following methods (depending on content type):
 * `data: Flow<Any?>`
 * `body: Flow<String>`
 * `blob: Flow<Blob>`
 * `arrayBuffer: Flow<ArrayBuffer>`
 
-More information regarding the connection status can be read from the `Session` as `Flow`:
+More information regarding the connection status is provided by the `Session` as `Flow`s:
 * `isConnecting: Flow<Boolean>`
 * `isOpen: Flow<Boolean>`
 * `isClosed: Flow<Boolean>`
@@ -64,4 +64,4 @@ val entityStore = object : RootStore<Person>(personResource.emptyEntity) {
 
 When the model in the `Store` changes, it will be sent to the server via websocket, and vice versa of course.
 
-There you have an easy way to synchronize your stores with a server. Want more? Keep on reading about [Routing](Routing.html).
+That way fritz2 provides an easy way to synchronize your stores with a server. Want more? Keep on reading about [Routing](Routing.html).
