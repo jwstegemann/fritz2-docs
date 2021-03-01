@@ -86,7 +86,7 @@ store.updateWithValidation(Person("", 101))
 
 render {
     ul {
-        store.validator.msgs.renderEach(Message::id) {
+        store.validator.data.renderEach(Message::id) {
             li(baseClass = it.severity.name.toLowerCase()) {
                 +it.text
             }
