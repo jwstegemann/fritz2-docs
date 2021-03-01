@@ -74,8 +74,8 @@ val store = object : RootStore<Person>(Person("Chris", 42)) {
 }
 ```
 
-You can access your validation-results with `Validator.msgs`. 
-This gives you a `StateFlow<List<M>` where `M` is your `ValidationMessage`-type. 
+You can access your validation-results with `Validator.data`. 
+This gives you a `Flow<List<M>` where `M` is your `ValidationMessage`-type. 
 You can also use the `current` property to get the current `List` of your `ValidationMessage`.
 You can handle the `Flow` of your messages like any other `Flow` of a `List`, 
 for example by rendering your messages to html:
