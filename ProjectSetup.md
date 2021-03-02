@@ -17,15 +17,21 @@ plugins {
 
 repositories {
     jcenter()
+    mavenCentral()
+    maven("https://dl.bintray.com/jwstegemann/fritz2")
 }
 
 kotlin {
     jvm()
-    js().browser()
+    js(IR) {
+        browser()
+    }.binaries.executable()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation("dev.fritz2:core:0.9")
+                // see https://components.fritz2.dev/
                 // implementation("dev.fritz2:components:0.9")
             }
         }
@@ -44,16 +50,23 @@ kotlin {
 ## Pre-release builds
 If you want to use the newest snapshot-builds of fritz2 before we release them add the 
 following lines to your `build.gradle.kts`:
+
 ```gradle
-...
+plugins {
+    id("dev.fritz2.fritz2-gradle") version "0.9"
+}
+
 repositories {
     jcenter()
+    mavenCentral()
     maven("https://oss.jfrog.org/artifactory/jfrog-dependencies") // new repository here
 }
 
 kotlin {
     jvm()
-    js().browser()
+    js(IR) {
+        browser()
+    }.binaries.executable()
 
     sourceSets {
         val commonMain by getting {
