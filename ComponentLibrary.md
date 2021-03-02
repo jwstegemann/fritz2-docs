@@ -46,9 +46,9 @@ which makes them a joy to apply to our default theme and use them within our com
 For a first impression, here is a screenshot from our showcase app:
 ![components example basics](images/components_showcase_1.png)
 
-Just jump directly to our [showcase app](https://components.fritz2.dev/#Welcome) to get a detailed overview about the
-components and their features or refer to this [project](https://github.com/jwstegemann/fritz2-kitchensink) for
-studying or modifying the sources directly.
+Hop over to the [showcase app](https://components.fritz2.dev/#Welcome) to view detailed examples of the
+components and their features, or refer to its [source code](https://github.com/jwstegemann/fritz2-kitchensink) to 
+study or modify the sources directly.
 
 fritz2 currently offers the following components:
 
@@ -89,7 +89,7 @@ The following components are planned for future releases:
   
 ## Basics
 
-A component in fritz2 is just a function that takes parameters and might have an individual return type.
+A component in fritz2 is just a function which takes parameters and which might have an individual return type.
 It acts as a factory function that could render an arbitrary structure of HTML elements as a result. 
 Let's start with a very basic example:
 
@@ -229,8 +229,8 @@ Next, an ``events`` context is opened in order to plug the button click event in
 update handler. The ``pushButton`` component explicitly offers this context for managing the 
 [events](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events) of the underlying 
 HTML ``button { }`` element.
-Many interactive components offer such a mechanism, always by using exactly the same name ``events`` 
-(for exposing the actual DOM events), sometimes also with more specific functions for specific flows. 
+Many interactive components offer such a mechanism, always using exactly the same name ``events`` 
+(for exposing the actual DOM events), sometimes with more additional specific functions for specific flows. 
 The principle always remains the same: fritz2 offers a place to grab and use the events of each component.
 
 ## Composition on steroids
@@ -301,7 +301,7 @@ fun RenderContext.generic(
     baseClass: StyleClass? = null,
     id: String? = null,
     prefix: String = "generic",
-    build: GenericComponent.() -> Unit = {} // might be called ``init`` for basic components
+    build: GenericComponent.() -> Unit = {} // is sometimes called ``init`` for basic components
 ) : Unit // return type might differ for interaction based composition (flows of events etc.)
 ```
 

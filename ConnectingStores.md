@@ -18,7 +18,7 @@ offered data type to the type brackets:
 val personStore = object : RootStore<Person>(Person(...)) {
     val save = handleAndEmit<Person> { person ->
         emit(person) // emits current person
-        Person(...) // return a new empty person
+        Person(...) // return a new empty person (set as new store value)
     }
 }
 ```

@@ -5,7 +5,7 @@ nav_order: 50
 ---
 # Components
 
-It's very easy to create a lightweight reusable component with fritz2. Basically all you have to do is writing a function with `RenderContext` as it's receiver type:
+It's very easy to create a lightweight reusable component with fritz2. Basically all you have to do is write a function with `RenderContext` as its receiver type:
 
 ```kotlin
 fun RenderContext.myComponent() {
@@ -21,7 +21,7 @@ render {
 
 Of course, you can also use a subtype of `RenderContext` like a certain `Tag` as receiver if you want to limit the usage of your component to this type as its parent. 
 
-By using plain functions it's also straight forward to parametrize your component:
+By using plain functions, it's also straight forward to parametrize your component:
 
 ```kotlin
 fun RenderContext.myOtherComponent(person: Person): P {
@@ -38,7 +38,7 @@ render {
 }
 ```
 
-To allow nested components use a lambda with `RenderContext` as its receiver, or the type of the element you are calling this lambda in:
+To allow nested components, use a lambda with `RenderContext` as its receiver, or the type of the element you are calling this lambda in:
 ```kotlin
 // return a html element if your if you need it
 fun RenderContext.container(content: Div.() -> Unit): Div {
