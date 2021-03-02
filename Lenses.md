@@ -2,7 +2,7 @@
 layout: default
 title: Lenses
 parent: Nested Structures
-nav_order: 8
+nav_order: 82
 ---
 # Lenses
 
@@ -17,20 +17,21 @@ A `Lens` needs to handle the following:
 In fritz2, a `Lens` is defined by the following interface:
 ```kotlin
 interface Lens<P,T> {
+    val id: String
     fun get(parent: P): T
     fun set(parent: P, value: T): P
-    fun apply(parent: P, mapper: (T) -> T): P = //is already implemented
 }
 ```
-`apply` allows you to change the current value of the inner entity within one atomic action.
 
-You can easily use this interface by just implementing `get()` and `set()`. fritz2 also offers the method `buildLens()` for a short-and-sweet-experience:
+You can easily use this interface by just implementing `get()` and `set()`. 
+fritz2 also offers the method `buildLens()` for a short-and-sweet-experience:
 
 ```kotlin
 val nameLens = buildLens("name", { it.name }, { person, value -> person.copy(name = value) })
 ```
 
-No magic there. The first parameter sets an id for the `Lens`. When using `Lens`es with `SubStore`s, the id will be used to generate a valid html-id representing the path through your model. This can be used to identify your elements semantically (for automated ui-tests for example).
+No magic there. The first parameter sets an id for the `Lens`. When using `Lens`es with `SubStore`s, the `id` will be used to generate a valid html-id representing the path through your model.
+This can be used to identify your elements semantically (for automated ui-tests for example).
 
 If you have deep nested structures or a lot of them, you may want to automate this behavior. 
 fritz2 offers an annotation `@Lenses` you can add to your data-classes in the `commonMain` source-set of 
@@ -48,10 +49,8 @@ val nameLens = L.Person.name
 
 You can see it in action at our [nestedmodel-example](https://examples.fritz2.dev/nestedmodel/build/distributions/index.html).
 
-Keep in mind that your annotated classes have to be in your `commonMain` source-set. 
-If you need to use the generated objects in your `commonMain` 
-(e.g., to implement a `Validator` you can use on client and server), 
-you have to set up a subproject for your model. 
+Keep in mind that your annotated classes have to be in your `commonMain` source-set
+otherwise the automatic generation of the lenses will not work!
 
 Have a look at the [validation-example](https://examples.fritz2.dev/validation/build/distributions/index.html) to see how to set it up.
 

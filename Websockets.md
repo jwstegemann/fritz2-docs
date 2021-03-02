@@ -1,11 +1,11 @@
 ---
 layout: default
 title: Websockets
-nav_order: 11
+nav_order: 120
 ---
 # Websockets
 
-fritz2 offers websockets you can use with different protocols. First, create a socket:
+fritz2 offers support for websockets you can use with different protocols. To use it, you first have to create a socket:
  
 ```kotlin
 val websocket: Socket = websocket("ws://myserver:3333")
@@ -15,7 +15,7 @@ You can specify one or more protocols on creation. See these [docs](https://deve
 Your socket is now ready to establish a `Session` with the server, using the method `connect()`. Messages can now be exchanged between socket and server, which looks like this:
 
 ```kotlin
-val session: Session = socket.connect()
+val session: Session = websocket.connect()
 
 // receiving messages from server
 session.messages.body.onEach {
@@ -26,14 +26,13 @@ session.messages.body.onEach {
 session.send("Hello")
 ```
 
-As you can see, `Session` returns a `Flow` of `MessageEvent`s in messages. When a new message from the server arrives, a new event pops up on the `Flow`. Get the content of the message with one of the following methods (depending on content type):
- 
+As you can see, `Session` offers a `Flow` of `MessageEvent`s in messages. When a new message from the server arrives, a new message pops up on the `Flow`. Get the content of the message with one of the following methods (depending on content type):
 * `data: Flow<Any?>`
 * `body: Flow<String>`
 * `blob: Flow<Blob>`
 * `arrayBuffer: Flow<ArrayBuffer>`
 
-More information regarding the connection status can be read from the `Session` as `Flow`:
+More information regarding the connection status is provided by the `Session` as `Flow`s:
 * `isConnecting: Flow<Boolean>`
 * `isOpen: Flow<Boolean>`
 * `isClosed: Flow<Boolean>`
@@ -65,4 +64,4 @@ val entityStore = object : RootStore<Person>(personResource.emptyEntity) {
 
 When the model in the `Store` changes, it will be sent to the server via websocket, and vice versa of course.
 
-There you have an easy way to synchronize your stores with a server. Want more? Keep on reading about [Routing](Routing.html).
+That way fritz2 provides an easy way to synchronize your stores with a server. Want more? Keep on reading about [Routing](Routing.html).

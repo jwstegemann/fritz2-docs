@@ -1,13 +1,13 @@
 ---
 layout: default
 title: Http Calls
-nav_order: 10
+nav_order: 110
 ---
 # Http Calls
 
 Using the browser's default fetch-api can get quite tiresome, which is why fritz2 offers a small wrapper for it:
 
-First you create a `Request` for your backend:
+First you create a `Request` which points to your endpoint url:
 ```kotlin
 val usersApi = http("https://reqresss.in/api/users")
             .acceptJson()
@@ -26,7 +26,7 @@ val result: String = usersApi.get(s).getBody()
 * `getFormData(): FormData`
 * `getJson(): Any?`
 
-If your request was not successful (`Response.ok` is `false`) and `FetchException` will be thrown.
+If your request was not successful (`Response.status != 200`) a `FetchException` will be thrown.
 
 The same works for posts and other methods, just use different parameters for the body to send.
 
@@ -66,27 +66,28 @@ render {
 }
 
 // or
-action("just a name") handledBy userStore.addUser
+userStore.addUser("just a name")
 ```
 
 To see a complete example of this, visit our 
-[remote example](https://examples.fritz2.dev/remote/build/distributions/index.html)
+[remote example](https://examples.fritz2.dev/remote/build/distributions/index.html).
 
 In the real world, instead of creating the JSON manually, better use 
 [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization).
-Get inspired by our [repositories example](https://examples.fritz2.dev/repositories/build/distributions/index.html).
+Get inspired by our [repositories example](https://examples.fritz2.dev/repositories/build/distributions/index.html)
+and use our [repositories API](Repositories.html).
 
 
-You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts:
+You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts`:
 
 ```kotlin
 kotlin {
-    target {
+    js {
         browser {
             runTask {
-                devServer = KotlinWebpackConfig.DevServer(
+                devServer = org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.DevServer(
                     port = 9000,
-                    contentBase = listOf("$projectDir/src/jsMain/resources"),
+                    contentBase = listOf("$buildDir/distributions"),
                     proxy = mapOf(
                         "/myService" to "http://localhost:8080"
                     )

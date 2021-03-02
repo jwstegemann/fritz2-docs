@@ -1,13 +1,13 @@
 ---
 layout: default
 title: Store
-nav_order: 5
+nav_order: 60
 has_children: true
 ---
 # Store
 
 In fritz2, `Store`s are used to handle your app's state. 
-It heavily depends on Kotlin's `Flow` - if you are not familiar with this concept, 
+They heavily depend on Kotlin's `Flow` - if you are not familiar with this concept, 
 please take a look at [Flows](Flows.html) first.
 
 Let's assume the state of your app is a simple `String`. Creating a `Store` to manage that state is quite easy:
@@ -23,7 +23,7 @@ render {
     p {
         s.data.asText()
     }
-}.mount("target")
+}
 ```
 
 By calling `s.data.asText()` a [MountPoint](MountPoint.html) is created and collects your model values. 
@@ -37,7 +37,7 @@ render {
     p {
         s.data.map { "you have entered ${it.length} characters so far." }.asText()
     }
-}.mount("target")
+}
 ```
 
 To combine data from two or more stores you can use the `combine` method:
@@ -51,7 +51,7 @@ render {
             "Your full name is: $firstName $lastName"
         }.asText()
     }
-}.mount("target")
+}
 ```
 Of course, you can also use a `RootStore<T>` with a complex model which contains all data that you need in one place.
 Therefore, take a look at [Nested Structures](NestedStructures.html).
