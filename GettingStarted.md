@@ -36,13 +36,13 @@ You can mark an element of your choice with an id to later mount your fritz2-com
 ```
 
 `app.kt` is the starting point of your fritz2 app, so make sure it has a `main`-function. 
-Inside `main`, you might want to create some content by creating a `render`-context, 
-adding [some `Tag`s](https://api.fritz2.dev/core/core/dev.fritz2.dom.html/-render-context/index.html) and 
+Inside `main`, create some content by opening a 
+[render](https://api.fritz2.dev/core/core/dev.fritz2.dom.html/render.html) context and 
 mount it to the DOM of your `index.html`:
 
 ```kotlin
 fun main() {
-    render {
+    render("#target") {
         h1 { +"My App" }
         div("some-fix-css-class") {
             p(id = "someId") {
@@ -53,7 +53,12 @@ fun main() {
 }
 ```
 
-By calling render the way above your content will be mounted to the `body` of your document. Set the `targetElement` parameter to mount your content to any other element. Using the `override`parameter you can define it the existing children of the element you are mounting to will be removed (which is the default behaviour) or will be preserved (and your content will be appended).
+When calling `render` like that, your content will be mounted to an `HTMLElement` with `id="target"`. 
+If you want to mount your content to the `body` of your `index.html`, you can omit this parameter. 
+Instead of using the `selector` string with the [querySelector syntax](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector), 
+you can also specify an `HTMLElement` directly on the `targetElement` parameter. 
+Setting the `override` parameter to `false` means that your content will be appended. By default, all child
+elements will be removed before your content is appended to the `targetElement`.
 
 Run the project by calling `./gradlew jsRun` in your project's main directory. Add `--continuous` to enable automatic
 building and reloading in the browser after changing your code.
