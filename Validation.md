@@ -97,4 +97,4 @@ render {
 
 Have a look at a more complete example [here](https://examples.fritz2.dev/validation/build/distributions/index.html).
 
-By the way: fritz2 supports connecting to your (http)-backend from the browser with [Remote Calls](RemoteCalls.html).
+By the way: fritz2 supports connecting to your (http)-backend from the browser with [Http Calls](HttpCalls.html).
