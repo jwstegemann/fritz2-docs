@@ -40,7 +40,7 @@ render {
 
 To allow nested components, use a lambda with `RenderContext` as its receiver, or the type of the element you are calling this lambda in:
 ```kotlin
-// return a html element if your if you need it
+// return a html element if you need it
 fun RenderContext.container(content: Div.() -> Unit): Div {
     return div("container") {
         content()
