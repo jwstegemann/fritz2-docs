@@ -7,12 +7,12 @@ search_enabled: true
 aux_links:
   "Home":
     - "//www.fritz2.dev"
-  "Documentation":
-    - "//docs.fritz2.dev"
   "Examples":
     - "//www.fritz2.dev/examples.html"
   "Api":
     - "//api.fritz2.dev"
+  "Components":
+    - "//components.fritz2.dev"
   "Github":
   - "//www.github.com/jwstegemann/fritz2"
 
