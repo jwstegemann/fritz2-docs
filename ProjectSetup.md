@@ -16,9 +16,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
-    maven("https://dl.bintray.com/jwstegemann/fritz2")
 }
 
 kotlin {
@@ -57,9 +55,8 @@ plugins {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
-    maven("https://oss.jfrog.org/artifactory/jfrog-dependencies") // new repository here
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // new repository here
 }
 
 kotlin {
