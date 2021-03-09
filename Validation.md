@@ -7,7 +7,7 @@ nav_order: 100
 
 When accepting user-input, it is a nice idea to validate the data before processing it any further.
 
-Hint: If you plan to use our [components](ComponentLibrary.html), you might want to check out a
+Hint: If you plan to use our [components](ComponentLibrary.html), you might want to check out the
 [guide](https://components.fritz2.dev/#FormControl) specially tailored to the component's validation features.
 
 To do validation in fritz2, you first have to implement the interface `Validator`. 
