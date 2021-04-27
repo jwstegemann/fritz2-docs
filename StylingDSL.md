@@ -8,11 +8,14 @@ nav_order: 172
 
 To make building components with unified styling even faster and simpler, fritz2 offers its own DSL which makes use of 
 constraint-based style props based on scales defined in a `Theme`. 
-Just call `styled` on the factory function of the element you would like to style and specify your concrete styling in its lambda:
+Just use the overloaded factory function to create a HTML tag and specify your concrete 
+styling as lambda expression as first parameter:
 
 ```kotlin
+import dev.fritz2.styling.*
+
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
-    (::img.styled {
+    img({
         boxShadow { flat }
         radius { large }
         width(sm = { small }, md = { smaller })
@@ -23,18 +26,21 @@ fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
 }
 ```
 
+**Important**: Add the following import to get the new extension functions: ``import dev.fritz2.styling.*``
+
 Remember that this does not result in inline-styling but rather uses fritz2's `style` function to dynamically create 
 css classes in a dynamic style sheet managed by fritz2. See [Styling](Styling.html) fot further details.
 
 fritz2's styling DSL does not aim to support the entirety of the css standard. 
 Similar to [Styled System](https://styled-system.com/), it offers fast, type-safe, and themed access to the most important 
-properties for adapting components and elements to the special requirements of any situation, and for re-composing them time and again.
+properties for adapting components and elements to the special requirements of any situation, and for re-composing 
+them time and again.
 
 To remain as flexible as possible, values of properties can alternatively be passed as `String`s, 
 like `width { "73%" }`. Additionally, using the `css()` function allows you to set properties that are not part of the DSL:
 
 ```kotlin
-(::p.styled {
+p({
     css("animation: mymove 5s infinite;")
 }) {
     div { + "some animated content"}
@@ -44,7 +50,7 @@ like `width { "73%" }`. Additionally, using the `css()` function allows you to s
 In addition to the usual pseudo elements and classes, the function `children()` gives access to (sub-)selectors:
 
 ```kotlin
-(::div.styled {
+div({
     children(" > :not(:first-child)") {
         margins { top { large } }
     }
@@ -58,11 +64,11 @@ You can still pass `baseClass`, `id`, and `prefix` to styled elements, of course
 
 ```kotlin
 fun RenderContext.headerImage(srcUrl: String, alternativeText: String) {
-    (::img.styled(id = "4711", prefix = "headerImage") {
+    img({
         boxShadow { flat }
         radius { large }
         width(sm = { small }, md = { smaller })
-    }) {
+    }, id = "4711", prefix = "headerImage") {
         src(srcUrl)
         alt(alternativeText)
     }
@@ -79,7 +85,7 @@ You can set each property independently for these viewport-sizes:
 {
     fontSize(sm = { tiny }, lg = { normal })
     width(sm = { full }, lg = { "768px" })
-    color { primary }
+    color { primary.mainContrast }
 }
 ```
 The concrete definition of the breakpoints (by media-query) is part of each `Theme`.
@@ -123,11 +129,11 @@ val teaserText: Style<BasicParams> = {
     fontWeight { semiBold }
     textTransform { uppercase }
     textShadow { glowing }
-    color { info }
+    color { info.mainContrast }
 }
 
 render {
-    (::p.styled {
+    p({
         margins { top { small } }
         teaserText() 
     }) {
@@ -145,7 +151,7 @@ object MyTheme: DefaultTheme() {
     override val name = "MyTheme"
 
     override val colors = object : Colors by super.colors {
-        override val dark = "darkblue" // overrides default dark color
+        override val font = "darkblue" // overrides default font color
     }
 }
 
@@ -185,7 +191,7 @@ You can specify the specific sub-type here as well to avoid numerous calls to `T
 ```kotlin
 fun main() {
     render(MyTheme) { theme: MyTheme ->
-        (::p.styled {
+        p({
             color { theme.importantColor }
             theme.teaserText()
         }) { +"some great looking text" }
