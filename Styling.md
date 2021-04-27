@@ -35,35 +35,8 @@ Add the following dependency to your gradle build:
 # StyleClass
 
 The key element of fritz2-styling is the `StyleClass`. An instance of `StyleClass` represents exactly one css class in 
-the dynamic stylesheet managed by fritz2. The `name`-attribute can be used whenever css classes are needed as a `String` in fritz2-core:
-
-```kotlin
-val height = "100%"
-val useFlex = true
-
-val myStyle: StyleClass = staticStyle("myClassName", css = """
-            min-height: $height;
-            flex-direction: row;
-            align-items: stretch;
-            color: rgb(52, 58, 64);
-            display: ${if (useFlex) "flex" else "block"};
-        """)
-
-render {
-    div(myStyle.name) {
-        +"here I am"
-    }
-}
-````
-
-The factory method `staticStyle` compiles the passed css code and inserts a class named `myClassName` into the 
-fritz2-managed stylesheet. It uses the [stylis] (https://stylis.js.org/) css compiler, which offers a slightly extended 
-syntax over pure css. It allows embedded selectors as well as media classes and namespaces. 
-
-Of course, you can use Kotlin variables and even code inside your styles, but since this class has a static name, 
-your variable cannot change over time. 
-
-Use `style` to create dynamic classes:
+the dynamic stylesheet managed by fritz2. The `name`-attribute can be used whenever css classes are needed as a 
+`String` in fritz2-core:
 
 ```kotlin
 fun RenderContext.myComponent(height: Int, isFlex: Boolean) {
@@ -80,9 +53,15 @@ fun RenderContext.myComponent(height: Int, isFlex: Boolean) {
     }
 }
 ```
-Every time this component is rendered, fritz2 creates a new class name, consisting of the prefix and a calculated hash value (i.e. `myComponent-iHpEb`). 
-This ensures that each created class has unique content, and classes that already exist are reused if the content has not changed. 
-The prefix allows you to use semantic identifiers which makes it easy to debug your styling in the browser. 
+Every time this component is rendered, fritz2 creates a new class name, consisting of the prefix and a calculated
+hash value (i.e. `myComponent-iHpEb`). This ensures that each created class has unique content, and classes that
+already exist are reused if the content has not changed. The prefix allows you to use semantic identifiers which
+makes it easy to debug your styling in the browser.
+
+It uses the [stylis] (https://stylis.js.org/) css compiler, which offers a slightly extended 
+syntax over pure css. It allows embedded selectors as well as media classes and namespaces. 
+
+Of course, you can use Kotlin variables and even code inside your styles.
 
 IntelliJ uses [language injections](https://www.jetbrains.com/help/idea/using-language-injections.html), 
 making it easy and comfortable to edit css code in kotlin files.

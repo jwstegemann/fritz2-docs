@@ -66,6 +66,8 @@ fritz2 currently offers the following components:
   - ``TextArea``
   - ``Switch``
   - ``FormControl``
+- Complex:
+  - ``DataTable`` (new with 0.10)
 - Overlay:
   - ``Modal``
   - ``Popover``
@@ -82,8 +84,6 @@ The following components are planned for future releases:
   - ``AppFrame``
 - Overlay
   - ``Menu``
-- Forms
-  - ``DataTable``
 - Feedback:
   - ``Progress``
   
@@ -140,7 +140,7 @@ render {
         alignItems { center }
         padding { small }
         background {
-            color { light }
+            color { gray200 }
         }
     }) { // configure content and behaviour / appearance within the build context
         reverse(true) // show items in reverse declaration order
@@ -214,7 +214,7 @@ div {
 
 ![components example getting interactive](images/components_gettinginteractive_1.png)
 
-First of all, a simple ``Boolean`` [store](Store.html) is created for toggling between _visible_ and _hidden_, 
+First a simple ``Boolean`` [store](Store.html) is created for toggling between _visible_ and _hidden_, 
 which will be used to show our information only when the store's  state is _true_. 
 
 Then, a ``pushButton`` component is created to toggle that state. As was previously shown, a functional expression
@@ -298,7 +298,7 @@ of our components, the factory functions. Their signatures follow a consistent p
 fun RenderContext.generic(
     styling: BasicParams.() -> Unit = {},
     // additional arguments are placed here, e.g. stores in some cases
-    baseClass: StyleClass? = null,
+    baseClass: StyleClass? = StyleClass.None,
     id: String? = null,
     prefix: String = "generic",
     build: GenericComponent.() -> Unit = {} // is sometimes called ``init`` for basic components
