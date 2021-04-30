@@ -58,7 +58,7 @@ fun main() {
     }
 }
 ```
-![components example basics](images/fritz2-template.png)
+![components example basics](images/gettingstarted_inital.png)
 
 When calling `render` like that, your content will be mounted to an `HTMLElement` with `id="target"`. 
 If you want to mount your content to the `body` of your `index.html`, you can omit this parameter. 
