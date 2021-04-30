@@ -79,23 +79,26 @@ and use our [repositories API](Repositories.html).
 
 
 You can easily setup your local webpack-server to proxy other services when developing locally in your `build.gradle.kts`:
-
 ```kotlin
 kotlin {
-    js {
+    js(IR) {
         browser {
             runTask {
-                devServer = org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.DevServer(
+                devServer = devServer?.copy(
                     port = 9000,
-                    contentBase = listOf("$buildDir/distributions"),
                     proxy = mapOf(
-                        "/myService" to "http://localhost:8080"
+                        "/members" to "http://localhost:8080",
+                        "/chat" to mapOf(
+                            "target" to "ws://localhost:8080",
+                            "ws" to true
+                        )
                     )
                 )
             }
         }
-    }
+    }.binaries.executable()
 }
 ```
+A working example you can find in the [Ktor Chat](https://github.com/jamowei/fritz2-ktor-chat) project.
 
 Want to do bidirectional communications? Keep on reading about [Websockets](Websockets.html).
