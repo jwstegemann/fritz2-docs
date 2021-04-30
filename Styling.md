@@ -58,7 +58,7 @@ hash value (i.e. `myComponent-iHpEb`). This ensures that each created class has 
 already exist are reused if the content has not changed. The prefix allows you to use semantic identifiers which
 makes it easy to debug your styling in the browser.
 
-It uses the [stylis] (https://stylis.js.org/) css compiler, which offers a slightly extended 
+It uses the [stylis](https://stylis.js.org/) css compiler, which offers a slightly extended 
 syntax over pure css. It allows embedded selectors as well as media classes and namespaces. 
 
 Of course, you can use Kotlin variables and even code inside your styles.
