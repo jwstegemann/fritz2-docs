@@ -7,30 +7,36 @@ nav_order: 30
 
 We recommend organizing your source code like this:
 
-* \<project-root\>
-  * src
-    * commonMain
-      * kotlin
-        * \<your base package\>
-          * model.kt (to use the model in client and server)
-    * jsMain
-      * kotlin
-        * \<your base package\>
-          * app.kt (or choose any other name)
-      * resources
-        * index.html
+```
+<project-root>/
+├── src/
+│   ├── commonMain/
+│   │   └── kotlin/
+│   │       └── <packages>/
+│   │           └── model.kt (common model for client (JS) and server (JVM))
+│   └── jsMain/
+│       ├── kotlin/
+│       │   └── <packages>/
+│       │       └── app.kt  (contains main function)
+│       └── resources/
+│           └── index.html  (starting point for your app)
+├── build.gradle.kts  (dependencies and tasks)
+└── settings.gradle.kts  (project name)
+```
 
-The `index.html`is just a normal web-page. Be sure to include the resulting script-file from your Kotlin/JS-build .
-You can mark an element of your choice with an id to later mount your fritz2-components to it:
+The `index.html` is just a normal web-page. Be sure to include the resulting script-file from your KotlinJS-build.
+You can mark an element of your choice with an id (or use the body) to later mount your fritz2 elements to it:
 
 ```html
+<!doctype html>
 <html>
   <head>
-    <title>Your title</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
   </head>
   <body id="target">
     Loading...
-    <script src="yourProject.js"></script>
+    <script src="<project-name>.js"></script>
   </body>
 </html>
 ```
@@ -42,7 +48,7 @@ mount it to the DOM of your `index.html`:
 
 ```kotlin
 fun main() {
-    render("#target") {
+    render("#target") { // using id selector here, leave blank to use document.body
         h1 { +"My App" }
         div("some-fix-css-class") {
             p(id = "someId") {
@@ -52,6 +58,8 @@ fun main() {
     }
 }
 ```
+
+
 
 When calling `render` like that, your content will be mounted to an `HTMLElement` with `id="target"`. 
 If you want to mount your content to the `body` of your `index.html`, you can omit this parameter. 
