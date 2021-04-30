@@ -1,15 +1,16 @@
 ---
 layout: default
 title: Format
-nav_order: 150
+parent: Nested Structures
+nav_order: 84
 ---
 # Format
 
 In html you can only use `Strings` in your attributes like in the `value` attribute of `input {}`. To use other data 
 types in your model you have to specify how to represent a specific value as `String` (e.g. Number, Currency, Date). 
 When you work with `input {}` you also need parse the entered text back to your data type.
-For all Kotlin basic types there is a convenince function `asString()` which generates a `Lens` from this type to `String`
-and vice versa. Therefore it calls internally the `T.toString()` and `String.toT()` functions.
+For all Kotlin basic types there is a convenience function `asString()` which generates a `Lens` from this type to `String`
+and vice versa. Therefore, it calls internally the `T.toString()` and `String.toT()` functions.
 
 ```kotlin
 // L object comes from @Lenses annotation on Person data class
