@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Styling
-nav_order: 170
+nav_order: 160
 has_children: true
 ---
 # Integrated Styling

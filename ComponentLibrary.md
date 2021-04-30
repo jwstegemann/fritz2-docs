@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Component library
-nav_order: 180
+nav_order: 170
 ---
 # Components library
 
@@ -49,43 +49,6 @@ For a first impression, here is a screenshot from our showcase app:
 Hop over to the [showcase app](https://components.fritz2.dev/#Welcome) to view detailed examples of the
 components and their features, or refer to its [source code](https://github.com/jwstegemann/fritz2-kitchensink) to 
 study or modify the sources directly.
-
-fritz2 currently offers the following components:
-
-- Layout:
-  - ``Flexbox``
-  - ``Gridbox``
-  - ``Stacks``
-- Forms
-  - ``Buttons``
-  - ``InputField``
-  - ``SelectField``
-  - ``File``
-  - ``Checkbox``
-  - ``Radio``
-  - ``TextArea``
-  - ``Switch``
-  - ``FormControl``
-- Complex:
-  - ``DataTable`` (new with 0.10)
-- Overlay:
-  - ``Modal``
-  - ``Popover``
-  - ``Tooltip``
-  - ``Toast``
-- Misc:
-  - ``Alert``
-  - ``Icons``
-  - ``Spinner``
-  
-The following components are planned for future releases:
-
-- Layout
-  - ``AppFrame``
-- Overlay
-  - ``Menu``
-- Feedback:
-  - ``Progress``
   
 ## Basics
 

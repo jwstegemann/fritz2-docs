@@ -8,10 +8,23 @@ nav_order: 72
 
 Most real-world applications contain multiple stores which need to be linked to properly react to model changes.
 
-To make your stores interconnect, fritz2 offers the `EmittingHandler`, a type of handler that doesn't just take data
-as an argument but also emits data on a new `Flow`. The emitted data can then be picked up and handled as usual.  
+To make your stores interconnect, fritz2 allows calling `Handlers` of others stores directly with or
+without a parameter. 
+```kotlin
+object SaveStore : RootStore<String>("") {
+    val save = handle<String> { _, data -> data }
+}
 
-Create such a handler by calling the `handleAndEmit {}` function instead of the `handle {}` function and add the 
+object InputStore : RootStore<String>("") {
+    val input = handle<String> { _, input -> SaveStore.save(input) }
+}
+```
+
+In cases where you don't know which `Handler` of another store will handle the exposed data, you can use 
+the `EmittingHandler`, a type of handler that doesn't just take data
+as an argument but also emits data on a new `Flow` for other handlers to receive.
+
+Create such a handler by calling the `handleAndEmit<T>()` function instead of the usual `handle()` function and add the 
 offered data type to the type brackets: 
 
 ```kotlin
