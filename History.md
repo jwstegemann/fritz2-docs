@@ -12,7 +12,7 @@ fritz2 offers a history service to do so.
 
 ```kotlin
 val store = object : RootStore<String>("") {
-    val history = history<Person>().sync(this)
+    val history = history<String>().sync(this)
 }
 ```
 
