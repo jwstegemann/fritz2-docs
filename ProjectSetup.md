@@ -12,7 +12,7 @@ To use fritz2, you have to set up a Kotlin multiplatform-project. To do so you c
 
 ```gradle
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.10"
+    id("dev.fritz2.fritz2-gradle") version "0.10.1"
 }
 
 repositories {
@@ -28,9 +28,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("dev.fritz2:core:0.10")
+                implementation("dev.fritz2:core:0.10.1")
                 // see https://components.fritz2.dev/
-                // implementation("dev.fritz2:components:0.10")
+                // implementation("dev.fritz2:components:0.10.1")
             }
         }
         val jvmMain by getting {
@@ -51,7 +51,7 @@ following lines to your `build.gradle.kts`:
 
 ```gradle
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.10"
+    id("dev.fritz2.fritz2-gradle") version "0.10.1"
 }
 
 repositories {
