@@ -13,10 +13,10 @@ Using fritz2 you can use the `tracker`-service to implement this:
 
 ```kotlin
 val store = object : RootStore<String>("") {
-    val tracker = tracker()
+    val tracking = tracker()
 
     val save = handle { model ->
-        tracker.track("myTransaction") {
+        tracking.track("myTransaction") {
             delay(1500) // do something that takes a while
             "$model."
         }
@@ -25,7 +25,7 @@ val store = object : RootStore<String>("") {
 
 render {
     button("btn") {
-        className(store.tracker.data.map {
+        className(store.tracking.data.map {
             if(it) "spinner" else ""
         })
         +"save"
