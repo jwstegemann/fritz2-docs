@@ -18,7 +18,7 @@ Your socket is now ready to establish a `Session` with the server, using the met
 val session: Session = websocket.connect()
 
 // receiving messages from server
-session.messages.getBody handledBy {
+session.messages.body handledBy {
   window.alert("Server said: $it")
 }
 
@@ -27,11 +27,10 @@ session.send("Hello")
 ```
 
 As you can see, `Session` offers a `Flow` of `MessageEvent`s in messages. When a new message from the server arrives, a new message pops up on the `Flow`. Get the content of the message with one of the following methods (depending on content type):
-* `getJson(): Flow<Any?>`
-* `getFormData(): Flow<FormData>`
-* `getBody(): Flow<String>`
-* `getBlob(): Flow<Blob>`
-* `getArrayBuffer(): Flow<ArrayBuffer>`
+* `data(): Flow<Any?>`
+* `body(): Flow<String>`
+* `blob(): Flow<Blob>`
+* `arrayBuffer(): Flow<ArrayBuffer>`
 
 More information regarding the connection status is provided by the `Session` as `Flow`s:
 * `isConnecting: Flow<Boolean>`
