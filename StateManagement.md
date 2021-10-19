@@ -68,18 +68,20 @@ someStore.someHandler(someValue)
 someStore.someHandler()
 ```
 
-If the content of your `Store` is not bound anywhere but need its handler's code to be executed whenever an action is available, 
-you have to explicitly `watch()` it:
+If you need its handler's code to be executed whenever the model is changed, 
+you have to use the `syncBy` function:
 
 ```kotlin
-val store = object : RootStore<Whatever>(initialWhatever) {
-    val printMessage = handle { model ->
-        console.log("some message")
+val store = object : RootStore<String>("initial") {
+    val logChange = handle { model ->
+        console.log("model changed to: $model")
         model
     }
-}
 
-store.data.watch()
+    init {
+        syncBy(logChange)
+    }
+}
 ```
 
 Next we will have a look at how to use [Lists as a model](ListsinaModel.html).
