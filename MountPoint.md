@@ -6,13 +6,15 @@ nav_order: 64
 ---
 # Mount-Point
 
-A mount-point in fritz2 is an anchor of a `Flow` somewhere in a structure like the DOM-tree. It is used as a placeholder when creating the structure. 
-Afterwards, each value appearing on the mounted `Flow` will be put into the structure at exactly that position replacing the former value.
+A mount-point in fritz2 is an anchor of a `Flow` somewhere in a structure like the DOM-tree. Afterwards, each value 
+appearing on the mounted `Flow` will be put into the structure at exactly that position replacing the former value.
 
-Most of the time you will use mount-points in the browser's DOM, allowing you to mount `Tag`s to some point in the html-structure you are building using for example the `someFlow.render {}` function.
+Most of the time you will use mount-points in the browser's DOM, allowing you to mount `Tag`s to some point in the 
+html-structure you are building using for example the `someFlow.render {}` function.
 
-Inside the `RenderContext` opened by `someFlow.render {}`, a new mount-point is created as a placeholder and 
-added to the current parent-element. Whenever a new value appears on the `Flow`, the new content is rendered and replaces the old elements.
+Inside the `RenderContext` opened by `someFlow.render {}`, a new mount-point is created as a `<div>`-tag and 
+added to the current parent-element. Whenever a new value appears on the `Flow`, the new content is rendered 
+and replaces the old elements.
 
 In this `RenderContext`, any number of root elements can be created (also none).
 ```kotlin
@@ -27,17 +29,34 @@ someStringFlow.render { name ->
     hr {}
 }
 ```
-Whenever you are sure that there will be only one root element, you can use the `renderElement {}` function instead: it is optimized for a single root element and performs slightly better.
-Additionally, you can influence how fritz2 handles the order of elements: Whenever no `Tag`s exist on the same level as the MountPoint created by the call to `render`, or the order of the elements just does not matter use `preserveOrder = false` to deactivate the ordering of elements to increase performance. This is highly recommended when re-rendering a lot in your application.
-
+The latter example will result in the following DOM structure:
+```html
+<div class="mount-point" data-mount-point> <!-- created by `render` function -->
+  <h5>Your name is:</h5>
+  <div>Chris</div>
+  <hr/>
+</div>
+```
+Whenever the mount-point is definitely the only sub-element of its parent element, you can omit the special 
+`<div>`-mount-point-tag by setting the `into` parameter to the parent element. In this case the rendering engine
+uses the existing parent node as reference for the mount-point:
 ```kotlin
 render {
-    div {
-        div { +"1" }
-        flowOf("2").renderElement(preserveOrder = false) {
-            div { +it }
+    ul { // `this` is <ul>-tag within this scope
+        flowOf(listOf("fritz2", "react", "vue", "angular")).renderEach(into = this) {
+        //                                                             ^^^^^^^^^^^
+        //                                                             define parent node as anchor for mounting    
+            li { +it }
         }
-        div { +"3" }
-    } // renders 1, 3, 2
+    }
 }
+```
+This will result in the following DOM structure:
+```html
+<ul data-mount-point> <!-- No more explicit <div> needed! Data attribute gives hint that tag is a mount-point -->
+  <li>fritz2</li>
+  <li>react</li>
+  <li>vue</li>
+  <li>angular</li>
+</ul>
 ```
