@@ -37,7 +37,7 @@ The latter example will result in the following DOM structure:
   <hr/>
 </div>
 ```
-Whenever the mount-point is definitely the only sub-element of its parent element, you can omit the special 
+Whenever the mount-point is definitely the only sub-element of its parent element, you can omit the dedicated 
 `<div>`-mount-point-tag by setting the `into` parameter to the parent element. In this case the rendering engine
 uses the existing parent node as reference for the mount-point:
 ```kotlin
@@ -53,7 +53,7 @@ render {
 ```
 This will result in the following DOM structure:
 ```html
-<ul data-mount-point> <!-- No more explicit <div> needed! Data attribute gives hint that tag is a mount-point -->
+<ul data-mount-point> <!-- No more dedicated <div> needed! Data attribute gives hint that tag is a mount-point -->
   <li>fritz2</li>
   <li>react</li>
   <li>vue</li>
