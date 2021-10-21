@@ -42,21 +42,20 @@ Whenever the mount-point is definitely the only sub-element of its parent elemen
 uses the existing parent node as reference for the mount-point:
 ```kotlin
 render {
-    ul { // `this` is <ul>-tag within this scope
-        flowOf(listOf("fritz2", "react", "vue", "angular")).renderEach(into = this) {
+    dl { // `this` is <ul>-tag within this scope
+        flowOf("fritz2" to "Awesome web frontend framework").render(into = this) { (title, def) ->
         //                                                             ^^^^^^^^^^^
         //                                                             define parent node as anchor for mounting    
-            li { +it }
+            dt { +title }
+            dd { +def }
         }
     }
 }
 ```
 This will result in the following DOM structure:
 ```html
-<ul data-mount-point> <!-- No more dedicated <div> needed! Data attribute gives hint that tag is a mount-point -->
-  <li>fritz2</li>
-  <li>react</li>
-  <li>vue</li>
-  <li>angular</li>
-</ul>
+<dl data-mount-point> <!-- No more dedicated <div> needed! Data attribute gives hint that tag is a mount-point -->
+  <dt>fritz2</dt
+  <dd>Awesome web frontend framework</dd>
+</dl>
 ```
