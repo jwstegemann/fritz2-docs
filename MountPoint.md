@@ -55,7 +55,7 @@ render {
 This will result in the following DOM structure:
 ```html
 <dl data-mount-point> <!-- No more dedicated <div> needed! Data attribute gives hint that tag is a mount-point -->
-  <dt>fritz2</dt
+  <dt>fritz2</dt>
   <dd>Awesome web frontend framework</dd>
 </dl>
 ```
