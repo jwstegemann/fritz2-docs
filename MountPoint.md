@@ -44,8 +44,8 @@ uses the existing parent node as reference for the mount-point:
 render {
     dl { // `this` is <ul>-tag within this scope
         flowOf("fritz2" to "Awesome web frontend framework").render(into = this) { (title, def) ->
-        //                                                             ^^^^^^^^^^^
-        //                                                             define parent node as anchor for mounting    
+            //                                                      ^^^^^^^^^^^
+            //                                                      define parent node as anchor for mounting    
             dt { +title }
             dd { +def }
         }
