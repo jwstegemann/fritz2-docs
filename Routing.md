@@ -84,8 +84,8 @@ If you want to use your own special `Route` instead, try this:
 ```kotlin
 class SetRoute(override val default: Set<String>) : Route<Set<String>> {
     val separator = "&"
-    override fun unmarshal(hash: String): Set<String> = hash.split(separator).toSet()
-    override fun marshal(route: Set<String>): String = route.joinToString(separator)
+    override fun deserialize(hash: String): Set<String> = hash.split(separator).toSet()
+    override fun serialize(route: Set<String>): String = route.joinToString(separator)
 }
 
 val router = router(SetRoute(setOf("welcome")))
