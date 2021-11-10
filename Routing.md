@@ -26,20 +26,16 @@ To make this mechanism easier to use, we already implemented two ways of handlin
 * `StringRoute` uses the url-hash how it is.
 * `MapRoute` serialize and deserialize the url-hash to `Map<String,String>` where `&` is the separator between the entries.
 
-You can easily create a new instance of `Router` by using the global `router()` function. 
+You can easily create a new instance of `Router` by using the global `routerOf()` function. 
 There are currently three of them for each type of your `Route`.
-* `router(default: String): Router<String>` which uses the `StringRoute`
-* `router(default: Map<String, String>): Router<Map<String, String>>` which uses the `MapRoute`
-* `<T> router(default: Route<T>): Router<T>` which uses your custom implementation of `Route` interface
-
-Use the last option to implement your own `Route` on your own data type.
-Every `Router` provides a `data: Flow<R>` and a `current: R` attribute for getting the current route in dynamic
-or static way.
+* `routerOf(default: String): Router<String>` which uses the `StringRoute`
+* `routerOf(default: Map<String, String>): MapRouter` which uses the `MapRoute`
+* `<T> routerOf(default: Route<T>): Router<T>` which uses your custom implementation of `Route` interface
 
 Routing is straightforward:
 Using simple `String`s by `StringRoute`:
 ```kotlin
-val router = router("welcome")
+val router = routerOf("welcome")
 
 render {
     section {
@@ -57,14 +53,14 @@ render {
 val currentRoute = router.current
 ```
 
-Using a `Map` of parameters by `MapRoute`:
+Using a `Map`:
 ```kotlin
-val router = router(mapOf("page" to "welcome"))
+val router = routerOf(mapOf("page" to "welcome"))
 
 render {
     section {
-        router.select("page").render { (name, other) ->
-            when(name) {
+        router.select(key = "page", orElse = "").render { value ->
+            when(value) {
                 "welcome" -> div { +"Welcome" }
                 "pageA" -> div { +"Page A" }
                 "pageB" -> div { +"Page B" }
@@ -76,19 +72,21 @@ render {
 
 val currentRoute = router.current
 ```
-A router using a `MapRoute` offers an extra `select` method which extract the values as `Pair` for the given key (here `"page"`) 
-and requires a function to map the value. Therefore, it returns a `Pair` of the current value, and the complete `Map` to
-help you decide what to render.
+A router using a `MapRoute` offers two extra `select` methods:
+* `fun select(key: String): Flow<Pair<String?, Map<String, String>>>` extracts the values as `Pair` for the given `key` 
+and the rest of the route
+* `fun select(key: String, orElse: String): Flow<String>` extracts the value for a given `key` when available otherwise 
+it returns `orElse`
 
 If you want to use your own special `Route` instead, try this:
 ```kotlin
 class SetRoute(override val default: Set<String>) : Route<Set<String>> {
-    val separator = "&"
+    private val separator = "&"
     override fun deserialize(hash: String): Set<String> = hash.split(separator).toSet()
     override fun serialize(route: Set<String>): String = route.joinToString(separator)
 }
 
-val router = router(SetRoute(setOf("welcome")))
+val router = routerOf(SetRoute(setOf("welcome")))
 
 render {
     section {
@@ -104,9 +102,28 @@ render {
 }
 ```
 
-If you want to change your current route (e.g. when an event fires), you can do so by calling `navTo`: 
+In more complex scenarios it would be common to create your own implementation of a `Router` by using either the
+`StringRouter` or `MapRouter` as parent class:
 ```kotlin
-val router = router("welcome")
+object MyRouter : MapRouter(mapOf("page" to "overview")) {
+
+    val overview = handle {
+        it + ("page" to "overview")
+    }
+
+    val details = handle<String> { route, id ->
+        route + mapOf("page" to "details", "detailsId" to id)
+    }
+}
+```
+Then you can create your handlers inside your router to manage your internal state better. 
+This behavior is anlog to our `Store`s.
+
+
+If you want to change your current route (e.g. when an event fires), 
+you can do so by calling the predefined handler `navTo`: 
+```kotlin
+val router = routerOf("welcome")
 
 render {
     button {
@@ -116,6 +133,26 @@ render {
 }
 // or call handler directly
 router.navTo("pageA")
+```
+or in case you created your own handlers you can call theme analogously:
+```kotlin
+object MyRouter : MapRouter(mapOf("page" to "overview")) {
+    val overview = handle { it + ("page" to "overview") }
+    val details = handle<String> { route, id -> route + mapOf("page" to "details", "detailsId" to id) }
+}
+
+render {
+    button {
+        +"Show overview"
+        clicks handledBy MyRouter.overview
+    }
+    button {
+        +"Show details"
+        clicks.map { "12" } handledBy MyRouter.details
+    }
+}
+// or call handler directly
+MyRouter.details("12")
 ```
 
 Have a look at our [routing example](https://examples.fritz2.dev/routing/build/distributions/index.html)
