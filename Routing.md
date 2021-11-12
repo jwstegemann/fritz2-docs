@@ -28,9 +28,9 @@ To make this mechanism easier to use, we already implemented two ways of handlin
 
 You can easily create a new instance of `Router` by using the global `routerOf()` function. 
 There are currently three of them for each type of your `Route`.
-* `routerOf(default: String): Router<String>` which uses the `StringRoute`
-* `routerOf(default: Map<String, String>): MapRouter` which uses the `MapRoute`
-* `<T> routerOf(default: Route<T>): Router<T>` which uses your custom implementation of `Route` interface
+* `routerOf(default: String): Router<String>` which uses `StringRoute`
+* `routerOf(default: Map<String, String>): MapRouter` which uses `MapRoute`
+* `<T> routerOf(default: Route<T>): Router<T>` which uses your custom implementation of the `Route` interface
 
 Routing is straightforward:
 Using simple `String`s by `StringRoute`:
@@ -102,7 +102,7 @@ render {
 }
 ```
 
-In more complex scenarios it would be common to create your own implementation of a `Router` by using either the
+In more complex scenarios, it's common to create your own implementation of `Router` by using either the
 `StringRouter` or `MapRouter` as parent class:
 ```kotlin
 object MyRouter : MapRouter(mapOf("page" to "overview")) {
@@ -116,8 +116,7 @@ object MyRouter : MapRouter(mapOf("page" to "overview")) {
     }
 }
 ```
-Then you can create your handlers inside your router to manage your internal state better. 
-This behavior is anlog to our `Store`s.
+This lets you create custom handlers inside your router to improve internal state managing, analogous to our `Store`s.
 
 
 If you want to change your current route (e.g. when an event fires), 
@@ -134,7 +133,7 @@ render {
 // or call handler directly
 router.navTo("pageA")
 ```
-or in case you created your own handlers you can call theme analogously:
+Or call your own handlers in case you created any:
 ```kotlin
 object MyRouter : MapRouter(mapOf("page" to "overview")) {
     val overview = handle { it + ("page" to "overview") }
