@@ -59,8 +59,11 @@ they only set an attribute if the value is *not* `null`. This behaviour could be
 val isOpened = storeOf(true)
 
 button {
-    +"Toggle"
+    +"Toggle" 
+    // This mechanism is later explained in "State Management". 
+    // Just accept for now this simply toggles the boolean value in the store by each click. 
     clicks.map { !isOpened.current } handledBy isOpened.update
+ 
     attr("aria-controls", isOpened.data.map { if (it) "disclosure" else null })
     //                                                                  ^^^^
     //      make whole attribute disappear if disclosure-div is not rendered
