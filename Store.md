@@ -21,13 +21,13 @@ Every `Store` offers a `Flow` named `data` which can be bound as part of your ht
 ```kotlin
 render {
     p {
-        s.data.asText()
+        s.data.renderText()
     }
 }
 ```
 
-By calling `s.data.asText()` a [MountPoint](MountPoint.html) is created and collects your model values. 
-This means a DOM-element is created (in this example it's a simple `TextNode`) and 
+By calling `s.data.renderText()` a [MountPoint](MountPoint.html) is created and collects your model values. 
+This means a DOM-element is created (in this example it's a `span` with the text as text-node) and 
 bound to your `data` so that it will change whenever your `Store`'s state updates. This is called _precise data binding_.
 
 You can of course use every intermediate action like `map`,`filter`, etc., on the `data`-flow as on every other `Flow`:
@@ -35,7 +35,7 @@ You can of course use every intermediate action like `map`,`filter`, etc., on th
 ```kotlin
 render {
     p {
-        s.data.map { "you have entered ${it.length} characters so far." }.asText()
+        s.data.map { "you have entered ${it.length} characters so far." }.renderText()
     }
 }
 ```
@@ -49,7 +49,7 @@ render {
     p {
         firstName.data.combine(lastName.data) { firstName, lastName ->
             "Your full name is: $firstName $lastName"
-        }.asText()
+        }.renderText()
     }
 }
 ```
@@ -63,6 +63,7 @@ input {
 }
 ```
 In this case, only the attribute value will change when the model in your store changes. 
-fritz2 offers [pre-defined properties (at each Tag)](https://api.fritz2.dev/core/core/dev.fritz2.dom.html/index.html) for every HTML5-attribute.
+fritz2 offers [pre-defined properties (at each Tag)](https://api.fritz2.dev/core/core/dev.fritz2.dom.html/index.html) 
+for every HTML5-attribute.
 
 But how can you change the model-data in a store? Let's have a look at [State Management](StateManagement.html).
