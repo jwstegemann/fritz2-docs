@@ -19,9 +19,21 @@ Having a `Lens` available which points to some specific property makes it very e
 property from a `Store` of the parent entity:
 
 ```kotlin
-    val personStore = storeOf(Person(Name("first name", "last name"), "more text"))
-    // remember, the L-object is created by fritz2-gradle-plugin per package
-    val nameStore = personStore.sub(L.Person.name)
+// given the following nested data classes...
+@Lenses
+data class Name(val firstname: String, val lastname: String) {
+    companion object
+}
+
+@Lenses 
+data class Person(val name: Name, description: String) {
+    companion object
+}
+
+// ... you can create a root-store...
+val personStore = storeOf(Person(Name("first name", "last name"), "more text"))
+// ... and a sub-store using the automatic generated lens-factory `Person.name()`
+val nameStore = personStore.sub(Person.name())
 ```
 
 Now you can use your `nameStore` exactly like any other `Store` to set up _two-way-databinding_, call `sub(...)` 

@@ -15,8 +15,11 @@ object SaveStore : RootStore<String>("") {
     val save = handle<String> { _, data -> data }
 }
 
-object InputStore : RootStore<String>("") {
-    val input = handle<String> { _, input -> SaveStore.save(input) }
+object InputStore : RootStore<String>("") { 
+    val input = handle<String> { _, input ->
+        SaveStore.save(input) // call other store`s handler
+        input // do not forget to return the "next" store value!
+    }
 }
 ```
 
