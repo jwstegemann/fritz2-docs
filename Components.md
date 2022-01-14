@@ -58,7 +58,8 @@ render {
 }
 ```
 
-Using `Div` as receiver type in the example above allows you to access the attributes and events of your container-element from your content-lambda. Use `RenderContext` if this is not necessary or intended.
+Using `Div` as receiver type in the example above allows you to access the specific attributes and events of your
+container-element from your content-lambda. Use `RenderContext` if this is not necessary or intended.
 
 Since stateless components alone are not that exciting, go on and read about the fritz2 
 mechanism to handle state: the [Store](Store.html).
