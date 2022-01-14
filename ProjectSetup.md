@@ -12,12 +12,20 @@ To use fritz2, you have to set up a Kotlin multiplatform-project. To do so you c
 
 ```gradle
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.13"
+    kotlin("multiplatform") version "1.6.10"
+    // KSP support
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
+
+val fritz2Version = "0.14"
+
+//group = "my.fritz2.app"
+//version = "0.0.1-SNAPSHOT"
 
 kotlin {
     jvm()
@@ -28,9 +36,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("dev.fritz2:core:0.13")
-                // see https://components.fritz2.dev/
-                // implementation("dev.fritz2:components:0.13")
+                implementation("dev.fritz2:core:$fritz2Version")
             }
         }
         val jvmMain by getting {
@@ -43,6 +49,24 @@ kotlin {
         }
     }
 }
+
+/**
+ * KSP support - start
+ */
+dependencies {
+    add("kspMetadata", "dev.fritz2:lenses-annotation-processor:$fritz2Version")
+}
+kotlin.sourceSets.commonMain { kotlin.srcDir("build/generated/ksp/commonMain/kotlin") }
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
+    if (name != "kspKotlinMetadata") dependsOn("kspKotlinMetadata")
+}
+// needed to work on Apple Silicon. Should be fixed by 1.6.20 (https://youtrack.jetbrains.com/issue/KT-49109#focus=Comments-27-5259190.0-0)
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().nodeVersion = "16.0.0"
+}
+/**
+ * KSP support - end
+ */
 ```
 
 ## Pre-release builds
@@ -51,7 +75,8 @@ following lines to your `build.gradle.kts`:
 
 ```gradle
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.13"
+    kotlin("multiplatform") version "1.6.10"
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 }
 
 repositories {
@@ -59,21 +84,18 @@ repositories {
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // new repository here
 }
 
+val fritz2Version = "0.14-SNAPSHOT" // set the newer snapshot version here
+
+//group = "my.fritz2.app"
+//version = "0.0.1-SNAPSHOT"
+
 kotlin {
     jvm()
     js(IR) {
         browser()
     }.binaries.executable()
 
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("dev.fritz2:core:0.14-SNAPSHOT") // add the newer snapshot version here
-                // implementation("dev.fritz2:components:0.14-SNAPSHOT")
-            }
-        }
-        ...
-    }
+    ...
 }
 ```
 If you find any problems with these snapshot-versions please 
