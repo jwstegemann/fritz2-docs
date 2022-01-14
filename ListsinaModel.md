@@ -14,11 +14,11 @@ val listStore = RootStore<List<String>>(listOf("a","b","c"))
 It is perfectly valid to handle this as seen before: render the `data` by iterating over the `List`
 (using `forEach()` inside the `map {}` function, for example). Keep in mind that this means re-rendering your 
 whole `List` whenever an element in your model changes. This might be exactly what you want for small `List`s, 
-for `List`s that changes rarely or not at all, or for `List`s with a small representation in HTML (just a test per item), etc.
+for `List`s that changes rarely or not at all, or for `List`s with a small representation in HTML (just a text per item), etc.
 However, for `List`s that change more often and/or result in complex HTML-trees per item, this does not perform well.
 
 For those cases, fritz2 offers the method `renderEach {}` which creates a `RenderContext` and mounts its result to the DOM. 
-`renderEach {}` works analogously to `render {}` and `renderElement {}`, but it creates a specialized mount-point in order to 
+`renderEach {}` works analogously to `render {}`, but it creates a specialized mount-point in order to 
 identify elements for re-rendering. This mount-point compares the last version of your model with the 
 new one on every change and applies the minimum necessary patches to the DOM.
 
@@ -66,7 +66,9 @@ data class ToDo(
     val id: String = uniqueId(),
     val text: String,
     val completed: Boolean = false
-)
+) {
+    companion object
+}
 ```
 
 in `jsMain`:
@@ -80,9 +82,9 @@ fun main() {
     render {
         section {
             ToDosStore.renderEach(ToDo::id) { toDo ->
-                val textStore = toDo.sub(L.ToDo.text)
-                val completedStore = toDo.sub(L.ToDo.completed)
-                ...
+                val textStore = toDo.sub(ToDo.text())
+                val completedStore = toDo.sub(ToDo.completed())
+                // ...
             }
         }
     }
