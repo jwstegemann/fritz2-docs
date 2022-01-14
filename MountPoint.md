@@ -22,7 +22,7 @@ someIntFlow.render {
     if(it % 2 == 0) p { +"is even" }
     // nothing is rendered if odd        
 }
-// or multiple root elements
+// or multiple elements
 someStringFlow.render { name ->
     h5 { +"Your name is:" }
     div { +name }
@@ -37,15 +37,18 @@ The latter example will result in the following DOM structure:
   <hr/>
 </div>
 ```
+The CSS-class `mount-point` consists only of a `display: contents;` directive so that the element will not appear
+in the visual rendering of the page.
+
 Whenever the mount-point is definitely the only sub-element of its parent element, you can omit the dedicated 
 `<div>`-mount-point-tag by setting the `into` parameter to the parent element. In this case the rendering engine
 uses the existing parent node as reference for the mount-point:
 ```kotlin
 render {
-    dl { // `this` is <ul>-tag within this scope
+    dl { // `this` is <dl>-tag within this scope
         flowOf("fritz2" to "Awesome web frontend framework").render(into = this) { (title, def) ->
             //                                                      ^^^^^^^^^^^
-            //                                                      define parent node as anchor for mounting    
+            //                        define parent node as anchor for mounting    
             dt { +title }
             dd { +def }
         }
