@@ -13,6 +13,10 @@ val store = object : RootStore<String>("") {
     val append = handle<String> { model, action: String ->
         "$model$action"
     }
+    
+    val remove = handle<Int> { model, action ->
+        model.dropLast(action)
+    }
 
     val clear = handle { model ->
         ""
@@ -20,14 +24,21 @@ val store = object : RootStore<String>("") {
 }
 ```
 Whenever a `String` is sent to the `append`-`Handler`, it updates the model by appending the text to its current model.
+`remove` is a `Handler` which needs the amount of characters as `Int` to drop from the data, so the type of the action 
+is not related to the type of the store itself!
 `clear` is a `Handler` that doesn't need any information to do its work, so the second parameter can be omitted.
 
-Since everything in fritz2 is reactive, most of the time you want to connect a `Flow` of actions to the `Handler` instead
-of calling it directly which is also possible:
+Since everything in fritz2 is reactive, most of the time you want to connect a `Flow` of actions to the `Handler`
+by calling the `handledBy` function, which can be called with
+[infix](https://kotlinlang.org/docs/functions.html#infix-notation) so the code reads much nicer.
+
+But it is also possible to call a handler directly but much less needed than the first option.
 
 ```kotlin
+// use this pattern in most situations 
 someFlowOfString handledBy store.append
-//or
+
+// but direct call is also possible
 store.append("someValueOfString")
 ```
 
@@ -37,7 +48,7 @@ You can use this handler to conveniently implement _two-way-databinding_ by usin
 of an `input`-`Tag`, for example:
 
 ```kotlin
-val store = RootStore<String>("")
+val store = storeOf("") // store: RootStore<String>
 
 render {
     input {
@@ -59,7 +70,7 @@ You can map the elements of the `Flow` to a specific action-type before connecti
 This way you can also add information from the rendering-context to the action. 
 You may also use any other source for a `Flow` like recurring timer events or even external events.
 
-If you need to purposefully fire an action at some point in your code (to init a [Store] for example) use 
+If you need to purposefully fire an action at some point in your code (to init a `Store` for example) use 
 ```kotlin
 //call handler with data
 someStore.someHandler(someValue)

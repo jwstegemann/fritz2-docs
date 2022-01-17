@@ -5,16 +5,16 @@ nav_order: 40
 ---
 # Attributes
 
-To create rich html-interfaces you will want to use a variety of attributes. In fritz2 there are several easy ways to  
+To create rich html-interfaces you will want to use a variety of attributes. In fritz2 there are several easy ways to 
 achieve this depending on your use case.
 
 You can set all html-attributes inside the `Tag`'s content by calling a function of the according name. 
 Every standard html attribute has two functions. One sets a static value every time the element is re-rendered, 
-the second collects dynamic data coming from a `Flow`.
+the second collects dynamic data coming from a [Flow](Flow.html).
 When coming from a `Flow`, the attribute's value will be updated in the DOM whenever a new value appears on the `Flow` 
 without having to re-render the whole element:
 ```kotlin
-val flowOfInts = ... //i.e. get it from some store
+val flowOfInts = ... // i.e. get it from some store
 
 render {
     input {
@@ -50,6 +50,34 @@ render {
 }
 ```
 
+Sometimes it is important for an attribute to only appear if some condition is `true`, for example some
+ [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) properties like 
+[aria-controls](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls) should 
+preferably appear only if the dependent element exist. The `attr` functions for `Flows` behave in such a way, that
+they only set an attribute if the value is *not* `null`. This behaviour could be used to achieve the desired effect:
+```kotlin
+val isOpened = storeOf(true)
+
+button {
+    +"Toggle" 
+    // This mechanism is later explained in "State Management". 
+    // Just accept for now this simply toggles the boolean value in the store by each click. 
+    clicks.map { !isOpened.current } handledBy isOpened.update
+ 
+    attr("aria-controls", isOpened.data.map { if (it) "disclosure" else null })
+    //                                                                  ^^^^
+    //      make whole attribute disappear if disclosure-div is not rendered
+}
+
+isOpened.data.render { 
+    if (it) { 
+        div(id = "disclosure") {
+        +"I am open!"
+        }
+    }
+}
+```
+
 # Working with CSS-Classes
 
 The `class` attribute of a `Tag` for working with CSS style-classes is somewhat special.
@@ -65,7 +93,20 @@ Use this one-liner to add styling and meaning to your elements by using semantic
 Also, it keeps your code clean when using CSS frameworks like Bootstrap etc.
 
 To dynamically change the styling of a rendered element, you can add dynamic classes by assigning a `Flow` of strings 
-to the `className`-attribute (like with any other attribute). 
+to the `className`-attribute (like with any other attribute).
+
+```kotlin
+val enabled = storeOf(true)
+
+div {
+    className(enabled.data.map {
+        if(it) "background-color: lightgreen;" 
+        else "opacity: 0.5; background-color: lightgrey;"
+    })
+    +"Some important content"
+}
+```
+
 The same works for `List<String>`s with the `classList`-attribute.
 
 Additionally, you can build a `Map<String, Boolean>` from your model data that enables and disables single classes dynamically:

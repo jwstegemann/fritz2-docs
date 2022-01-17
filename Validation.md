@@ -25,7 +25,9 @@ In the `commonMain` section write something like this:
 data class Person(
     val name: String,
     val age: Int
-)
+) {
+    companion object
+}
 
 enum class Severity {
     Info,
@@ -39,31 +41,28 @@ data class Message(val id: String, val severity: Severity, val text: String): Va
 
 class PersonValidator : Validator<Person, Message, String>() {
 
-    override fun validate(data: Person, metadata: String): List<Message> {
-        val msgs = mutableListOf<Message>()
-        val inspector = inspect(data)
-        
-        val name = inspector.sub(L.Person.name)
-        if(name.data.trim().isBlank()) {
-            msgs.add(Message(name.id, Severity.Error, "Please provide a name"))
-        }
+    override fun validate(inspector: Inspector<Person>, metadata: String): List<Message> {
+        return buildList {
+            val name = inspector.sub(Person.name())
+            if(name.data.trim().isBlank()) {
+                add(Message(name.path, Severity.Error, "Please provide a name"))
+            }
 
-        val age = inspector.sub(L.Person.age)
-        if(age.data < 1) {
-            msgs.add(Message(age.id, Severity.Error, "Please correct the age"))
-        } else if(age.data > 100) {
-            msgs.add(Message(age.id, Severity.Warning, "Is the person really older then 100 years‽"))
+            val age = inspector.sub(Person.age())
+            if(age.data < 1) {
+                add(Message(age.path, Severity.Error, "Please correct the age"))
+            } else if(age.data > 100) {
+                add(Message(age.path, Severity.Warning, "Is the person really older then 100 years‽"))
+            }
         }
-
-        return msgs
     }
 }
 ```
 You can structure and implement your concrete validation-rules with everything Kotlin offers. 
-Also, for getting the same ids as with using `sub()` method on the `SubStore`s, we create a new `Inspector` with the
+Also, for getting the same paths as with using `sub()` method on the `SubStore`s, we create a new `Inspector` with the
 `ìnspect()` function. The `Inspector` can then navigate through the model by calling the `sub()` method with the corresponding `Lens`.
-The resulting `SubInspector`s then have two attributes `data` and `id`. The first one gives you the current data and 
-the second one the corresponding id to it.
+The resulting `SubInspector`s then have two attributes `data` and `path`. The first one gives you the current data and 
+the second one the corresponding path to it.
 
 Now you can use the `PersonValidator` in your `jsMain` section:
 
@@ -78,7 +77,7 @@ val store = object : RootStore<Person>(Person("Chris", 42)) {
 ```
 
 You can access your validation-results with `Validator.data`. 
-This gives you a `Flow<List<M>` where `M` is your `ValidationMessage`-type. 
+This gives you a `Flow<List<M>>` where `M` is your `ValidationMessage`-type. 
 You can also use the `current` property to get the current `List` of your `ValidationMessage`.
 You can handle the `Flow` of your messages like any other `Flow` of a `List`, 
 for example by rendering your messages to html:

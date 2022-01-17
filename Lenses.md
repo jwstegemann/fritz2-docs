@@ -38,13 +38,16 @@ fritz2 offers an annotation `@Lenses` you can add to your data-classes in the `c
 your multiplatform project:
 ```kotlin
 @Lenses
-data class Person(val name: String, val value: String)
+data class Person(val name: String, val value: String) {
+    companion object // needs to be declared! The generated lens-factories are created within.
+}
 ```
-Using an annotation-processor, fritz2 builds a `L`-object per package from these annotations which contains all the `Lens`es you need. 
+Using an annotation-processor, fritz2 builds factory methods for each public constructor property within the
+companion object of the data class from these annotations which contains all the `Lens`es you need.
 They are named exactly like the entities and properties, so it's easy to use:
 
 ```kotlin
-val nameLens = L.Person.name
+val nameLens = Person.name()
 ```
 
 You can see it in action at our [nestedmodel-example](https://examples.fritz2.dev/nestedmodel/build/distributions/index.html).
