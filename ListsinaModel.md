@@ -5,13 +5,13 @@ nav_order: 90
 ---
 # Lists as a Model
 
-Like for any other type, you can create a `Store` that holds a list:
+`Store`s can be created for any type, including lists:
 
 ```kotlin
-val listStore = storeOf(listOf("a","b","c"))
+val listStore = storeOf(listOf("a", "b", "c"))
 ```
 
-It is perfectly valid to handle this as seen before: render the `data` by iterating over the `List`:
+It's perfectly valid to render this `data` by iterating over the `List`:
 
 ```kotlin
 listStore.data.render { list ->
@@ -21,12 +21,11 @@ listStore.data.render { list ->
 }
 ```
 
-Keep in mind that this means re-rendering *all* `span`s in this example the list changes, regardless if you just added a new `String` at the end or changed the `String` at index 2. This might be exactly what you want for small `List`s, 
-for `List`s that changes rarely or not at all, or for `List`s with a small representation in HTML (just a text per item), etc.
-However, for `List`s that change more often and/or result in complex HTML-trees per item, this does not perform well.
+But keep in mind that this means re-rendering *all* `span`s in this example when the list changes, regardless of how many items you actually changed. This might be what you want for small `List`s, 
+for `List`s that rarely change, or for `List`s with a small representation in HTML (like just text per item), etc. However, for `List`s that change more often and/or result in complex HTML-trees per item, this does not perform well.
 
 For those cases, fritz2 offers the method `renderEach {}` which creates a `RenderContext` and mounts its result to the DOM. 
-`renderEach {}` works analogously to `render {}`, but it creates a specialized mount-point in order to 
+`renderEach {}` works like `render {}`, but it creates a specialized mount-point in order to 
 identify elements for re-rendering. This mount-point compares the last version of your list with the 
 new one on every change and applies the minimum necessary patches to the DOM.
 
@@ -36,7 +35,7 @@ val seq = object : RootStore<List<String>>(listOf("one", "two", "three")) {
 
     val addItem = handle { list ->
         count++
-        list + "yet another item no. $count"
+        list + "Yet another item: No. $count"
     }
     val deleteItem = handle<String> { list, current ->
         list.minus(current)
@@ -50,22 +49,22 @@ render {
                 li {
                     button("btn", id = "delete-btn") {
                         +s
-                        clicks.map { console.log("deleting $s"); s } handledBy seq.deleteItem
+                        clicks.map { console.log("Deleting $s"); s } handledBy seq.deleteItem
                     }
                 }
             }
         }
         button("button") {
-            +"add an item"
+            +"Add an item"
             clicks handledBy seq.addItem
         }
     }
 }
 ```
 
-In this example `renderEach` uses the equals function to determine, if an item at a given index is still the same. So for the `String` example, render each will not apply any patch to your DOM, when you replace "two" by another instance of String with the same content. It will however remove the `li` representing "two", if you replaced the item it index 1 by "another two" and insert a newly rendered `li` with this text content. So be aware, that the code inside the lambda you give to `renderEach` is executed whenever it is needed to render the DOM representation of a new or changed item.
+In this example, `renderEach` uses the equals function to determine whether an item at a given index is still the same. So for the `String` example, renderEach won't patch your DOM when "two" is replaced by another instance of String with the same content. It will however remove the `li` representing "two" when the item at index 1 is replaced by "another two" and a newly rendered `li` is inserted with this text content. So be aware that the lambda you pass to `renderEach` is executed whenever the DOM representation of a new or changed item is rendered.
 
-When dealing with more complex data models this sometimes isn't what you want. When you have a `ToDo` like the following
+When dealing with more complex data models, this sometimes isn't what you want. 
 
 ```kotlin
 @Lenses
@@ -77,7 +76,7 @@ data class ToDo(
     companion object
 }
 ```
-in your list, which is rendered by 
+When you have a `ToDo` like this in your list, which is rendered by..
 
 ```kotlin
 val toDoListStore = storeOf(listOf(ToDo(1, "foo", false), ToDo(2, "bar", false)))
@@ -99,7 +98,7 @@ fun main() {
 }
 ```
 
-you might just want the `class`-attribute to be re-rendered when the `ToDo` at a given index is still the same, but just the value of its `completed` state changed. You have to tell `renderEach` how to determine, if an element at an index is still the same entity although one ot more of its attributes (or sub-entities) have changed by offering an `IdProvider`. An `IdProvider` is a function mapping an entity to unique id of arbitrary type. In this example, we just use the `id`-attribute of the `ToDo`.
+you might just want the `class`-attribute to be re-rendered when the `ToDo` at a given index is still the same, but just the value of its `completed` state changes. `renderEach` must be told how to determine, whether an element at an index is still the same entity although one or more of its attributes (or sub-entities) have changed by passing an `IdProvider`. An `IdProvider` is a function mapping an entity to unique id of arbitrary type. In this example, we just use the `id`-attribute of the `ToDo`.
 
 Then create a `SubStore` for a given entity conveniently by calling `sub(someEntity, properIdProvider)` on a `Store<List<*>>`. Of course you can do this yourself by mapping the flows if you work on a `Flow<List<*>>` and have no `Store` available or don't want to utilize fritz2's `Lens`es-:
 
@@ -131,7 +130,7 @@ fun main() {
 }
 ```
 
-If you need two-way-databinding directly on a `Store`'s `data` without any intermediate operations (filters, maps, etc.) you can call `renderEach(IdProvider)` directly on the `Store`, which will provide the `SubStore` for each element conveniently as the parameter of the render-lambda.
+If you need two-way-databinding directly on a `Store`'s `data` without any intermediate operations (filters, maps, etc.), call `renderEach(IdProvider)` directly on the `Store`. This will provide the `SubStore` as the render-lambda's parameter for each element.
 
 Now you know how to handle all kinds of data and structures in your `Store`s. 
 Next, you might want to check whether your model is valid. In fritz2 this is done with [Validation](Validation.html).

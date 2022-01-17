@@ -1,13 +1,14 @@
 ---
 layout: default
 title: Authentication
-nav_order: 1
+nav_order: 112
 parent: Http Calls
 ---
 
 # Authentication
 
-In fritz2 you would want to implement the authentication process of your SPA as a `Middleware` for its remote-API. To do this conveniently start by inheriting from 
+In fritz2, you want to implement the authentication process of your SPA as a `Middleware` for its remote-API. To do
+this conveniently, start by inheriting from 
 
 ```kotlin
 abstract class Authentication<P> : Middleware {
@@ -19,10 +20,11 @@ abstract class Authentication<P> : Middleware {
 }
 ```
 
-fritz2's authentication allows you to specify the data type of the current authenticated user (principal). This could for example be 
+fritz2's authentication allows you to specify the data type of the current authenticated user (principal). 
+This could be, for example: 
 
 ```kotlin
-// This class holds the information of the principal actually authenticated
+// This class holds the information of the principal currently authenticated
 @Lenses
 @Serializable
 data class Principal(val name: String, val roles: List<String> = emptyList()) {
@@ -30,13 +32,19 @@ data class Principal(val name: String, val roles: List<String> = emptyList()) {
 }
 ```
 
-When you add this `Middleware` to your endpoint(s), it will intercept each response with status code unauthorized (401) or forbidden (403). You can change this by overwriting 
+When you add this `Middleware` to your endpoint(s), it will intercept each response with status code unauthorized 
+(401) or forbidden (403). You can change this by overwriting 
 
 ```kotlin
 override val statusCodesEnforcingAuthentication: List<Int> = listOf(401, 403, /* some more */)
 ```
 
-Whenever the authentication middleware receives such a response, it starts the client-side authentication-process you defined by implementing the abstract `authenticate`-method. You are totally free here to do, whatever your authentication process requires. For example, you could open a modal window to ask the user for her credentials and send them to another remote service a get a [JSON Web Token](https://jwt.io/) for subsequent requests as well as name and roles of the user. To successfully complete the authentication process with an identified principal just call `complete(someValidPrincipal)`. If you have to cancel the running authentication process call `clear()`.
+Whenever the authentication middleware receives such a response, it starts the client-side authentication-process 
+you defined by implementing the abstract `authenticate`-method. You are free to do here whatever your authentication 
+process requires. For example, you could open a modal window to ask the user for their credentials and send them 
+to another remote service to get a [JSON Web Token](https://jwt.io/) for subsequent requests, as well as name and 
+roles of the user. To successfully complete the authentication process with an identified principal, 
+just call `complete(someValidPrincipal)`. To cancel the running authentication process, call `clear()`.
 
 ```kotlin
 // This class holds the information entered in your login form
@@ -56,16 +64,16 @@ object MyAuthentication : Authentication<Principal>() {
         try {
             val principal = Json.decodeFromString<Principal>(http("/login").formData(form).post().body())
             complete(principal)
-            closeTheLoginModal() //however you do this in your app
+            closeTheLoginModal() // example
             Credentials() // clear the input form
         } catch (e: Exception) {
-            //you might want to show some error-message here
+            // show some error-message
             it
         }
     }
 
     override fun authenticate() {
-        createSomeModal { //however, you do this in your app
+        createSomeModal { // example
             input {
                 loginStore.sub(Credentials.name()).let {
                     value(it.data)
@@ -93,7 +101,7 @@ object MyAuthentication : Authentication<Principal>() {
 
 ```
 
-Now you can use your principals' data to enrich each subsequent request by adding a token as a header for example:
+Now you can use your principal's data to enrich each subsequent request by adding a token as a header, for example:
 
 ```kotlin
 object MyAuthentication : Authentication<Principal>() {
@@ -129,7 +137,7 @@ MyAuthentication.authenticated.render {
             MyAuthentication.principal.map { it?.name ?: "" }.renderText()
 
             clicks handledBy {
-                MyAuthentication.clear() // logout, in real life you would want to inform the backend
+                MyAuthentication.clear() // logout, but in real life you would want to inform the backend
             }
         }
 
@@ -144,7 +152,9 @@ MyAuthentication.authenticated.render {
 }
 ```
 
-If the first request requires authentication, subsequent requests that use the same authentication middleware will wait for the started authentication process to finish. So make sure you always complete or cancel it and use a fresh endpoint within for remote requests required (login, get roles, etc.).
+If the first request requires authentication, subsequent requests that use the same authentication middleware 
+will wait for the started authentication process to finish. So make sure you always complete or cancel it and use 
+a fresh endpoint within for remote requests required (login, get roles, etc.).
 
 
 

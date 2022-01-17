@@ -80,18 +80,22 @@ val entityStore = object : RootStore<Person>(Person(...)) {
     val delete = handle { rest.delete(it) }
     
     init {
-        syncBy(saveOrUpdate)
+        syncBy(addOrUpdate)
     }
 }
 ```
 
-The `restEntity` function needs an `initialId` to distinguish add from update operations when calling `addOrUpdate`: A `POST`request is sent, when the id of the given instance equals `initialID`, otherwise a `PUT` request is used to update the ressource.).
+The `restEntity` function needs an `initialId` to distinguish add from update operations when calling `addOrUpdate`: 
+A `POST`request is sent, when the id of the given instance equals `initialID`, otherwise a `PUT` request is used to 
+update the ressource.).
 
-By calling `syncBy` from your init-block the given `Handler` (here `addOrUpdate`) is automatically called on each update of your `Store`s data, to keep your REST-backend in sync with your local ressource.
+By calling `syncBy` from your init-block the given `Handler` (here `addOrUpdate`) is automatically called on each 
+update of your `Store`s data, to keep your REST-backend in sync with your local ressource.
 
 ### QueryRepository
 
-When creating a `QueryRepository`, you can define a type describing the queries which are done by this repository. You also have to implement a lambda, that defines, how to deal with a concrete instance of this query type:
+When creating a `QueryRepository`, you can define a type describing the queries which are done by this repository. 
+You also have to implement a lambda, that defines, how to deal with a concrete instance of this query type:
 
 ```kotlin
 data class PersonQuery(val namePrefix: String? = null)
