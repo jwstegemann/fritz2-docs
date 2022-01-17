@@ -27,7 +27,8 @@ val result: String = usersApi.get(s).body()
 * `formData(): FormData`
 * `json(): Any?`
 
-If your request was not successful (`Response.status != 200`), a `FetchException` will be thrown.
+If your request was not successful (`Response.ok` property returns `false` according to the
+[fetch](https://developer.mozilla.org/en-US/docs/Web/API/Response/ok) -API), a `FetchException` will be thrown.
 
 The same works for posts and other methods - just use different parameters for the body to send.
 
@@ -79,7 +80,8 @@ Get inspired by our [repositories example](https://examples.fritz2.dev/repositor
 and use our [repositories API](Repositories.html).
 
 
-You can easily set up your local webpack-server to proxy services (avoid CORS, etc.) when developing locally in your `build.gradle.kts`:
+You can easily set up your local webpack-server to proxy services (avoid CORS, etc.) when developing locally in 
+your `build.gradle.kts`:
 ```kotlin
 kotlin {
     js(IR) {
@@ -107,7 +109,8 @@ Want to do bidirectional communications? Keep on reading about [Websockets](Webs
 
 ## Middleware
 
-You can intercept calls made by the remote api, for example to implement cross-cutting concerns like logging, generic error handling, etc.
+You can intercept calls made by the remote api, for example to implement cross-cutting concerns like logging,
+generic error handling, etc.
 
 To write your own `Middleware`, implement the following interface:
 
@@ -125,7 +128,8 @@ val myEndpoint = http("/myAPI").use(someMiddleware)
 myEndpoint.get("some/Path").body()
 ```
 
-`enrichRequest` is called before each `Request` you configured to use this `Middleware`. You can add additional headers, parameters, etc. here. `handleResponse` is called on each `Response`.
+`enrichRequest` is called before each `Request` you configured to use this `Middleware`. You can add additional headers, 
+parameters, etc. here. `handleResponse` is called on each `Response`.
 
 To implement a simple logging `Middleware`, you could write the following: 
 
@@ -145,7 +149,10 @@ val logging = object : Middleware {
 val myAPI = http("/myAPI").use(logging)
 ```
 
-You can add multiple Middlewares in one row with .use(mw1, mw2, mw3). The enrichRequest functions will be called from left to right (mw1,mw2,mw3), the handleResponse functions from right to left (mw3, mw2, mw1). You can stop the processing of a Response by Middlewares further down the chain by returning response.stopPropagation().
+You can add multiple Middlewares in one row with .use(mw1, mw2, mw3). The `enrichRequest` functions will be called from 
+left to right (mw1,mw2,mw3), the `handleResponse` functions from right to left (mw3, mw2, mw1). 
+
+You can stop the processing of a Response by Middlewares further down the chain by returning `response.stopPropagation()`.
 
 fritz2 also offers some base classes to implement the [authentication](Authentication.html)-process of your SPA.
 

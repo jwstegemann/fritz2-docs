@@ -1,13 +1,14 @@
 ---
 layout: default
 title: Authentication
-nav_order: 1
+nav_order: 112
 parent: Http Calls
 ---
 
 # Authentication
 
-In fritz2, you want to implement the authentication process of your SPA as a `Middleware` for its remote-API. To do this conveniently, start by inheriting from 
+In fritz2, you want to implement the authentication process of your SPA as a `Middleware` for its remote-API. To do
+this conveniently, start by inheriting from 
 
 ```kotlin
 abstract class Authentication<P> : Middleware {
@@ -19,7 +20,8 @@ abstract class Authentication<P> : Middleware {
 }
 ```
 
-fritz2's authentication allows you to specify the data type of the current authenticated user (principal). This could be, for example: 
+fritz2's authentication allows you to specify the data type of the current authenticated user (principal). 
+This could be, for example: 
 
 ```kotlin
 // This class holds the information of the principal currently authenticated
@@ -30,13 +32,19 @@ data class Principal(val name: String, val roles: List<String> = emptyList()) {
 }
 ```
 
-When you add this `Middleware` to your endpoint(s), it will intercept each response with status code unauthorized (401) or forbidden (403). You can change this by overwriting 
+When you add this `Middleware` to your endpoint(s), it will intercept each response with status code unauthorized 
+(401) or forbidden (403). You can change this by overwriting 
 
 ```kotlin
 override val statusCodesEnforcingAuthentication: List<Int> = listOf(401, 403, /* some more */)
 ```
 
-Whenever the authentication middleware receives such a response, it starts the client-side authentication-process you defined by implementing the abstract `authenticate`-method. You are free to do here whatever your authentication process requires. For example, you could open a modal window to ask the user for their credentials and send them to another remote service to get a [JSON Web Token](https://jwt.io/) for subsequent requests, as well as name and roles of the user. To successfully complete the authentication process with an identified principal, just call `complete(someValidPrincipal)`. To cancel the running authentication process, call `clear()`.
+Whenever the authentication middleware receives such a response, it starts the client-side authentication-process 
+you defined by implementing the abstract `authenticate`-method. You are free to do here whatever your authentication 
+process requires. For example, you could open a modal window to ask the user for their credentials and send them 
+to another remote service to get a [JSON Web Token](https://jwt.io/) for subsequent requests, as well as name and 
+roles of the user. To successfully complete the authentication process with an identified principal, 
+just call `complete(someValidPrincipal)`. To cancel the running authentication process, call `clear()`.
 
 ```kotlin
 // This class holds the information entered in your login form
@@ -144,7 +152,9 @@ MyAuthentication.authenticated.render {
 }
 ```
 
-If the first request requires authentication, subsequent requests that use the same authentication middleware will wait for the started authentication process to finish. So make sure you always complete or cancel it and use a fresh endpoint within for remote requests required (login, get roles, etc.).
+If the first request requires authentication, subsequent requests that use the same authentication middleware 
+will wait for the started authentication process to finish. So make sure you always complete or cancel it and use 
+a fresh endpoint within for remote requests required (login, get roles, etc.).
 
 
 
