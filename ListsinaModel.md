@@ -8,7 +8,7 @@ nav_order: 90
 Like for any other type, you can create a `Store` that holds a list:
 
 ```kotlin
-val listStore = storeOf(listOf("a","b","c")
+val listStore = storeOf(listOf("a","b","c"))
 ```
 
 It is perfectly valid to handle this as seen before: render the `data` by iterating over the `List`:
@@ -70,23 +70,27 @@ When dealing with more complex data models this sometimes isn't what you want. W
 ```kotlin
 @Lenses
 data class ToDo(
-    val id: String = uniqueId(),
+    val id: Int,
     val text: String,
-    val completed: Boolean = false
-)
+    val completed: Boolean
+) {
+    companion object
+}
 ```
 in your list, which is rendered by 
 
 ```kotlin
-val toDosStore = storeOf(listOf(ToDo(text = "foo"), ToDo(text = "bar")))
+val toDoListStore = storeOf(listOf(ToDo(1, "foo", false), ToDo(2, "bar", false)))
 
 fun main() {
     render {
         section {
-            toDosStore.data.renderEach(ToDo::id) { toDo ->
+            toDoListStore.data.renderEach(ToDo::id) { toDo ->
+                val toDoStore = toDoListStore.sub(toDo, ToDo::id)
                 li {
+                    val completed = toDoStore.sub(ToDo.completed()).data
                     // css is based on https://tailwindcss.com
-                    className("line-through".whenever(toDo.completed))
+                    className(completed.map { if (it) "line-through" else ""})
                     +toDo.text
                 }
             }
@@ -94,17 +98,26 @@ fun main() {
     }
 }
 ```
-you just want the `class`-attribute re-rendered when the `ToDo` at a given index is still the same, but just changed the value of its `completed` state. You have to tell `renderEach` how to determine, if an element at an index is still the same although one ot more of its attributes (or sub-entities) have changed. To do so just give it `IdProvider`, a function or lambda that defines how to get the unique id for a certain entity. In this example, we just use the `id`-attribute of the `ToDo`. 
 
-To be able to do two-way-databinding inside `renderEach` you can create a `SubStore` for a given entity conveniently by calling `sub(someEntity)` on a `Store<List<*>>`. This of course only makes sense in combination with an `IdProvider`:
+you might just want the `class`-attribute to be re-rendered when the `ToDo` at a given index is still the same, but just the value of its `completed` state changed. You have to tell `renderEach` how to determine, if an element at an index is still the same entity although one ot more of its attributes (or sub-entities) have changed by offering an `IdProvider`. An `IdProvider` is a function mapping an entity to unique id of arbitrary type. In this example, we just use the `id`-attribute of the `ToDo`.
+
+Then create a `SubStore` for a given entity conveniently by calling `sub(someEntity, properIdProvider)` on a `Store<List<*>>`. Of course you can do this yourself by mapping the flows if you work on a `Flow<List<*>>` and have no `Store` available or don't want to utilize fritz2's `Lens`es-:
 
 ```kotlin
-val toDosStore = storeOf(listOf(ToDo(text = "foo"), ToDo(text = "bar")))
+val completed = toDoListStore.data.map { it.find { t -> t.id == toDo.id } ?: false }
+```
+
+Regardless if you use a `SubStore` or your mapped `Flow`: be aware that in the example above nothing will happen to your DOM, when the text of a `ToDo` changes, but it is still at the same position in the list. fritz2 determines that still the same entity (identified by the `IdProvider`) is at the same place in the list and therefore the `li` as a whole won't be re-rendered, but just the `class`-attribute (which is mounted to its own mountpoint depending on you `completed`-flow). This might be exactly what you want, but it depends on your use-case.
+
+You can easily do two-way-databinding inside `renderEach` using a `SubStore` created for a particular entity as seen above. This of course only makes sense in combination with an `IdProvider`:
+
+```kotlin
+val toDoListStore = storeOf(listOf(ToDo(text = "foo"), ToDo(text = "bar")))
 
 fun main() {
     render {
         section {
-            ToDosStore.data.renderEach(ToDo::id) { toDo ->
+            toDoListStore.data.renderEach(ToDo::id) { toDo ->
                 val entityStore = toDosStore.sub(toDo)
                 li {
                     input {
@@ -118,7 +131,7 @@ fun main() {
 }
 ```
 
-If you need two-way-databinding directly on a `Store`'s `data` without any manipulation (filters, maps, etc.) you can call `renderEach(IdProvider)` directly on the `Store`, which will provide the `SubStore` for each element conveniently as the parameter of the render-lambda.
+If you need two-way-databinding directly on a `Store`'s `data` without any intermediate operations (filters, maps, etc.) you can call `renderEach(IdProvider)` directly on the `Store`, which will provide the `SubStore` for each element conveniently as the parameter of the render-lambda.
 
 Now you know how to handle all kinds of data and structures in your `Store`s. 
 Next, you might want to check whether your model is valid. In fritz2 this is done with [Validation](Validation.html).
