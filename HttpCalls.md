@@ -8,7 +8,7 @@ has_children: true
 
 Using the browser's default fetch-api can get quite tiresome, which is why fritz2 offers a small fluent api wrapper for it:
 
-First you create a `Request` which points to your endpoint url:
+First, you create a `Request` which points to your endpoint url:
 ```kotlin
 val usersApi = http("https://reqresss.in/api/users")
             .acceptJson()
@@ -21,18 +21,18 @@ Sending a request is pretty straightforward:
 ```kotlin
 val result: String = usersApi.get(s).body()
 ```
-`body()` returns the body of the response as a `String`. Instead, you can also use some following methods to get different results:
+`body()` returns the body of the response as a `String`. Alternatively you can use the following methods to get different results:
 * `blob(): Blob`
 * `arrayBuffer(): ArrayBuffer`
 * `formData(): FormData`
 * `json(): Any?`
 
-If your request was not successful (`Response.status != 200`) a `FetchException` will be thrown.
+If your request was not successful (`Response.status != 200`), a `FetchException` will be thrown.
 
-The same works for posts and other methods, just use different parameters for the body to send.
+The same works for posts and other methods - just use different parameters for the body to send.
 
-Of course the remote service is primarily designed to use in your `Handler`s within your `Store`s when 
-exchanging data with your backend:
+The remote service is primarily designed for use in your `Store`'s `Handler`s when 
+exchanging data with the backend:
 ```kotlin
 val userStore = object : RootStore<String>("") {
     
@@ -79,7 +79,7 @@ Get inspired by our [repositories example](https://examples.fritz2.dev/repositor
 and use our [repositories API](Repositories.html).
 
 
-You can easily setup your local webpack-server to proxy services (avoid CORS, etc.) when developing locally in your `build.gradle.kts`:
+You can easily set up your local webpack-server to proxy services (avoid CORS, etc.) when developing locally in your `build.gradle.kts`:
 ```kotlin
 kotlin {
     js(IR) {
@@ -107,9 +107,9 @@ Want to do bidirectional communications? Keep on reading about [Websockets](Webs
 
 ## Middleware
 
-You can intercept calls made by the remote api for example to implement cross-cutting concerns like logging, generic error handling, etc.
+You can intercept calls made by the remote api, for example to implement cross-cutting concerns like logging, generic error handling, etc.
 
-To write your own `Middleware` just implement the following interface:
+To write your own `Middleware`, implement the following interface:
 
 ```kotlin
 interface Middleware {
@@ -118,7 +118,7 @@ interface Middleware {
 }
 ```
 
-To make a `Request` use a `Middleware` just call its `use`-method:
+Make a `Request` by passing a `Middleware` to its `use`-method:
 
 ```kotlin
 val myEndpoint = http("/myAPI").use(someMiddleware)
@@ -127,7 +127,7 @@ myEndpoint.get("some/Path").body()
 
 `enrichRequest` is called before each `Request` you configured to use this `Middleware`. You can add additional headers, parameters, etc. here. `handleResponse` is called on each `Response`.
 
-To implement a simple logging `Middleware` you could write the following: 
+To implement a simple logging `Middleware`, you could write the following: 
 
 ```kotlin
 val logging = object : Middleware {
@@ -145,8 +145,8 @@ val logging = object : Middleware {
 val myAPI = http("/myAPI").use(logging)
 ```
 
-You can add multiple Middlewares in one row by .use(mw1, mw2, mw3). The enrichRequest functions will be called from left to right (mw1,mw2,mw3), the handleResponse functions back from right to left (mw3, mw2, mw1). You can stop the processing of a Response by Middlewares further down the chain by return response.stopPropagation().
+You can add multiple Middlewares in one row with .use(mw1, mw2, mw3). The enrichRequest functions will be called from left to right (mw1,mw2,mw3), the handleResponse functions from right to left (mw3, mw2, mw1). You can stop the processing of a Response by Middlewares further down the chain by returning response.stopPropagation().
 
-fritz2 also offers some base classes to implement the [authentication](Authentication.html)-process of your SPA: 
+fritz2 also offers some base classes to implement the [authentication](Authentication.html)-process of your SPA.
 
 
